@@ -1,24 +1,45 @@
 ﻿/* Navbar Brand */
-
 .navbar-brand img {
     width: 50px;
     height: 50px;
 }
 
-/* Cart badge */
+/* Navbar Expended */
 
-.cart-badge {
-    position: absolute;
-    top: 0px;
-    right: 65px;
-    z-index: 1;
-    width: 15px;
-    height: 15px;
-    background-color: red;
-    color: white;
-    text-align: center;
-    letter-spacing: 0;
-    font-weight: 400;
-    font-size: 9px;
-    line-height: 15px;
+.jds-navbar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.jds-navbar a {
+    color: var(--san-juan) !important;
+    text-transform: uppercase;
+}
+
+.jds-navbar .jds-navbar-expended .jds-navbar-left .nav-item {
+    margin: 0 30px;
+}
+
+.jds-navbar .jds-navbar-expended .jds-navbar-right li {
+    margin: 0 5px;
+}
+
+.jds-navbar .jds-navbar-expended {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.jds-navbar .jds-navbar-expended ul {
+    flex-direction: row;
+}
+
+/* Collapse specification */
+
+@media screen and (max-width: 990px) {
+    .jds-navbar .jds-navbar-expended {
+        display: none;
+    }
 }
