@@ -1,0 +1,41 @@
+﻿
+/* Carousel */
+
+#jds_index_carousel img {
+    height: 60vh;
+    object-fit: cover;
+}
+
+/* Banner */
+
+.jds-banner {
+    padding: 2em 0;
+    text-align: center;
+    color: var(--saffron);
+    background-color: var(--san-juan);
+}
+
+/* Collapse specification */
+
+@media screen and (max-width: 990px) {
+    #jds_index_carousel img {
+        height: 40vh;
+    }
+}
+
+/* Three images */
+
+.jds-index-flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 30px;
+}
+
+.jds-index-flex-container h1 {
+    color: var(--saffron);
+}
+
+.jds-index-flex-container img {
+    object-fit: cover;
+}

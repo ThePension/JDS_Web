@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JDSWeb.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/committee.css" asp-append-version="true" />
 </head>
@@ -90,7 +91,7 @@
                             Évènements
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="event_dropdown">
-                            <li><a class="dropdown-item" href="#">Actualité</a></li>
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="ActualEvents">Actualité</a></li>
                             <li><a class="dropdown-item" href="#">Archives</a></li>
                         </ul>
                     </li>
@@ -128,17 +129,11 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - JDSWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
