@@ -92,7 +92,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="event_dropdown">
                             <li><a class="dropdown-item" asp-controller="Home" asp-action="ActualEvents">Actualité</a></li>
-                            <li><a class="dropdown-item" href="#">Archives</a></li>
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="PassedEvents">Archives</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -100,8 +100,8 @@
                             La société
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="society_dropdown">
-                            <li><a class="dropdown-item" href="#">Comité</a></li>
-                            <li><a class="dropdown-item" href="#">Membres</a></li>
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Committee">Comité</a></li>
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Members">Membres</a></li>
                             <li><a class="dropdown-item" href="#">À propos</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Développeurs</a></li>
