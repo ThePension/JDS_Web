@@ -4,26 +4,90 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - JDSWeb</title>
+
+    <script src="https://kit.fontawesome.com/11627b19fd.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JDSWeb.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
+        <!--
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">JDSWeb</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbar"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Évènements</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">La société</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Nos produits</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="~/img/logo_jds.jpg" class="rounded-circle" alt="[Home]">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="event_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Évènements
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="event_dropdown">
+                                <li><a class="dropdown-item" href="#">Actualité</a></li>
+                                <li><a class="dropdown-item" href="#">Archives</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="society_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                La société
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="society_dropdown">
+                                <li><a class="dropdown-item" href="#">Comité</a></li>
+                                <li><a class="dropdown-item" href="#">Membres</a></li>
+                                <li><a class="dropdown-item" href="#">À propos</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Développeurs</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Nos produits</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav hstack gap-2">
+                        <li><a class="nav-link"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+                        <li><div class="custom-vr"></div></li>
+                        <li><a class="nav-link"><i class="fa-solid fa-user-tie"></i> Connexion</a></li>
+                        <li>
+                            <a class="nav-link position-relative">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span class="position-absolute top-10 translate-middle rounded-circle badge bg-danger">
+                                    0
+                                    <span class="visually-hidden">Panier non vide</span>
+                                </span>
+                                <span class="ms-2">0.00 CHF</span>
+                            </a>
                         </li>
                     </ul>
                 </div>

@@ -1,18 +1,15 @@
-html {
-  font-size: 14px;
+:root {
+    --white-mode-bg: #F1F5F0;
+    --havelock-blue: #6989E9;
+    --saffron: #F7C740;
+    --au-chico: 9E5466;
+    --san-juan: #305778;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
+/* Vertical Bar */
+.custom-vr {
+    width: 1px;
+    min-height: 2em;
+    background-color: currentColor;
+    opacity: .25;
 }

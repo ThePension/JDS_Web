@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32811.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDSWeb", "JDSWeb\JDSWeb.csproj", "{77ED3BC5-37DB-426A-8FD0-CDCD00F9CA60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDSCommon", "JDSCommon\JDSCommon.csproj", "{346B9540-228C-489D-AD64-AE559429D01E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDSTest", "JDSTest\JDSTest.csproj", "{EAA6A696-8186-4ED2-8C2B-0B4E986D0E5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{77ED3BC5-37DB-426A-8FD0-CDCD00F9CA60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77ED3BC5-37DB-426A-8FD0-CDCD00F9CA60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77ED3BC5-37DB-426A-8FD0-CDCD00F9CA60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{346B9540-228C-489D-AD64-AE559429D01E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{346B9540-228C-489D-AD64-AE559429D01E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{346B9540-228C-489D-AD64-AE559429D01E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{346B9540-228C-489D-AD64-AE559429D01E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAA6A696-8186-4ED2-8C2B-0B4E986D0E5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAA6A696-8186-4ED2-8C2B-0B4E986D0E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAA6A696-8186-4ED2-8C2B-0B4E986D0E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAA6A696-8186-4ED2-8C2B-0B4E986D0E5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
