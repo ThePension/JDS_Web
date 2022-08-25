@@ -6,9 +6,9 @@ namespace JDSCommon.Database.Models
     public partial class ShopGallery
     {
         public int ClothId { get; set; }
-        public int Image { get; set; }
+        public int ImageId { get; set; }
 
         public virtual Cloth Cloth { get; set; } = null!;
-        public virtual Image ImageNavigation { get; set; } = null!;
+        public virtual Image Image { get; set; } = null!;
     }
 }

@@ -42,8 +42,6 @@ namespace JDSCommon.Database.Models
             {
                 entity.ToTable("Cloth");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Description)
                     .HasMaxLength(100)
                     .IsUnicode(false);
@@ -55,20 +53,17 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.ColorNavigation)
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Color)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Cloth__Color__5EBF139D");
+                    .HasConstraintName("FK__Cloth__Color__797309D9");
 
                 entity.HasOne(d => d.SizeNavigation)
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Size)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Cloth__Size__5DCAEF64");
+                    .HasConstraintName("FK__Cloth__Size__787EE5A0");
 
                 entity.HasOne(d => d.TypeNavigation)
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Type)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Cloth__Type__5BE2A6F2");
+                    .HasConstraintName("FK__Cloth__Type__778AC167");
             });
 
             modelBuilder.Entity<ClothColor>(entity =>
@@ -78,7 +73,7 @@ namespace JDSCommon.Database.Models
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Hexa)
-                    .HasMaxLength(6)
+                    .HasMaxLength(7)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
@@ -97,7 +92,7 @@ namespace JDSCommon.Database.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Shortcut)
-                    .HasMaxLength(5)
+                    .HasMaxLength(10)
                     .IsUnicode(false);
             });
 
@@ -111,23 +106,21 @@ namespace JDSCommon.Database.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Price).HasColumnType("decimal(4, 2)");
+                entity.Property(e => e.Price).HasColumnType("decimal(6, 2)");
             });
 
             modelBuilder.Entity<Event>(entity =>
             {
                 entity.ToTable("Event");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Date).HasColumnType("date");
+                entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.Property(e => e.Description)
-                    .HasMaxLength(100)
+                    .HasMaxLength(500)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Title)
-                    .HasMaxLength(50)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
             });
 
@@ -140,28 +133,24 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.Event)
                     .WithMany()
                     .HasForeignKey(d => d.EventId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__EventGall__Event__619B8048");
+                    .HasConstraintName("FK__EventGall__Event__06CD04F7");
 
-                entity.HasOne(d => d.ImageNavigation)
+                entity.HasOne(d => d.Image)
                     .WithMany()
-                    .HasForeignKey(d => d.Image)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__EventGall__Image__628FA481");
+                    .HasForeignKey(d => d.ImageId)
+                    .HasConstraintName("FK__EventGall__Image__07C12930");
             });
 
             modelBuilder.Entity<Image>(entity =>
             {
                 entity.ToTable("Image");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Alt)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Url)
-                    .HasMaxLength(50)
+                    .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("URL");
             });
@@ -173,7 +162,7 @@ namespace JDSCommon.Database.Models
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(50)
+                    .HasMaxLength(20)
                     .IsUnicode(false);
             });
 
@@ -186,21 +175,17 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.Cloth)
                     .WithMany()
                     .HasForeignKey(d => d.ClothId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ShopGalle__Cloth__5FB337D6");
+                    .HasConstraintName("FK__ShopGalle__Cloth__03F0984C");
 
-                entity.HasOne(d => d.ImageNavigation)
+                entity.HasOne(d => d.Image)
                     .WithMany()
-                    .HasForeignKey(d => d.Image)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ShopGalle__Image__60A75C0F");
+                    .HasForeignKey(d => d.ImageId)
+                    .HasConstraintName("FK__ShopGalle__Image__04E4BC85");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
@@ -217,8 +202,7 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.RoleNavigation)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.Role)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__User__Role__5AEE82B9");
+                    .HasConstraintName("FK__User__Role__7E37BEF6");
             });
 
             OnModelCreatingPartial(modelBuilder);

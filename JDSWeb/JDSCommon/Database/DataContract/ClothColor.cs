@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,18 +9,67 @@ using System.Threading.Tasks;
 
 namespace JDSCommon.Database.DataContract
 {
-    internal class ClothColor
+    public class ClothColor
     {
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
-        |*                             PROPERTIES                            *|
-        \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+		|*                               FIELDS                              *|
+		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Hexa { get; set; }
+
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
-        |*                           PUBLIC METHODS                          *|
-        \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+		|*                             PROPERTIES                            *|
+		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Hexa { get; set; }
+		public Color Color => ColorTranslator.FromHtml(Hexa);
+
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+		|*                            CONSTRUCTORS                           *|
+		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+		|*                           PUBLIC METHODS                          *|
+		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+		|*                          PRIVATE METHODS                          *|
+		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+		|*                         PROTECTED METHODS                         *|
+		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+		|*                          STATIC METHODS                           *|
+		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+		|*                         ABSTRACT METHODS                          *|
+		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+		|*                              INDEXERS                             *|
+		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+		|*                         OPERATORS OVERLOAD                        *|
+		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     }
 }
