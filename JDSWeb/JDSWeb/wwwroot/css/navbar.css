@@ -118,7 +118,17 @@
 
     .jds-mobile-menu a {
         text-decoration: none;
-        color: var(--snow-drift) !important;
+    }
+
+        .jds-mobile-menu a:not(.jds-mobile-menu-active) {
+            text-decoration: none;
+            color: var(--snow-drift) !important;
+        }
+
+    .jds-mobile-menu > .jds-mobile-menu-item > a {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 1.1em;
     }
 
     .jds-mobile-menu div,
@@ -130,11 +140,68 @@
     }
 
         .jds-mobile-menu li a {
-            border-bottom: 1px solid black;
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            border-bottom: 1px solid grey;
         }
 
+            .jds-mobile-menu li a::before {
+                content: '\276F';
+                padding: 0 5px;
+            }
+
+    .jds-mobile-menu .jds-mobile-dropdown > a::before {
+        transform: rotate(90deg);
+        padding: 0 10px;
+    }
+
+.jds-mobile-submenu-item a {
+    padding-left: 45px !important;
+}
+
 .jds-mobile-submenu-item,
-.jds-mobile-menu-item div {
-    height: 40px;
+.jds-mobile-menu-item a {
+    height: 50px;
     color: var(--snow-drift);
+}
+
+    .jds-mobile-menu-item:not(.jds-mobile-dropdown) a:hover,
+    .jds-mobile-submenu-item a:hover,
+    .jds-mobile-menu-active {
+        color: var(--saffron) !important;
+        transform: translateX(3px);
+    }
+
+/* Mobile Search */
+
+.jds-mobile-nav .jds-mobile-search {
+    margin-bottom: 5px;
+}
+
+    .jds-mobile-nav .jds-mobile-search .jds-mobile-search-form {
+        width: 100%;
+    }
+
+.jds-mobile-search .jds-mobile-search-form input[type=text] {
+    width: 100%;
+    height: 70px;
+    padding-left: 20px;
+    padding-right: 50px;
+    vertical-align: top;
+    box-shadow: 0 -1px 9px rgba(0,0,0,0.17);
+}
+
+    .jds-mobile-search .jds-mobile-search-form input[type=text]:focus {
+        outline: none;
+    }
+
+.jds-mobile-search .jds-mobile-search-form button[type=submit] {
+    height: 70px;
+    width: 50px;
+    background-color: transparent;
+    border: none;
+    display: inline-block;
+    margin-left: -50px;
+    color: grey;
 }

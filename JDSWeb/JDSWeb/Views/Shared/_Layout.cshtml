@@ -130,38 +130,35 @@
         </nav>
     </header>
 
-    <div class="jds-close-nav"></div>
+    <div class="jds-close-nav" id="jds-close-nav"></div>
 
-    <div class="jds-mobile-nav">
-        <div class="jds-mobile-search mb-3">
-            <a>RECHERCHE</a>
+    <div class="jds-mobile-nav" id="jds-mobile-nav">
+        <div class="jds-mobile-search">
+            <form class="jds-mobile-search-form">
+                <input type="text" placeholder="Rechercher un événement" />
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
         </div>
         <ul class="jds-mobile-menu">
-            <li class="jds-mobile-menu-item">
-                <a>ÉVÉNEMENTS</a>
-                <ul class="jds-mobile-dropdown">
+            <li class="jds-mobile-menu-item jds-mobile-dropdown">
+                <a>Événements</a>
+                <ul>
                     <li class="jds-mobile-submenu-item"><a href="#">Actualité</a></li>
                     <li class="jds-mobile-submenu-item"><a href="#">Archives</a></li>
                 </ul>
             </li>
-            <li class="jds-mobile-menu-item">
-                <a>LA SOCIÉTÉ</a>
-                <ul class="jds-mobile-dropdown">
+            <li class="jds-mobile-menu-item jds-mobile-dropdown">
+                <a>La société</a>
+                <ul>
                     <li class="jds-mobile-submenu-item"><a href="#">Comité</a></li>
                     <li class="jds-mobile-submenu-item"><a href="#">Membres</a></li>
                     <li class="jds-mobile-submenu-item"><a href="#">À propos</a></li>
                     <li class="jds-mobile-submenu-item"><a href="#">Développeurs</a></li>
                 </ul>
             </li>
-            <li class="jds-mobile-menu-item">
-                <div><a href="#">NOS PRODUITS</a></div>
-            </li>
-            <li class="jds-mobile-menu-item">
-                <div><a href="#">CONNEXION</a></div>
-            </li>
-            <li class="jds-mobile-menu-item">
-                <div><a href="#">PANIER</a></div>
-            </li>
+            <li class="jds-mobile-menu-item"><a href="#">Nos produits</a></li>
+            <li class="jds-mobile-menu-item"><a href="#">Connexion</a></li>
+            <li class="jds-mobile-menu-item"><a href="#">Panier</a></li>
         </ul>
     </div>
 
@@ -172,6 +169,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/navbar.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
