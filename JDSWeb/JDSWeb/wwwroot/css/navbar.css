@@ -41,7 +41,6 @@
     .jds-navbar .jds-burger {
         display: none;
         position: absolute;
-        top: 50px;
         right: 50px;
     }
 
@@ -53,6 +52,67 @@
     .jds-navbar .jds-navbar-expended {
         display: none;
     }
+
+    .jds-menu-btn {
+        position: absolute;
+        right: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 60px;
+        cursor: pointer;
+        transition: all .5s ease-in-out;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .jds-menu-btn-burger {
+        width: 20px;
+        height: 4px;
+        background: var(--san-juan);
+        border-radius: 5px;
+        /*box-shadow: 0 2px 5px rgba(255,101,47,.2);*/
+        transition: all .5s ease-in-out;
+    }
+
+        .jds-menu-btn-burger::before,
+        .jds-menu-btn-burger::after {
+            content: '';
+            position: absolute;
+            height: 4px;
+            background: var(--san-juan);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(255,101,47,.2);
+            transition: all .5s ease-in-out;
+        }
+
+        .jds-menu-btn-burger::before {
+            width: 40px;
+            transform: translateY(-12px);
+        }
+
+        .jds-menu-btn-burger::after {
+            width: 30px;
+            transform: translateY(12px);
+        }
+
+    /* ANIMATION */
+
+    .jds-menu-btn.open .jds-menu-btn-burger {
+        transform: translateX(-50px);
+        background: transparent;
+        box-shadow: none;
+    }
+
+        .jds-menu-btn.open .jds-menu-btn-burger::before {
+            transform: rotate(45deg) translate(35px, -35px);
+        }
+
+        .jds-menu-btn.open .jds-menu-btn-burger::after {
+            width: 40px;
+            transform: rotate(-45deg) translate(35px, 35px);
+        }
 }
 
 /* Close Nav */

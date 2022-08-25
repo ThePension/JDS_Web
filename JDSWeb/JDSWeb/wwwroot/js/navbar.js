@@ -22,7 +22,25 @@ $(document).ready(() => {
     });
 
     function toggleMobileMenu() {
+        burgerAnimation();
         $("#jds-mobile-nav").toggleClass("jds-mobile-nav-opened");
         $("#jds-close-nav").toggleClass("jds-close-nav-opened");
     }
 });
+
+/**
+ * Burger animation
+ */
+
+let mobileMenuOpen = false;
+const menuBurger = document.querySelector(".jds-menu-btn");
+
+function burgerAnimation() {
+    if (!mobileMenuOpen) {
+        menuBurger.classList.add("open");
+        mobileMenuOpen = true;
+    } else {
+        menuBurger.classList.remove("open");
+        mobileMenuOpen = false;
+    }
+}
