@@ -8,5 +8,15 @@ namespace JDSCommon.Database.DataContract
 {
     internal class ShopGallery
     {
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+        |*                             PROPERTIES                            *|
+        \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+        public int ClothId { get; set; }
+        public int Image { get; set; }
+
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+        |*                           PUBLIC METHODS                          *|
+        \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     }
 }

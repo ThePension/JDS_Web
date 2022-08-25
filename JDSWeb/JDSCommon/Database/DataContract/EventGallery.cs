@@ -8,5 +8,15 @@ namespace JDSCommon.Database.DataContract
 {
     internal class EventGallery
     {
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+        |*                             PROPERTIES                            *|
+        \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+        public int EventId { get; set; }
+        public int Image { get; set; }
+
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+        |*                           PUBLIC METHODS                          *|
+        \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     }
 }
