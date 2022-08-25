@@ -1,0 +1,91 @@
+﻿#team {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dev-card {
+    width: 100%;
+    position: relative; 
+}
+
+.dev-image {
+    transition-duration: 0.8s;
+    transition-property: transform;
+    width: 25vw;
+    height: 25vw;
+    background-color: var(--san-juan);
+    border: 1px solid black;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.dev-image img {
+    display: block;
+    width: 80%;
+    height: 80%;
+    /* Center the image */
+    margin: auto;
+    /* Transformation infos */
+    transition-duration: 0.8s;
+    transition-property: transform;
+}
+
+.dev-info {
+    display: none;
+    width: 100%;
+}
+
+.dev-card:hover .dev-image img {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+}
+
+.dev-card:hover .dev-info {
+    display: block;
+}
+
+.dev-card:hover .dev-image {
+    -webkit-transform: translate(0,8em);
+    -moz-transform: translate(0,8em);
+    -o-transform: translate(0,8em);
+    -ms-transform: translate(0,8em);
+    transform: translate(0,8em);
+}
+
+.dev-info {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+
+.dev-info p {
+    padding-bottom: 50px;
+}
+
+@media screen and (max-width: 990px) {
+    .dev-image {
+        width: 20vw;
+        height: 20vw;
+    }
+}
+
+@media screen and (max-width: 770px) {
+    
+    #team {
+        flex-direction: column;
+    }
+
+    .dev-image {
+        width: 50vw;
+        height: 50vw;
+    }
+
+    .dev-card:hover .dev-image {
+        margin-bottom: 30vw;
+    }
+
+    .dev-card {
+        margin-bottom: 10vw;
+    }
+}
