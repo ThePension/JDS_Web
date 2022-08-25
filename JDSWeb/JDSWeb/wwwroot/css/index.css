@@ -28,14 +28,21 @@
 .jds-index-flex-container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-around;
-    padding-top: 30px;
+    row-gap: 30px;
+    column-gap: 30px;
+    padding: 30px;
 }
 
-.jds-index-flex-container h1 {
-    color: var(--saffron);
-}
+    .jds-index-flex-container h1 {
+        color: var(--saffron);
+    }
 
-.jds-index-flex-container img {
-    object-fit: cover;
-}
+    .jds-index-flex-container img {
+        object-fit: cover;
+    }
+
+    .jds-index-flex-container card {
+        margin-bottom: 20px;
+    }
