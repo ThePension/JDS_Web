@@ -13,33 +13,128 @@
     box-sizing: border-box;
 }
 
-.jds-navbar a {
-    color: var(--san-juan) !important;
-    text-transform: uppercase;
-}
+    .jds-navbar a {
+        color: var(--san-juan) !important;
+        text-transform: uppercase;
+    }
 
-.jds-navbar .jds-navbar-expended .jds-navbar-left .nav-item {
-    margin: 0 30px;
-}
+    .jds-navbar .jds-navbar-expended .jds-navbar-left .nav-item {
+        margin: 0 30px;
+    }
 
-.jds-navbar .jds-navbar-expended .jds-navbar-right li {
-    margin: 0 5px;
-}
+    .jds-navbar .jds-navbar-expended .jds-navbar-right li {
+        margin: 0 5px;
+    }
 
-.jds-navbar .jds-navbar-expended {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-}
+    .jds-navbar .jds-navbar-expended {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
 
-.jds-navbar .jds-navbar-expended ul {
-    flex-direction: row;
-}
+        .jds-navbar .jds-navbar-expended ul {
+            flex-direction: row;
+        }
 
-/* Collapse specification */
+    /* Collapse specification */
+
+    .jds-navbar .jds-burger {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 50px;
+    }
 
 @media screen and (max-width: 990px) {
+    .jds-navbar .jds-burger {
+        display: block;
+    }
+
     .jds-navbar .jds-navbar-expended {
         display: none;
     }
+}
+
+/* Close Nav */
+
+.jds-close-nav {
+    background-color: green;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 400;
+    opacity: 0;
+    visibility: hidden;
+    background-color: rgba(0,0,0,0.7);
+    transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1), visibility 0s cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
+}
+
+@media screen and (max-width: 990px) {
+    .jds-close-nav {
+        top: -150px;
+        height: calc(100vh + 300px);
+    }
+}
+
+.jds-close-nav-opened {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.25s ease, visibility 0s ease;
+}
+
+/* Mobile Nav */
+
+.jds-mobile-nav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: var(--san-juan);
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+@media screen and (max-width: 990px) {
+    .jds-mobile-nav {
+        width: 300px;
+        z-index: 99999;
+    }
+}
+
+.jds-mobile-nav.jds-mobile-nav-opened {
+    transform: none;
+}
+
+/* Mobile Nav Menu */
+
+.jds-mobile-menu,
+.jds-mobile-menu ul {
+    padding-left: 0px;
+}
+
+    .jds-mobile-menu a {
+        text-decoration: none;
+        color: var(--snow-drift) !important;
+    }
+
+    .jds-mobile-menu div,
+    .jds-mobile-menu li {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        list-style: none;
+    }
+
+        .jds-mobile-menu li a {
+            border-bottom: 1px solid black;
+        }
+
+.jds-mobile-submenu-item,
+.jds-mobile-menu-item div {
+    height: 40px;
+    color: var(--snow-drift);
 }

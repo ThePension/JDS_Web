@@ -1,24 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 
 :root {
-    --white-mode-bg: #F1F5F0;
+    --snow-drift: #F1F5F0;
     --havelock-blue: #6989E9;
     --saffron: #F7C740;
     --au-chico: #9E5466;
     --san-juan: #305778;
-}
-
-/* Font */
-
-@font-face {
-    font-family: jds-font;
-    src: url(~/font/Poppins/Poppins-Regular.ttf);
-}
-
-@font-face {
-    font-family: jds-font;
-    src: url(~/font/Poppins/Poppins-Bold.ttf);
-    font-weight: bold;
 }
 
 /* Global */

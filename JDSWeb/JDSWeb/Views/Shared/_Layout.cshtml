@@ -79,16 +79,11 @@
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                 <img src="~/img/logo_jds.png" class="rounded-circle" alt="[Home]">
             </a>
-            <button class="jds-navbar-burger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
             <div class="jds-navbar-expended">
                 <ul class="navbar-nav jds-navbar-left">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="event_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Évènements
+                            Événements
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="event_dropdown">
                             <li><a class="dropdown-item" asp-controller="Home" asp-action="ActualEvents">Actualité</a></li>
@@ -127,8 +122,48 @@
                     </li>
                 </ul>
             </div>
+            <button class="jds-burger" id="jds-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </nav>
     </header>
+
+    <div class="jds-close-nav"></div>
+
+    <div class="jds-mobile-nav">
+        <div class="jds-mobile-search mb-3">
+            <a>RECHERCHE</a>
+        </div>
+        <ul class="jds-mobile-menu">
+            <li class="jds-mobile-menu-item">
+                <a>ÉVÉNEMENTS</a>
+                <ul class="jds-mobile-dropdown">
+                    <li class="jds-mobile-submenu-item"><a href="#">Actualité</a></li>
+                    <li class="jds-mobile-submenu-item"><a href="#">Archives</a></li>
+                </ul>
+            </li>
+            <li class="jds-mobile-menu-item">
+                <a>LA SOCIÉTÉ</a>
+                <ul class="jds-mobile-dropdown">
+                    <li class="jds-mobile-submenu-item"><a href="#">Comité</a></li>
+                    <li class="jds-mobile-submenu-item"><a href="#">Membres</a></li>
+                    <li class="jds-mobile-submenu-item"><a href="#">À propos</a></li>
+                    <li class="jds-mobile-submenu-item"><a href="#">Développeurs</a></li>
+                </ul>
+            </li>
+            <li class="jds-mobile-menu-item">
+                <div><a href="#">NOS PRODUITS</a></div>
+            </li>
+            <li class="jds-mobile-menu-item">
+                <div><a href="#">CONNEXION</a></div>
+            </li>
+            <li class="jds-mobile-menu-item">
+                <div><a href="#">PANIER</a></div>
+            </li>
+        </ul>
+    </div>
 
     <main role="main" class="pb-3">
         @RenderBody()
