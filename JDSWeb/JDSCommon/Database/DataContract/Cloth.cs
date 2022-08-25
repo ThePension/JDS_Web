@@ -38,7 +38,9 @@ namespace JDSCommon.Database.DataContract
 
         public Cloth()
         {
-            Images = new JDSContext().ShopGalleries
+            using JDSContext ctx = new JDSContext();
+
+            Images = ctx.ShopGalleries
                 .Include(s => s.Image)
                 .Where(s => s.ClothId == Id)
                 .Select(s => s.Image.ToDataContract())

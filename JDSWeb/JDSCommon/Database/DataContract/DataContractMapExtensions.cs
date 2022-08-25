@@ -32,6 +32,12 @@ namespace JDSCommon.Database.DataContract
         public static Models.Cloth? ToModel(this Cloth cloth, DbSet<Models.Cloth> table)
             => table.FirstOrDefault(c => c.Id == cloth.Id);
 
+        public static Models.Event? ToModel(this Event @event, DbSet<Models.Event> table)
+            => table.FirstOrDefault(e => e.Id == @event.Id);
+
+        public static Models.User? ToModel(this User user, DbSet<Models.User> table)
+            => table.FirstOrDefault(e => e.Id == user.Id);
+
         public static ClothColor ToDataContract(this Models.ClothColor clothColor) => new ClothColor
         {
             Name = clothColor.Name,

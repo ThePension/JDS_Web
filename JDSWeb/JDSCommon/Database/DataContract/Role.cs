@@ -20,6 +20,7 @@ namespace JDSCommon.Database.DataContract
         |*                             PROPERTIES                            *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+        public int Id => (int)ERole;
         public ERole ERole { get; set; }
         public string Name { get; set; }
 
