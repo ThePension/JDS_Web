@@ -10,8 +10,10 @@
     <link rel="icon" href="~/favicon.ico" />
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/button.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JDSWeb.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/committee.css" asp-append-version="true" />
@@ -19,66 +21,9 @@
 </head>
 <body>
     <header>
-        <!--
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="~/img/logo_jds.png" class="rounded-circle" alt="[Home]">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbar">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="event_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Évènements
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="event_dropdown">
-                                <li><a class="dropdown-item" href="#">Actualité</a></li>
-                                <li><a class="dropdown-item" href="#">Archives</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="society_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                La société
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="society_dropdown">
-                                <li><a class="dropdown-item" href="#">Comité</a></li>
-                                <li><a class="dropdown-item" href="#">Membres</a></li>
-                                <li><a class="dropdown-item" href="#">À propos</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Développeurs</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Nos produits</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav hstack gap-2">
-                        <li><a class="nav-link"><i class="fa-solid fa-magnifying-glass"></i></a></li>
-                        <li><div class="custom-vr"></div></li>
-                        <li><a class="nav-link"><i class="fa-solid fa-user-tie"></i> Connexion</a></li>
-                        <li>
-                            <a class="nav-link position-relative">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                                <span class="position-absolute top-10 translate-middle rounded-circle badge bg-danger">
-                                    0
-                                    <span class="visually-hidden">Panier non vide</span>
-                                </span>
-                                <span class="ms-2">0.00 CHF</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        -->
         <nav class="jds-navbar py-2 px-4">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                <img src="~/img/logo_jds.png" class="rounded-circle" alt="[Home]">
+                <img src="~/img/jds_logo/blue_yellow.png" class="rounded-circle" alt="[Home]">
             </a>
             <div class="jds-navbar-expended">
                 <ul class="navbar-nav jds-navbar-left">
@@ -110,7 +55,7 @@
                 <ul class="navbar-nav jds-navbar-right hstack gap-2">
                     <li><a class="nav-link"><i class="fa-solid fa-magnifying-glass"></i></a></li>
                     <li><div class="jds-vr"></div></li>
-                    <li><a class="nav-link"><i class="fa-solid fa-user-tie"></i> Connexion</a></li>
+                    <li><a class="nav-link" asp-controller="User" asp-action="Login"><i class="fa-solid fa-user-tie"></i> Connexion</a></li>
                     <li>
                         <a class="nav-link position-relative">
                             <i class="fa-solid fa-cart-shopping"></i>
@@ -156,7 +101,7 @@
                 </ul>
             </li>
             <li class="jds-mobile-menu-item"><a href="#">Nos produits</a></li>
-            <li class="jds-mobile-menu-item"><a href="#">Connexion</a></li>
+            <li class="jds-mobile-menu-item"><a asp-controller="User" asp-action="Login">Connexion</a></li>
             <li class="jds-mobile-menu-item"><a href="#">Panier</a></li>
         </ul>
     </div>

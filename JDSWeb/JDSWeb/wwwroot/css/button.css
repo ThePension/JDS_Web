@@ -1,0 +1,136 @@
+﻿:root {
+    --btn-default: #989898;
+    --btn-primary: var(--saffron);
+    --btn-info: var(--san-juan);
+    --btn-success: #7EB54B;
+    --btn-warning: #FCA513;
+    --btn-danger: #F44336;
+}
+
+/* Button Base Specification */
+
+.jds-button {
+    position: relative;
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+    padding: 10px 25px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 2px;
+    font-size: 16px;
+    transition: 0.5s;
+}
+
+.jds-button:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+}
+
+    .jds-button:hover {
+        text-decoration: none;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    .jds-button span {
+        display: block;
+        position: absolute;
+        background: var(--btn-default);
+    }
+
+    /* Border Specification */
+
+    .jds-button .left {
+        left: 0;
+        bottom: 0;
+        width: 2px;
+        height: 100%;
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: transform 0.5s;
+    }
+
+    .jds-button .bottom {
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s;
+    }
+
+    .jds-button .right {
+        right: 0;
+        bottom: 0;
+        width: 2px;
+        height: 100%;
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: transform 0.5s;
+        transition-delay: 0.5s;
+    }
+
+    .jds-button .top {
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 2px;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s;
+        transition-delay: 0.5s;
+    }
+
+    /* Hover Animation */
+
+    .jds-button:hover .left {
+        transform: scaleY(1);
+        transform-origin: bottom;
+        transition: transform 0.5s;
+    }
+
+    .jds-button:hover .bottom {
+        transform: scaleX(1);
+        transform-origin: left;
+        transition: transform 0.5s;
+    }
+
+    .jds-button:hover .right {
+        transform: scaleY(1);
+        transform-origin: bottom;
+        transition: transform 0.5s;
+        transition-delay: 0.5s;
+    }
+
+    .jds-button:hover .top {
+        transform: scaleX(1);
+        transform-origin: left;
+        transition: transform 0.5s;
+        transition-delay: 0.5s;
+    }
+
+/* Button Declinaison */
+
+.jds-primary span {
+    background: var(--btn-primary);
+}
+
+.jds-info span {
+    background: var(--btn-info);
+}
+
+.jds-success span {
+    background: var(--btn-success);
+}
+
+.jds-warning span {
+    background: var(--btn-warning);
+}
+
+.jds-danger span {
+    background: var(--btn-danger);
+}

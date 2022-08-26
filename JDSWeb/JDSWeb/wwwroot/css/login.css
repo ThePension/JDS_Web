@@ -1,0 +1,117 @@
+﻿/* All Page */
+
+#jds_login {
+    position: absolute;
+    top: 0;
+    min-height: 100vh;
+    width: 100%;
+    z-index: -10;
+}
+
+    #jds_login:before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: url(../img//wallpaper/login_bg.svg);
+        background-size: cover;
+        filter: blur(2px);
+        z-index: -100;
+    }
+
+/* Main Card */
+
+.jds-login-card {
+    background: url(../img/wallpaper/login_bg.svg);
+    background-size: cover;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    max-width: 600px;
+    flex-wrap: wrap-reverse;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width:596px) {
+    .jds-login-card {
+        padding-top: 75px;
+        padding-bottom: 75px;
+    }
+}
+
+/* Login form */
+
+.jds-login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+    .jds-login-form a {
+        text-decoration: none;
+        font-size: 0.8em;
+        transition: 0.5s;
+    }
+
+    .jds-login-form a:hover {
+        color: var(--saffron);
+        letter-spacing: 0.1em;
+    }
+
+    .jds-login-form h1,
+    .jds-login-form a {
+        text-align: center;
+        color: var(--snow-drift);
+    }
+
+    .jds-login-form h1,
+    .jds-login-form button {
+        width: 250px;
+    }
+
+.jds-group-box {
+    position: relative;
+    width: 250px;
+}
+
+    .jds-group-box input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--snow-drift);
+        background-color: transparent;
+        border-radius: 5px;
+        outline: none;
+        color: white;
+        font-size: 1em;
+        transition: 0.5s;
+    }
+
+    .jds-group-box span {
+        position: absolute;
+        left: 10px;
+        padding: 10px;
+        pointer-events: none;
+        font-size: 1em;
+        color: var(--snow-drift);
+        text-transform: uppercase;
+        transition: 0.5s;
+    }
+
+    .jds-group-box input:focus,
+    .jds-group-box input:valid {
+        border: 1px solid var(--saffron);
+    }
+
+        .jds-group-box input:focus ~ span,
+        .jds-group-box input:valid ~ span {
+            color: var(--san-juan);
+            background: var(--saffron);
+            border-radius: 2px;
+            transform: translateX(10px) translateY(-7px);
+            font-size: 0.65em;
+            padding: 0 20px;
+            border-left: 1px solid var(--saffron);
+            border-right: 1px solid var(--saffron);
+            letter-spacing: 0.2em;
+        }
