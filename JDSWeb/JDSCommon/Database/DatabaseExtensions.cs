@@ -17,21 +17,21 @@ namespace JDSCommon.Database
     {
         #region Fetch Extensions
 
-        public static Cloth[] Fetch(this DbSet<Models.Cloth> cloths)
+        public static DataContract.Cloth[] Fetch(this DbSet<Models.Cloth> cloths)
         {
             return cloths
                 .Select(c => c.ToDataContract())
                 .Copy();
         }
 
-        public static Event[] Fetch(this DbSet<Models.Event> events)
+        public static DataContract.Event[] Fetch(this DbSet<Models.Event> events)
         {
             return events
                 .Select(e => e.ToDataContract())
                 .Copy();
         }
 
-        public static User[] Fetch(this DbSet<Models.User> users)
+        public static DataContract.User[] Fetch(this DbSet<Models.User> users)
         {
             return users
                 .Select(u => u.ToDataContract())
@@ -90,7 +90,7 @@ namespace JDSCommon.Database
         {
             Models.Cloth? clothToUpdate = entity.ToModel(table);
 
-            if(clothToUpdate is not null)
+            if (clothToUpdate is not null)
             {
                 clothToUpdate.Type = entity.Type.Id;
                 clothToUpdate.Size = entity.Size.Id;
@@ -98,7 +98,42 @@ namespace JDSCommon.Database
                 clothToUpdate.Name = entity.Name;
                 clothToUpdate.Description = entity.Description;
 
-                // TODO : Update images of cloth
+                #region Update images in database
+
+                using JDSContext ctx = new JDSContext();
+
+                // Get image for this cloth in database
+                var clothDBImages = ctx.ShopGalleries
+                    .Where(i => i.ClothId == entity.Id)
+                    .ToArray();
+
+                // Erase all relation clothId - Image
+                foreach (var cloth in clothDBImages)
+                {
+                    ctx.ShopGalleries.Remove(cloth);
+                }
+
+                // Add every relation clothId - Image
+                foreach (var image in entity.Images)
+                {
+                    // Check if image exist
+                    var imageDB = ctx.Images.FirstOrDefault(i => i.Id == image.Id);
+
+                    if (imageDB is null)
+                    {
+                        ctx.Images.Add(image.ToModel());
+                    }
+
+                    ctx.ShopGalleries.Add(new ShopGallery
+                    {
+                        ClothId = clothToUpdate.Id,
+                        ImageId = image.Id,
+                    });
+                }
+
+                ctx.SaveChanges();
+
+                #endregion
 
                 return table.Update(clothToUpdate);
             }
@@ -118,7 +153,42 @@ namespace JDSCommon.Database
                 eventToUpdate.Title = entity.Title;
                 eventToUpdate.Description = entity.Description;
 
-                // TODO : Update images of event
+                #region Update images in database
+
+                using JDSContext ctx = new JDSContext();
+
+                // Get image for this event in database
+                var eventDBImages = ctx.EventGalleries
+                    .Where(i => i.EventId == entity.Id)
+                    .ToArray();
+
+                // Erase all relation eventId - Image
+                foreach (var @event in eventDBImages)
+                {
+                    ctx.EventGalleries.Remove(@event);
+                }
+
+                // Add every relation eventId - Image
+                foreach (var image in entity.Images)
+                {
+                    // Check if image exist
+                    var imageDB = ctx.Images.FirstOrDefault(i => i.Id == image.Id);
+
+                    if (imageDB is null)
+                    {
+                        ctx.Images.Add(image.ToModel());
+                    }
+
+                    ctx.EventGalleries.Add(new EventGallery
+                    {
+                        EventId = eventToUpdate.Id,
+                        ImageId = image.Id,
+                    });
+                }
+
+                ctx.SaveChanges();
+
+                #endregion
 
                 return table.Update(eventToUpdate);
             }
@@ -139,8 +209,6 @@ namespace JDSCommon.Database
                 userToUpdate.Email = entity.Email;
                 userToUpdate.Password = entity.Password;
                 userToUpdate.Newsletter = entity.Newsletter;
-
-                // TODO : Update images of cloth
 
                 return table.Update(userToUpdate);
             }

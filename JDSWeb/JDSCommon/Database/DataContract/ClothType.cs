@@ -23,7 +23,7 @@ namespace JDSCommon.Database.DataContract
         public int Id => (int)EType;
         public EType EType { get; set; }
         public string Name { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\

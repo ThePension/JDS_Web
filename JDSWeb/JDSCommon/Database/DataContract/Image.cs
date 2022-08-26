@@ -20,7 +20,9 @@ namespace JDSCommon.Database.DataContract
         |*                             PROPERTIES                            *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
+        public int Id { get; set; }
+        public string Url { get; set; }
+        public string Alt { get; set; }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                            CONSTRUCTORS                           *|
