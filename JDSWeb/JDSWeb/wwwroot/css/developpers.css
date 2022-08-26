@@ -1,4 +1,5 @@
 ﻿#team {
+    margin-top: 3em;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -7,6 +8,14 @@
 .dev-card {
     width: 100%;
     position: relative; 
+}
+
+section {
+    padding: 0 !important;  
+}
+
+.dev-info-collapsed {
+    display: none;
 }
 
 .dev-image {
@@ -18,7 +27,7 @@
     border: 1px solid black;
     border-radius: 50%;
     margin: 0 auto;
-}
+}   
 
 .dev-image img {
     display: block;
@@ -54,9 +63,19 @@
 }
 
 .dev-info {
+    background-color: var(--snow-drift);
     position: absolute;
     top: 0;
     z-index: -1;
+}
+
+.dev-info-collapsed {
+    display: block;
+    width: 100%;
+    position: fixed;
+    left: -100%;
+    transition-duration: 0.8s !important;
+    transition-property: transform !important;
 }
 
 .dev-info p {
@@ -70,22 +89,44 @@
     }
 }
 
-@media screen and (max-width: 770px) {
-    
+@media screen and (max-width: 600px) {
+    /* Remove every animations */
+    #team * {
+        -webkit-transform: none;
+        -moz-transform: none;
+        -o-transform: none;
+        -ms-transform: none;
+        transform: none;
+    }
+
     #team {
-        flex-direction: column;
+        margin-top: 5em;
+    }
+
+    .dev-info-collapsed * {
+        background-color: var(--snow-drift);
+        transition-duration: 0.8s !important;
+        transition-property: transform !important;
     }
 
     .dev-image {
-        width: 50vw;
-        height: 50vw;
+        width: 15vw;
+        height: 15vw;
     }
 
     .dev-card:hover .dev-image {
-        margin-bottom: 30vw;
+        margin-bottom: 0;
     }
 
-    .dev-card {
-        margin-bottom: 10vw;
+    .collapsed-active .dev-image {
+        transform: scale(2) !important;
+    }
+
+    .dev-info {
+        display: none !important;
+    }
+
+    .dev-info-collasped-active {
+        transform: translate(100%, 0);
     }
 }
