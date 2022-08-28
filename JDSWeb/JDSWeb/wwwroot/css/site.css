@@ -12,6 +12,7 @@
 
 * {
     font-family: 'Poppins';
+    scrollbar-width: none;
 }
 
 /* Vertical Bar */
@@ -27,5 +28,4 @@
 
 .jds-hspring {
     flex-grow: 1;
-    background-color: blue;
 }

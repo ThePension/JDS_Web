@@ -4,6 +4,10 @@
  * - Click on burger
  * - Click next to mobile menu
  * - Resize page over 990px
+ * 
+ * Search navbar button
+ * - Display searching form
+ * - Hide main content
  */
 
 $(document).ready(() => {
@@ -15,9 +19,21 @@ $(document).ready(() => {
         toggleMobileMenu();
     });
 
+    $("#jds-navbar-search-btn").click(() => {
+        toggleSearchNavbar();
+    });
+
+    $("#jds-search-close-btn").click(() => {
+        toggleSearchNavbar();
+    });
+
     $(window).resize(() => {
         if ($("#jds-mobile-nav").hasClass("jds-mobile-nav-opened") && $(document).width() >= 990) {
             toggleMobileMenu();
+        }
+
+        if ($("#jds-main-content").hasClass("jds-navbar-search-opened") && $(document).width() < 990) {
+            toggleSearchNavbar();
         }
     });
 
@@ -25,6 +41,25 @@ $(document).ready(() => {
         burgerAnimation();
         $("#jds-mobile-nav").toggleClass("jds-mobile-nav-opened");
         $("#jds-close-nav").toggleClass("jds-close-nav-opened");
+    }
+
+    function toggleSearchNavbar() {
+        $("#jds-navbar-search").toggleClass("jds-navbar-search-opened");
+
+        if ($("#jds-navbar-search").hasClass("jds-navbar-search-opened")) {
+            setTimeout(() => {
+                $("#jds-main-content").addClass("jds-navbar-search-opened");
+
+                if (!$("#jds-navbar-search").hasClass("jds-navbar-search-opened")) {
+                    $("#jds-main-content").removeClass("jds-navbar-search-opened");
+                }
+            }, 300);
+
+            $("#jds-navbar-search-btn").html("<i class=\"fa-solid fa-xmark\"></i>");
+        } else {
+            $("#jds-main-content").removeClass("jds-navbar-search-opened");
+            $("#jds-navbar-search-btn").html("<i class=\"fa-solid fa-magnifying-glass\"></i>");
+        }
     }
 });
 

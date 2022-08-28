@@ -42,21 +42,22 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="society_dropdown">
                             <li><a class="dropdown-item" asp-controller="Home" asp-action="Committee">Comité</a></li>
-                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Members">Membres</a></li>
+                            <li><a class="dropdown-item" href="#">Nos Produits</a></li>
                             <li><a class="dropdown-item" asp-controller="Home" asp-action="About">À propos</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" asp-controller="Home" asp-action="Developpers">Développeurs</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Nos produits</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Members">Espace Membres</a>
                     </li>
                 </ul>
+                <div class="jds-hspring"></div>
                 <ul class="navbar-nav jds-navbar-right hstack gap-2">
-                    <li><a class="nav-link"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+                    <li><button id="jds-navbar-search-btn" class="nav-link"><i class="fa-solid fa-magnifying-glass"></i></button></li>
                     <li><div class="jds-vr"></div></li>
-                    <li><a class="nav-link" asp-controller="User" asp-action="Login"><i class="fa-solid fa-user-tie"></i> Connexion</a></li>
-                    <li>
+                    <li style="min-width: 112px;"><a class="nav-link" asp-controller="User" asp-action="Login"><i class="fa-solid fa-user-tie"></i> Connexion</a></li>
+                    <li style="min-width: 100px;">
                         <a class="nav-link position-relative">
                             <i class="fa-solid fa-cart-shopping"></i>
                             <span class="position-absolute top-10 translate-middle rounded-circle badge bg-danger">
@@ -75,6 +76,22 @@
     </header>
 
     <div class="jds-close-nav" id="jds-close-nav"></div>
+
+    <div class="jds-navbar-search" id="jds-navbar-search">
+        <span class="jds-navbar-search-close">
+            <button id="jds-search-close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </span>
+        <form class="jds-search-form">
+            <input type="text" placeholder="Rechercher un événement" />
+            <button class="jds-search-form-btn" type="submit">Rechercher</button>
+        </form>
+        <div class="jds-search-info">
+            <span>Commencez à écrire pour voir les événements</span>
+        </div>
+        <div class="jds-search-result">
+            <small>/* Les résultats viendront ici *\</small>
+        </div>
+    </div>
 
     <div class="jds-mobile-nav" id="jds-mobile-nav">
         <div class="jds-mobile-search">
@@ -95,18 +112,18 @@
                 <a>La société</a>
                 <ul>
                     <li class="jds-mobile-submenu-item"><a asp-controller="Home" asp-action="Committee">Comité</a></li>
-                    <li class="jds-mobile-submenu-item"><a asp-controller="Home" asp-action="Members">Membres</a></li>
+                    <li class="jds-mobile-submenu-item"><a href="#">Nos produits</a></li>
                     <li class="jds-mobile-submenu-item"><a asp-controller="Home" asp-action="About">À propos</a></li>
                     <li class="jds-mobile-submenu-item"><a asp-controller="Home" asp-action="Developpers">Développeurs</a></li>
                 </ul>
             </li>
-            <li class="jds-mobile-menu-item"><a href="#">Nos produits</a></li>
+            <li class="jds-mobile-menu-item"><a asp-controller="Home" asp-action="Members">Espace Membres</a></li>
             <li class="jds-mobile-menu-item"><a asp-controller="User" asp-action="Login">Connexion</a></li>
             <li class="jds-mobile-menu-item"><a href="#">Panier</a></li>
         </ul>
     </div>
 
-    <main role="main" class="pb-3">
+    <main id="jds-main-content" role="main" class="pb-3">
         @RenderBody()
     </main>
 
