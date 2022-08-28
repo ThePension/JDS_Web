@@ -20,39 +20,73 @@
         text-transform: uppercase;
     }
 
-    .jds-navbar .jds-navbar-expended .jds-navbar-left {
-        min-width: 500px;
-        max-width: 600px;
-        align-items: center;
-        justify-content: space-around;
+.jds-navbar-expended a.nav-link {
+    position: relative;
+}
+
+.jds-navbar-expended .nav-link:not(.dropdown-item)::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--saffron);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+}
+
+.jds-navbar-expended .nav-link.jds-active::before,
+.jds-navbar-expended .nav-link.show::before,
+.jds-navbar-expended .nav-link:not(.dropdown-item):hover::before {
+    transform: scaleX(1);
+}
+
+.jds-navbar-expended .dropdown-item {
+    margin-left: 15px;
+    transition: 0.2s;
+}
+
+    .jds-navbar-expended .dropdown-item:hover {
+        background: var(--saffron) !important;
+        letter-spacing: 0.1em;
+        box-shadow: 0 -1px 9px rgba(0,0,0,0.25);
     }
 
-    .jds-navbar .jds-navbar-expended .jds-navbar-right {
-        min-width: 350px;
-        justify-content: end;
+.jds-navbar .jds-navbar-expended .jds-navbar-left {
+    min-width: 500px;
+    max-width: 600px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.jds-navbar .jds-navbar-expended .jds-navbar-right {
+    min-width: 350px;
+    justify-content: end;
+}
+
+    .jds-navbar .jds-navbar-expended .jds-navbar-right li:not(:first-child):not(:last-child) {
+        margin: 0 5px;
     }
 
-        .jds-navbar .jds-navbar-expended .jds-navbar-right li:not(:first-child):not(:last-child) {
-            margin: 0 5px;
-        }
+.jds-navbar .jds-navbar-expended {
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+}
 
-    .jds-navbar .jds-navbar-expended {
-        display: inline-flex;
-        width: 100%;
-        justify-content: space-between;
+    .jds-navbar .jds-navbar-expended ul {
+        flex-direction: row;
     }
 
-        .jds-navbar .jds-navbar-expended ul {
-            flex-direction: row;
-        }
+/* Collapse specification */
 
-    /* Collapse specification */
-
-    .jds-navbar .jds-burger {
-        display: none;
-        position: absolute;
-        right: 50px;
-    }
+.jds-navbar .jds-burger {
+    display: none;
+    position: absolute;
+    right: 50px;
+}
 
 @media screen and (max-width: 990px) {
     .jds-navbar .jds-burger {
