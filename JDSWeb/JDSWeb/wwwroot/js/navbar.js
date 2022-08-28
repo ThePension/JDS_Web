@@ -53,7 +53,7 @@ $(document).ready(() => {
                 if (!$("#jds-navbar-search").hasClass("jds-navbar-search-opened")) {
                     $("#jds-main-content").removeClass("jds-navbar-search-opened");
                 }
-            }, 300);
+            }, 500);
 
             $("#jds-navbar-search-btn").html("<i class=\"fa-solid fa-xmark\"></i>");
         } else {
