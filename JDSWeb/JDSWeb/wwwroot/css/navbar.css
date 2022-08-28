@@ -189,7 +189,8 @@
     bottom: 0;
     z-index: 1;
     overflow: hidden;
-    background-color: var(--havelock-blue);
+    background-color: var(--san-juan);
+    color: var(--snow-drift);
     transform: translate3d(0, 100%, 0);
     transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
@@ -215,13 +216,15 @@ main.jds-navbar-search-opened {
     }
 
         .jds-navbar-search .jds-navbar-search-close #jds-search-close-btn i {
+            color: var(--snow-drift);
             font-size: 40px;
         }
 
 .jds-navbar-search .jds-search-form {
     position: relative;
     padding: 0 100px;
-    border-bottom: 1px solid var(--san-juan);
+    border-bottom: 1px solid var(--snow-drift);
+
 }
 
     .jds-navbar-search .jds-search-form input[type=text] {
@@ -234,6 +237,7 @@ main.jds-navbar-search-opened {
         outline: none;
         border: none;
         background: transparent;
+        color: var(--snow-drift);
     }
 
     .jds-navbar-search .jds-search-form .jds-search-form-btn {
