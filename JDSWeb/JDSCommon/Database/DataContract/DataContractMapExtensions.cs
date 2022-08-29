@@ -114,13 +114,13 @@ namespace JDSCommon.Database.DataContract
         public static Image ToDataContract(this Models.Image image) => new Image
         {
             Id = image.Id,
-            Url = image.Url,
+            Picture = image.Picture,
             Alt = image.Alt,
         };
 
         public static Models.Image ToModel(this Image image) => new Models.Image
         {
-            Url = image.Url,
+            Picture = image.Picture,
             Alt = image.Alt,
         };
 

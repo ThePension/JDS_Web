@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JDSCommon.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,7 @@ namespace JDSCommon.Database.DataContract
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
         public int Id { get; set; }
-        public string Url { get; set; }
+        public byte[] Picture { get; set; }
         public string Alt { get; set; }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
@@ -34,7 +35,10 @@ namespace JDSCommon.Database.DataContract
         |*                           PUBLIC METHODS                          *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
+        public string ToBase64()
+        {
+            return ImageService.FromByteToBase64(this.Picture);
+        }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                          PRIVATE METHODS                          *|

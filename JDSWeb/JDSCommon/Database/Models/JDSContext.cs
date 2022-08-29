@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using JDSCommon.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using JDSCommon.Settings;
 
 namespace JDSCommon.Database.Models
 {
@@ -53,17 +53,17 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.ColorNavigation)
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Color)
-                    .HasConstraintName("FK__Cloth__Color__797309D9");
+                    .HasConstraintName("FK__Cloth__Color__3A4CA8FD");
 
                 entity.HasOne(d => d.SizeNavigation)
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Size)
-                    .HasConstraintName("FK__Cloth__Size__787EE5A0");
+                    .HasConstraintName("FK__Cloth__Size__395884C4");
 
                 entity.HasOne(d => d.TypeNavigation)
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Type)
-                    .HasConstraintName("FK__Cloth__Type__778AC167");
+                    .HasConstraintName("FK__Cloth__Type__3864608B");
             });
 
             modelBuilder.Entity<ClothColor>(entity =>
@@ -133,12 +133,12 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.Event)
                     .WithMany()
                     .HasForeignKey(d => d.EventId)
-                    .HasConstraintName("FK__EventGall__Event__06CD04F7");
+                    .HasConstraintName("FK__EventGall__Event__47A6A41B");
 
                 entity.HasOne(d => d.Image)
                     .WithMany()
                     .HasForeignKey(d => d.ImageId)
-                    .HasConstraintName("FK__EventGall__Image__07C12930");
+                    .HasConstraintName("FK__EventGall__Image__489AC854");
             });
 
             modelBuilder.Entity<Image>(entity =>
@@ -148,11 +148,6 @@ namespace JDSCommon.Database.Models
                 entity.Property(e => e.Alt)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-
-                entity.Property(e => e.Url)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("URL");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -175,12 +170,12 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.Cloth)
                     .WithMany()
                     .HasForeignKey(d => d.ClothId)
-                    .HasConstraintName("FK__ShopGalle__Cloth__03F0984C");
+                    .HasConstraintName("FK__ShopGalle__Cloth__44CA3770");
 
                 entity.HasOne(d => d.Image)
                     .WithMany()
                     .HasForeignKey(d => d.ImageId)
-                    .HasConstraintName("FK__ShopGalle__Image__04E4BC85");
+                    .HasConstraintName("FK__ShopGalle__Image__45BE5BA9");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -202,7 +197,7 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.RoleNavigation)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.Role)
-                    .HasConstraintName("FK__User__Role__7E37BEF6");
+                    .HasConstraintName("FK__User__Role__3F115E1A");
             });
 
             OnModelCreatingPartial(modelBuilder);
