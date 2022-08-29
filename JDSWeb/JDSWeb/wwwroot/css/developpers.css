@@ -23,11 +23,12 @@ section {
     transition-property: transform;
     width: 25vw;
     height: 25vw;
-    background-color: var(--san-juan);
-    border: 1px solid black;
+    background: linear-gradient(var(--saffron), var(--au-chico));
+    
     border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin: 0 auto;
-}   
+}
 
 .dev-image img {
     display: block;
@@ -42,6 +43,7 @@ section {
 
 .dev-info {
     display: none;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     width: 100%;
 }
 
@@ -76,6 +78,7 @@ section {
     left: -100%;
     transition-duration: 0.8s !important;
     transition-property: transform !important;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .dev-info p {
