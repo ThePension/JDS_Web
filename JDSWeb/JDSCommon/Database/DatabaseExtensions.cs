@@ -15,6 +15,10 @@ namespace JDSCommon.Database
 {
     public static class DatabaseExtensions
     {
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+        |*                           PUBLIC METHODS                          *|
+        \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
         #region Fetch Extensions
 
         public static DataContract.Cloth[] Fetch(this DbSet<Models.Cloth> cloths)

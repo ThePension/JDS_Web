@@ -10,6 +10,10 @@ namespace JDSCommon.Database.DataContract
 {
     public static class DataContractMapExtensions
     {
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+        |*                           PUBLIC METHODS                          *|
+        \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
         #region Cloth map extension
 
         public static Cloth ToDataContract(this Models.Cloth cloth) => new Cloth

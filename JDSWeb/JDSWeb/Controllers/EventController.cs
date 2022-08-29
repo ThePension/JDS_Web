@@ -1,5 +1,6 @@
 ﻿using JDSCommon.Database;
 using JDSCommon.Database.DataContract;
+using JDSCommon.Services;
 using JDSWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,11 +10,15 @@ namespace JDSWeb.Controllers
 {
     public class EventController : Controller
     {
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+        |*                           PUBLIC METHODS                          *|
+        \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
         public IActionResult ActualEvents()
         {
             ActualEventViewModel vm = new ActualEventViewModel
             {
-                Events = FetchEvents(),
+                Events = FetchActualEvents(),
             };
 
             return View(vm);
@@ -21,18 +26,40 @@ namespace JDSWeb.Controllers
 
         public IActionResult PassedEvents()
         {
-            return View();
+            ActualEventViewModel vm = new ActualEventViewModel
+            {
+                Events = FetchPassedEvents(),
+            };
+
+            return View(vm);
         }
 
-        private static Event[] FetchEvents()
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+        |*                          PRIVATE METHODS                          *|
+        \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+        private static Event[] FetchActualEvents()
         {
             JDSContext ctx = new JDSContext();
 
             Event[] events = ctx.Events.Fetch();
+            Event[] actualEvents = events.Where(e => DateTime.Compare(e.Date, DateTime.Now) >= 0).ToArray();
 
             ctx.Dispose();
 
-            return events;
+            return actualEvents;
+        }
+
+        private static Event[] FetchPassedEvents()
+        {
+            JDSContext ctx = new JDSContext();
+
+            Event[] events = ctx.Events.Fetch();
+            Event[] passedEvents = events.Where(e => DateTime.Compare(e.Date, DateTime.Now) < 0).ToArray();
+
+            ctx.Dispose();
+
+            return passedEvents;
         }
     }
 }
