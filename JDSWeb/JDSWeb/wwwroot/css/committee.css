@@ -1,7 +1,179 @@
-﻿/* Based on : https://bootsnipp.com/snippets/X2Db0 */
+﻿
+/*#jds-committee {
+    background: linear-gradient(45deg, #fbda61, #ff5acd);
+    height: 100vh;
+}*/
+
+/* Card */
+
+.jds-committee-container {
+    display: flex;
+    padding-top: 75px;
+}
+
+.jds-committee-container .jds-committee-card {
+    position: relative;
+    width: 350px;
+    height: 190px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.15);
+    transition: 0.5s;
+}
+
+    .jds-committee-container .jds-committee-card:hover {
+        height: 450px;
+    }
+
+    .jds-committee-container .jds-committee-card .jds-committee-img-box {
+        position: absolute;
+        left: 50%;
+        top: -50px;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 150px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.35);
+        overflow: hidden;
+        transition: 0.5s;
+    }
+
+    .jds-committee-container .jds-committee-card:hover .jds-committee-img-box {
+        width: 250px;
+        height: 250px;
+    }
+
+    .jds-committee-container .jds-committee-card .jds-committee-img-box img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .jds-committee-container .jds-committee-card .jds-committee-content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        overflow: hidden;
+    }
+
+        .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details {
+            padding: 40px;
+            text-align: center;
+            width: 100%;
+            transition: 0.5s;
+            transform: translateY(160px);
+        }
+
+    .jds-committee-container .jds-committee-card:hover .jds-committee-content .jds-committee-details {
+        transform: none;
+    }
+
+    .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details h2 {
+        font-size: 1.25em;
+        font-weight: 600;
+        color: #555;
+        line-height: 1.2em;
+    }
+
+        .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details h2 span {
+            font-size: 0.75em;
+            font-weight: 500;
+            opacity: 0.5;
+        }
+
+    .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details .jds-committee-data {
+        padding: 10px 0;
+        color: var(--san-juan);
+        font-size: 1em;
+    }
+
+    .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details .jds-committee-btn {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details .jds-committee-btn a {
+            margin: 0;
+            padding: 0;
+            color: var(--san-juan);
+            box-sizing: border-box;
+            text-decoration: none;
+            height: 60px;
+            width: 60px;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.35);
+            transform: translateY(25%);
+            transition: all 0.3s ease-out;
+        }
+
+            .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details .jds-committee-btn a:hover {
+                width: 190px;
+            }
+
+            .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details .jds-committee-btn a .jds-committee-btn-icon {
+                display: inline-block;
+                float: left;
+                width: 60px;
+                height: 60px;
+                text-align: center;
+                border-radius: 50px;
+                box-sizing: border-box;
+                line-height: 60px;
+                transition: all 0.3s ease-out;
+            }
+
+                .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details .jds-committee-btn a .jds-committee-btn-icon i {
+                    font-size: 25px;
+                    line-height: 60px;
+                    transition: all 0.3s ease-out;
+                }
+
+            .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details .jds-committee-btn a span {
+                line-height: 60px;
+            }
+
+            .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details .jds-committee-btn a:nth-child(1) span {
+                color: #4267b2;
+            }
+
+            .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details .jds-committee-btn a:nth-child(1):hover .jds-committee-btn-icon {
+                background: #4267b2;
+                color: white;
+            }
+
+            .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details .jds-committee-btn a:nth-child(2) span {
+                color: #e1306c;
+            }
+
+            .jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details .jds-committee-btn a:nth-child(2):hover .jds-committee-btn-icon {
+                background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+                color: white;
+            }
+
+/*.jds-committee-container .jds-committee-card .jds-committee-content .jds-committee-details .jds-committee-btn button {
+                padding: 5px 10px;
+                border-radius: 5px;
+                border: none;
+                outline: none;
+                font-size: 1em;
+                font-weight: 500;
+                background: #ff5f95;
+                color: white;
+                cursor: pointer;
+            }*/
+
+/* Based on : https://bootsnipp.com/snippets/X2Db0 */
 
 /* FontAwesome for working BootSnippet :> */
-
+/*
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 .btn-primary:hover,
@@ -125,4 +297,4 @@ section .section-title {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-}
+}*/

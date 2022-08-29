@@ -37,11 +37,11 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="society_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle @(ViewData["Active"] as string == "committee" ? "jds-active" : "")" href="#" id="society_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             La société
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="society_dropdown">
-                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Committee">Comité</a></li>
+                            <li><a class="dropdown-item" asp-controller="Society" asp-action="Committee">Comité</a></li>
                             <li><a class="dropdown-item" href="#">Nos Produits</a></li>
                             <li><a class="dropdown-item" asp-controller="Home" asp-action="About">À propos</a></li>
                             <li><hr class="dropdown-divider"></li>
@@ -56,7 +56,7 @@
                 <ul class="navbar-nav jds-navbar-right hstack gap-2">
                     <li><button id="jds-navbar-search-btn" class="nav-link"><i class="fa-solid fa-magnifying-glass"></i></button></li>
                     <li><div class="jds-vr"></div></li>
-                    <li style="min-width: 112px;"><a class="nav-link" asp-controller="User" asp-action="Login"><i class="fa-solid fa-user-tie"></i> Connexion</a></li>
+                    <li style="min-width: 112px;"><a class="nav-link @(ViewData["Active"] as string == "login" ? "jds-active" : "")" asp-controller="User" asp-action="Login"><i class="fa-solid fa-user-tie"></i> Connexion</a></li>
                     <li style="min-width: 100px;">
                         <a class="nav-link position-relative">
                             <i class="fa-solid fa-cart-shopping"></i>
@@ -111,14 +111,14 @@
             <li class="jds-mobile-menu-item jds-mobile-dropdown">
                 <a>La société</a>
                 <ul>
-                    <li class="jds-mobile-submenu-item"><a asp-controller="Home" asp-action="Committee">Comité</a></li>
+                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["Active"] as string == "committee" ? "jds-mobile-menu-active" : "")" asp-controller="Society" asp-action="Committee">Comité</a></li>
                     <li class="jds-mobile-submenu-item"><a href="#">Nos produits</a></li>
                     <li class="jds-mobile-submenu-item"><a asp-controller="Home" asp-action="About">À propos</a></li>
                     <li class="jds-mobile-submenu-item"><a asp-controller="Home" asp-action="Developpers">Développeurs</a></li>
                 </ul>
             </li>
             <li class="jds-mobile-menu-item"><a asp-controller="Home" asp-action="Members">Espace Membres</a></li>
-            <li class="jds-mobile-menu-item"><a asp-controller="User" asp-action="Login">Connexion</a></li>
+            <li class="jds-mobile-menu-item"><a class="@(ViewData["Active"] as string == "login" ? "jds-mobile-menu-active" : "")" asp-controller="User" asp-action="Login">Connexion</a></li>
             <li class="jds-mobile-menu-item"><a href="#">Panier</a></li>
         </ul>
     </div>
