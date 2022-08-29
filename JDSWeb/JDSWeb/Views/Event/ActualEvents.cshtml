@@ -1,0 +1,42 @@
+﻿@{
+	ViewData["Title"] = "Événements actuels";
+}
+
+@model ActualEventViewModel
+
+<div class="text-center">
+	<h1 class="my-4">Événements actuels</h1>
+</div>
+
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+	<div class="carousel-indicators">
+
+		@for(int i=0; i<@Model.Events.Length; i++)
+		{
+			<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="@i" @(i==0 ? "class=active aria-current=true" : "") aria-label="Slide @(i+1)"></button>
+		}
+
+	</div>
+	<div class="carousel-inner">
+
+		@for(int i=0; i<@Model.Events.Length; i++)
+		{
+			<div class="carousel-item @(i==0 ? "active" : "")">
+				<img src="@Model.Events[i].Images.FirstOrDefault().URL" class="d-block w-100" alt="test">
+				<div class="carousel-caption d-none d-md-block">
+					<h2>@Model.Events[i].Title - @Model.Events[i].StringDate</h2>
+					<h5>@Model.Events[i].Description</h5>
+				</div>
+			</div>
+		}
+		
+	</div>
+	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	</button>
+	<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Next</span>
+	</button>
+</div>

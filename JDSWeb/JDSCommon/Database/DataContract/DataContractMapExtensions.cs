@@ -89,13 +89,20 @@ namespace JDSCommon.Database.DataContract
 
         #region Event map extension
 
-        public static Event ToDataContract(this Models.Event @event) => new Event
+        public static Event ToDataContract(this Models.Event @event)
         {
-            Id = @event.Id,
-            Date = @event.Date,
-            Title = @event.Title,
-            Description = @event.Description,
-        };
+            Event dataContractEvent = new Event
+            {
+                Id = @event.Id,
+                Date = @event.Date,
+                Title = @event.Title,
+                Description = @event.Description,
+            };
+
+            dataContractEvent.LoadImages();
+
+            return dataContractEvent;
+        }
 
         public static Models.Event ToModel(this Event @event) => new Models.Event
         {

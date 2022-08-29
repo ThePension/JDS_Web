@@ -1,18 +1,10 @@
-﻿using JDSCommon.Database.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using JDSCommon.Database.DataContract;
 
 #nullable disable
 
-namespace JDSCommon.Database.DataContract
+namespace JDSWeb.Models
 {
-    public class Cloth
+    public class ActualEventViewModel
     {
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                               FIELDS                              *|
@@ -24,30 +16,13 @@ namespace JDSCommon.Database.DataContract
 		|*                             PROPERTIES                            *|
 		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public int Id { get; set; }
-        public ClothType Type { get; set; }
-        public ClothSize Size { get; set; }
-        public ClothColor Color { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public ICollection<Image> Images { get; private set; }
+        public Event[] Events { get; set; }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                            CONSTRUCTORS                           *|
 		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public Cloth()
-        {
-            JDSContext ctx = new JDSContext();
 
-            Images = ctx.ShopGalleries
-                .Include(s => s.Image)
-                .Where(s => s.ClothId == Id)
-                .Select(s => s.Image.ToDataContract())
-                .ToArray();
-
-            ctx.Dispose();
-        }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                           PUBLIC METHODS                          *|

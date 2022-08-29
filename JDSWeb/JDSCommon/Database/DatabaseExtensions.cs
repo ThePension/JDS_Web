@@ -100,7 +100,7 @@ namespace JDSCommon.Database
 
                 #region Update images in database
 
-                using JDSContext ctx = new JDSContext();
+                JDSContext ctx = new JDSContext();
 
                 // Get image for this cloth in database
                 var clothDBImages = ctx.ShopGalleries
@@ -132,6 +132,7 @@ namespace JDSCommon.Database
                 }
 
                 ctx.SaveChanges();
+                ctx.Dispose();
 
                 #endregion
 
@@ -155,7 +156,7 @@ namespace JDSCommon.Database
 
                 #region Update images in database
 
-                using JDSContext ctx = new JDSContext();
+                JDSContext ctx = new JDSContext();
 
                 // Get image for this event in database
                 var eventDBImages = ctx.EventGalleries
@@ -187,6 +188,7 @@ namespace JDSCommon.Database
                 }
 
                 ctx.SaveChanges();
+                ctx.Dispose();
 
                 #endregion
 

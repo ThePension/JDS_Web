@@ -8,6 +8,11 @@ namespace JDSTest
     [TestClass]
     public class UnitTestImage
     {
+        /* ASSUMPTION:
+         * 
+         * The tests needs to be executed with the image "JDS_insta_1.jpg" in the folder "JDSWeb\JDSTest\bin\Debug\net6.0\JDS_insta_1.jpg"
+         */
+
         [TestMethod]
         public void TestImage()
         {
@@ -29,7 +34,7 @@ namespace JDSTest
                 Picture = byteImage,
             };
 
-            using JDSContext ctx = new JDSContext();
+            JDSContext ctx = new JDSContext();
 
             // Add to database
             ctx.Images.Add(image);
@@ -46,6 +51,7 @@ namespace JDSTest
             // Remove from database
             ctx.Images.Remove(image);
             ctx.SaveChanges();
+            ctx.Dispose();
 
             // Select from database
             imageFromDatabase = ctx.Images.FirstOrDefault(i => i.Id == image.Id);

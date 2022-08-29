@@ -14,4 +14,8 @@
     <PackageReference Include="jQuery" Version="3.6.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JDSCommon\JDSCommon.csproj" />
+  </ItemGroup>
+
 </Project>

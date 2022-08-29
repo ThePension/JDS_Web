@@ -24,6 +24,7 @@ namespace JDSCommon.Database.DataContract
         public int Id { get; set; }
         public byte[] Picture { get; set; }
         public string Alt { get; set; }
+        public string URL => "data:image/jpg;base64," + ImageService.FromByteToBase64(this.Picture);
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                            CONSTRUCTORS                           *|
@@ -35,10 +36,7 @@ namespace JDSCommon.Database.DataContract
         |*                           PUBLIC METHODS                          *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public string ToBase64()
-        {
-            return ImageService.FromByteToBase64(this.Picture);
-        }
+
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                          PRIVATE METHODS                          *|

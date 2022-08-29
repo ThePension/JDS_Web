@@ -28,10 +28,7 @@ namespace JDSWeb.Controllers
             return View();
         }
 
-        public IActionResult PassedEvents()
-        {
-            return View();
-        }
+        
 
         public IActionResult Members()
         {
