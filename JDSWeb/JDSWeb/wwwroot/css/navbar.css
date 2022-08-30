@@ -55,11 +55,13 @@
     }
 
 .jds-navbar .jds-navbar-expended .jds-navbar-left {
-    min-width: 500px;
-    max-width: 600px;
+    margin-left: 25px;
     align-items: center;
-    justify-content: space-around;
 }
+
+    .jds-navbar .jds-navbar-expended .jds-navbar-left > li:not(:first-child) {
+        margin-left: 45px;
+    }
 
 .jds-navbar .jds-navbar-expended .jds-navbar-right {
     min-width: 350px;
