@@ -14,15 +14,18 @@
     <link rel="icon" href="~/favicon.ico" />
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="~/css/aboutus.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/button.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/JDSWeb.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/committee.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/developpers.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/aboutus.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/products.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/JDSWeb.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -47,7 +50,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="society_dropdown">
                             <li><a class="dropdown-item" asp-controller="Society" asp-action="Committee">Comité</a></li>
-                            <li><a class="dropdown-item" href="#">Nos Produits</a></li>
+                            <li><a class="dropdown-item" asp-controller="Shop" asp-action="Products">Nos Produits</a></li>
                             <li><a class="dropdown-item" asp-controller="Home" asp-action="About">À propos</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" asp-controller="Home" asp-action="Developpers">Développeurs</a></li>
@@ -77,7 +80,7 @@
                             </ul>
                         </li>
                         <li style="min-width: 100px;">
-                            <a class="nav-link position-relative @(ViewData["Active"] as string == "shopping" ? "jds-active" : "")">
+                            <a class="nav-link position-relative">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <span class="position-absolute top-10 translate-middle rounded-circle badge bg-danger">
                                     0
@@ -136,7 +139,7 @@
                 <a>La société</a>
                 <ul>
                     <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "committee" ? "jds-mobile-menu-active" : "")" asp-controller="Society" asp-action="Committee">Comité</a></li>
-                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "products" ? "jds-mobile-menu-active" : "")" href="#">Nos produits</a></li>
+                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "products" ? "jds-mobile-menu-active" : "")" asp-controller="Shop" asp-action="Products">Nos produits</a></li>
                     <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "about" ? "jds-mobile-menu-active" : "")" asp-controller="Home" asp-action="About">À propos</a></li>
                     <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "developers" ? "jds-mobile-menu-active" : "")" asp-controller="Home" asp-action="Developpers">Développeurs</a></li>
                 </ul>

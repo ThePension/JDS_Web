@@ -16,7 +16,7 @@ namespace JDSWeb.Controllers
 
         public IActionResult ActualEvents()
         {
-            ActualEventViewModel vm = new ActualEventViewModel
+            EventViewModel vm = new EventViewModel
             {
                 Events = FetchActualEvents(),
             };
@@ -26,7 +26,7 @@ namespace JDSWeb.Controllers
 
         public IActionResult PassedEvents()
         {
-            ActualEventViewModel vm = new ActualEventViewModel
+            EventViewModel vm = new EventViewModel
             {
                 Events = FetchPassedEvents(),
             };

@@ -4,7 +4,7 @@
 
 namespace JDSWeb.Models
 {
-    public class ActualEventViewModel
+    public class ShopViewModel
     {
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                               FIELDS                              *|
@@ -16,7 +16,7 @@ namespace JDSWeb.Models
 		|*                             PROPERTIES                            *|
 		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public Event[] Events { get; set; }
+        public Cloth[] Clothes { get; set; }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                            CONSTRUCTORS                           *|
@@ -63,5 +63,6 @@ namespace JDSWeb.Models
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                         OPERATORS OVERLOAD                        *|
 		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     }
 }

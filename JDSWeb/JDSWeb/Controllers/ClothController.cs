@@ -19,7 +19,7 @@ namespace JDSWeb.Controllers
         // GET: ClothController
         public ActionResult ShowAllClothes()
         {
-            ClothViewModel vm = new ClothViewModel
+            ShopViewModel vm = new ShopViewModel
             {
                 Clothes = FetchClothes(),
             };

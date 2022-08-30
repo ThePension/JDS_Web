@@ -1,0 +1,152 @@
+﻿/* Card */
+
+.jds-product-card {
+    position: relative;
+    width: 300px;
+    height: 380px;
+    background: black;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+    display: flex;
+    overflow: hidden;
+    transition: 0.5s ease-in-out;
+}
+
+    .jds-product-card:hover {
+        width: 650px;
+    }
+
+    .jds-product-card .jds-product-img-box {
+        position: relative;
+        min-width: 300px;
+        height: 100%;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        z-index: 2;
+    }
+
+        .jds-product-card .jds-product-img-box img {
+            max-width: 250px;
+            transition: 0.5s ease-in-out;
+        }
+
+    .jds-product-card:hover .jds-product-img-box img {
+        transform: rotate(-35deg) translateX(-20px);
+    }
+
+    .jds-product-card .jds-product-details {
+        position: absolute;
+        left: 0;
+        min-width: 350px;
+        height: 100%;
+        background: var(--saffron);
+        display: flex;
+        justify-content: center;
+        /*align-items: center;*/
+        padding: 20px;
+        flex-direction: column;
+        z-index: 1;
+        transition: 0.5s ease-in-out;
+    }
+
+    .jds-product-card:hover .jds-product-details {
+        left: 300px;
+    }
+
+    .jds-product-card .jds-product-details::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 10px solid white;
+    }
+
+    .jds-product-card .jds-product-details h3 {
+        color: var(--snow-drift);
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 1.5em;
+        line-height: 1em;
+    }
+
+        .jds-product-card .jds-product-details h3 span {
+            font-size: 0.65em;
+            font-weight: 300;
+            text-transform: none;
+            opacity: 0.85;
+        }
+
+    .jds-product-card .jds-product-details h4 {
+        color: var(--snow-drift);
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 0.9em;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        line-height: 1em;
+    }
+
+    .jds-product-card .jds-product-details p {
+        color: var(--snow-drift);
+        opacity: 0.85;
+        font-size: 0.8em;
+    }
+
+    .jds-product-card .jds-product-details .jds-product-size {
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .jds-product-card .jds-product-details .jds-product-size li {
+            list-style: none;
+            color: var(--snow-drift);
+            font-size: 0.9em;
+            width: 35px;
+            height: 35px;
+            border: 2px solid var(--snow-drift);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            opacity: 0.65;
+            cursor: pointer;
+        }
+
+            .jds-product-card .jds-product-details .jds-product-size li:hover {
+                color: var(--saffron);
+                background: var(--snow-drift);
+                opacity: 1;
+            }
+
+    .jds-product-card .jds-product-details .jds-product-buy {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+        .jds-product-card .jds-product-details .jds-product-buy h2 {
+            color: var(--snow-drift);
+            font-weight: 600;
+            font-size: 2em;
+        }
+
+            .jds-product-card .jds-product-details .jds-product-buy h2 sup {
+                font-weight: 300;
+                font-size: 0.75em;
+            }
+
+            .jds-product-card .jds-product-details .jds-product-buy h2 small {
+                font-size: 0.75em;
+            }
+
+        .jds-product-card .jds-product-details .jds-product-buy a {
+            display: inline-flex;
+        }

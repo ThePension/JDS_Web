@@ -2,7 +2,7 @@
 
 namespace JDSWeb.Controllers
 {
-    public class Society : Controller
+    public class SocietyController : Controller
     {
         public IActionResult Committee()
         {
