@@ -1,8 +1,16 @@
-﻿@{
+﻿@using JDSCommon.Database.DataContract
+@{
 	ViewData["Title"] = "Événements actuels";
+
+	ERole role = ERole.Admin; // (ERole)(Context.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
 }
 
 @model EventViewModel
+
+@if (role >= ERole.Manager)
+{
+    <a class="btn btn-primary" asp-controller="Event" asp-action="Create">Ajouter</a>
+}
 
 <div class="text-center">
 	<h1 class="my-4">Événements actuels</h1>

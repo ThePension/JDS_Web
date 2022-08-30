@@ -58,6 +58,7 @@ namespace JDSWeb.Controllers
             Response.Cookies.Delete(UserViewModel.CookieKeyError);
 
             HttpContext.Session.SetInt32(UserViewModel.SessionKeyUserId, user.Id);
+            HttpContext.Session.SetInt32(UserViewModel.SessionKeyUserRole, user.Role.Id);
             HttpContext.Session.SetString(UserViewModel.SessionKeyUserName, user.Username);
 
             Response.Cookies.Append(UserViewModel.CookieKeyLoggedIn, "true");
@@ -69,6 +70,7 @@ namespace JDSWeb.Controllers
         {
             HttpContext.Session.Remove(UserViewModel.SessionKeyUserId);
             HttpContext.Session.Remove(UserViewModel.SessionKeyUserName);
+            HttpContext.Session.Remove(UserViewModel.SessionKeyUserRole);
 
             Response.Cookies.Append(UserViewModel.CookieKeyLoggedOut, "true");
 

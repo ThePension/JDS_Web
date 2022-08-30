@@ -74,6 +74,7 @@ namespace JDSCommon.Database.DataContract
 
     public enum ERole
     {
+        None = -1,
         Member,
         Manager,
         Admin

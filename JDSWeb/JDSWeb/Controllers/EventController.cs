@@ -34,9 +34,56 @@ namespace JDSWeb.Controllers
             return View(vm);
         }
 
+        public IActionResult Create()
+        {
+            //if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
+            //{
+            //    return RedirectToAction("ActualEvents", "Event");
+            //}
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ParseEvent(string title, string description, DateTime date, ICollection<IFormFile> files)
+        {
+            JDSContext ctx = new JDSContext();
+
+            ctx.AddEvent(new Event
+            {
+                Title = title,
+                Description = description,
+                Date = date,
+                Images = ImagesFromFileNames(files)
+            });
+
+            ctx.Dispose();
+
+            return RedirectToAction("ActualEvents", "Event");
+        }
+
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                          PRIVATE METHODS                          *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+        private static Image[] ImagesFromFileNames(ICollection<IFormFile> files)
+        {
+            Image[] images = new Image[files.Count];
+
+            int count = 0;
+
+            foreach(var image in files)
+            {
+                images[count++] = new Image
+                {
+                    Alt = "none",
+                    Picture = ImageService.FromStreamToBytes(image.OpenReadStream()),
+                };
+            }
+
+            return images;
+        }
 
         private static Event[] FetchActualEvents()
         {
@@ -61,5 +108,6 @@ namespace JDSWeb.Controllers
 
             return passedEvents;
         }
+
     }
 }

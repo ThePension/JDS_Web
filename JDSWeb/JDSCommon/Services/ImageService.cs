@@ -17,5 +17,14 @@ namespace JDSCommon.Services
         {
              return File.ReadAllBytes(filename);
         }
+
+        public static byte[] FromStreamToBytes(Stream file)
+        {
+            MemoryStream ms = new MemoryStream();
+
+            file.CopyTo(ms);
+
+            return ms.ToArray();
+        }
     }
 }
