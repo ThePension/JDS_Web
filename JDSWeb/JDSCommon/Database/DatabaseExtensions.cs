@@ -61,29 +61,28 @@ namespace JDSCommon.Database
         {
             return table.Add(entity.ToModel());
         }
-        public static EntityEntry<Models.Event> AddEvent(this JDSContext ctx, DataContract.Event entity)
-        {
-            return null;
-            //EntityEntry<Models.Event> eventAdded = ctx.Events.Add(entity.ToModel());
-            //ctx.SaveChanges();
+        //public static EntityEntry<Models.Event> AddEvent(this JDSContext ctx, DataContract.Event entity)
+        //{
+        //    EntityEntry<Models.Event> eventAdded = ctx.Events.Add(entity.ToModel());
+        //    ctx.SaveChanges();
 
-            //foreach (var eventImage in entity.Images)
-            //{
-            //    EntityEntry<Models.Image> imageAdded = ctx.Images.Add(eventImage.ToModel());
-            //    ctx.SaveChanges();
+        //    foreach (var eventImage in entity.Images)
+        //    {
+        //        EntityEntry<Models.Image> imageAdded = ctx.Images.Add(eventImage.ToModel());
+        //        ctx.SaveChanges();
 
-            //    EventGallery eventGallery = new EventGallery
-            //    {
-            //        EventId = eventAdded.Entity.Id,
-            //        ImageId = imageAdded.Entity.Id,
-            //    };
+        //        EventGallery eventGallery = new EventGallery
+        //        {
+        //            EventId = eventAdded.Entity.Id,
+        //            ImageId = imageAdded.Entity.Id,
+        //        };
 
-            //    ctx.EventGalleries.Add(eventGallery);
-            //    ctx.SaveChanges();
-            //}
+        //        ctx.Add(eventGallery);
+        //        ctx.SaveChanges();
+        //    }
 
-            //return eventAdded;
-        }
+        //    return eventAdded;
+        //}
 
         public static EntityEntry<Models.User> Add(this DbSet<Models.User> table, DataContract.User entity)
         {

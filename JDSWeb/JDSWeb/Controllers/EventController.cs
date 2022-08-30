@@ -36,10 +36,10 @@ namespace JDSWeb.Controllers
 
         public IActionResult Create()
         {
-            //if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
-            //{
-            //    return RedirectToAction("ActualEvents", "Event");
-            //}
+            if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
+            {
+                return RedirectToAction("ActualEvents", "Event");
+            }
 
             return View();
         }
@@ -50,13 +50,15 @@ namespace JDSWeb.Controllers
         {
             JDSContext ctx = new JDSContext();
 
-            ctx.AddEvent(new Event
+            ctx.Events.Add(new Event
             {
                 Title = title,
                 Description = description,
                 Date = date,
                 Images = ImagesFromFileNames(files)
             });
+
+            ctx.SaveChanges();
 
             ctx.Dispose();
 
