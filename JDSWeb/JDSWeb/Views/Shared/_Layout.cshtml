@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    bool UserLogged = Context.Session.GetString(UserViewModel.SessionKeyUserName) is not null;
+}
+
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="utf-8" />
@@ -49,25 +53,44 @@
                             <li><a class="dropdown-item" asp-controller="Home" asp-action="Developpers">Développeurs</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="Members">Espace Membres</a>
-                    </li>
+                    @if (UserLogged)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Members">Espace Membres</a>
+                        </li>
+                    }
                 </ul>
                 <div class="jds-hspring"></div>
                 <ul class="navbar-nav jds-navbar-right hstack gap-2">
                     <li><button id="jds-navbar-search-btn" class="nav-link"><i class="fa-solid fa-magnifying-glass"></i></button></li>
                     <li><div class="jds-vr"></div></li>
-                    <li style="min-width: 112px;"><a class="nav-link @(ViewData["Active"] as string == "login" ? "jds-active" : "")" asp-controller="User" asp-action="Login"><i class="fa-solid fa-user-tie"></i> Connexion</a></li>
-                    <li style="min-width: 100px;">
-                        <a class="nav-link position-relative @(ViewData["Active"] as string == "shopping" ? "jds-active" : "")">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            <span class="position-absolute top-10 translate-middle rounded-circle badge bg-danger">
-                                0
-                                <span class="visually-hidden">0 articles</span>
-                            </span>
-                            <span class="ms-2">0.00 CHF</span>
-                        </a>
-                    </li>
+                    @if (UserLogged)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @(ViewData["Active"] as string == "user" ? "jds-active" : "")" href="#" id="user_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Mon Compte
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="user_dropdown">
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="Update">Modifier</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Déconnexion</a></li>
+                            </ul>
+                        </li>
+                        <li style="min-width: 100px;">
+                            <a class="nav-link position-relative @(ViewData["Active"] as string == "shopping" ? "jds-active" : "")">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span class="position-absolute top-10 translate-middle rounded-circle badge bg-danger">
+                                    0
+                                    <span class="visually-hidden">0 articles</span>
+                                </span>
+                                <span class="ms-2">0.00 CHF</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li style="min-width: 112px;"><a class="nav-link @(ViewData["Active"] as string == "login" ? "jds-active" : "")" asp-controller="User" asp-action="Login"><i class="fa-solid fa-user-tie"></i> Connexion</a></li>
+                    }
                 </ul>
             </div>
             <div class="jds-menu-btn" id="jds-burger">
@@ -118,9 +141,23 @@
                     <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "developers" ? "jds-mobile-menu-active" : "")" asp-controller="Home" asp-action="Developpers">Développeurs</a></li>
                 </ul>
             </li>
-            <li class="jds-mobile-menu-item"><a class="@(ViewData["MobileActive"] as string == "members" ? "jds-mobile-menu-active" : "")" asp-controller="Home" asp-action="Members">Espace Membres</a></li>
-            <li class="jds-mobile-menu-item"><a class="@(ViewData["MobileActive"] as string == "login" ? "jds-mobile-menu-active" : "")" asp-controller="User" asp-action="Login">Connexion</a></li>
-            <li class="jds-mobile-menu-item"><a class="@(ViewData["MobileActive"] as string == "shop" ? "jds-mobile-menu-active" : "")" href="#">Panier</a></li>
+            @if (UserLogged)
+            {
+                <li class="jds-mobile-menu-item"><a class="@(ViewData["MobileActive"] as string == "members" ? "jds-mobile-menu-active" : "")" asp-controller="Home" asp-action="Members">Espace Membres</a></li>
+                <li class="jds-mobile-menu-item jds-mobile-dropdown">
+                    <a>Mon compte</a>
+                    <ul>
+                        <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "update_profil" ? "jds-mobile-menu-active" : "")" asp-controller="User" asp-action="Update">Modifier</a></li>
+                        <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "logout" ? "jds-mobile-menu-active" : "")" asp-controller="User" asp-action="Logout">Déconnexion</a></li>
+                    </ul>
+                </li>
+                <li class="jds-mobile-menu-item"><a class="@(ViewData["MobileActive"] as string == "shop" ? "jds-mobile-menu-active" : "")" href="#">Panier</a></li>
+            }
+            else
+            {
+                <li class="jds-mobile-menu-item"><a class="@(ViewData["MobileActive"] as string == "login" ? "jds-mobile-menu-active" : "")" asp-controller="User" asp-action="Login">Connexion</a></li>
+            }
+
         </ul>
     </div>
 

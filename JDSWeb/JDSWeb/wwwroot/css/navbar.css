@@ -224,7 +224,6 @@ main.jds-navbar-search-opened {
     position: relative;
     padding: 0 100px;
     border-bottom: 1px solid var(--snow-drift);
-
 }
 
     .jds-navbar-search .jds-search-form input[type=text] {
@@ -298,7 +297,9 @@ main.jds-navbar-search-opened {
     position: fixed;
     top: 0;
     bottom: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: thin;
     background-color: var(--san-juan);
     transform: translate3d(-100%, 0, 0);
     transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
