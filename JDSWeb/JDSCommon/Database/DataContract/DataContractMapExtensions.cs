@@ -16,15 +16,22 @@ namespace JDSCommon.Database.DataContract
 
         #region Cloth map extension
 
-        public static Cloth ToDataContract(this Models.Cloth cloth) => new Cloth
+        public static Cloth ToDataContract(this Models.Cloth cloth)
         {
-            Id = cloth.Id,
-            Type = cloth.TypeNavigation.ToDataContract(),
-            Size = cloth.SizeNavigation.ToDataContract(),
-            Color = cloth.ColorNavigation.ToDataContract(),
-            Name = cloth.Name,
-            Description = cloth.Description,
-        };
+            Cloth newCloth = new Cloth
+            {
+                Id = cloth.Id,
+                Type = cloth.TypeNavigation.ToDataContract(),
+                Size = cloth.SizeNavigation.ToDataContract(),
+                Color = cloth.ColorNavigation.ToDataContract(),
+                Name = cloth.Name,
+                Description = cloth.Description,
+            };
+
+            newCloth.LoadImages();
+
+            return newCloth;
+        }
 
         public static Models.Cloth ToModel(this Cloth cloth) => new Models.Cloth
         {
@@ -111,7 +118,7 @@ namespace JDSCommon.Database.DataContract
         public static Models.Event ToModel(this Event @event) => new Models.Event
         {
             Date = @event.Date,
-            Title= @event.Title,
+            Title = @event.Title,
             Description = @event.Description,
         };
 

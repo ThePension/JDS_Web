@@ -24,6 +24,9 @@ namespace JDSCommon.Database
         public static DataContract.Cloth[] Fetch(this DbSet<Models.Cloth> cloths)
         {
             return cloths
+                .Include(c => c.ColorNavigation)
+                .Include(c => c.SizeNavigation)
+                .Include(c => c.TypeNavigation)
                 .Select(c => c.ToDataContract())
                 .Copy();
         }
