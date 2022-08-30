@@ -44,6 +44,33 @@ namespace JDSWeb.Controllers
             return View();
         }
 
+        public IActionResult Update()
+        {
+            /*
+            if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
+            {
+                return RedirectToAction("ActualEvents", "Event");
+            }
+            */
+
+            EventViewModel vm = new EventViewModel
+            {
+                Events = FetchEvents(),
+            };
+
+            return View(vm);
+        }
+
+        public IActionResult Delete()
+        {
+            if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
+            {
+                return RedirectToAction("ActualEvents", "Event");
+            }
+
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ParseEvent(string title, string description, DateTime date, ICollection<IFormFile> files)
@@ -51,6 +78,27 @@ namespace JDSWeb.Controllers
             JDSContext ctx = new JDSContext();
 
             ctx.Events.Add(new Event
+            {
+                Title = title,
+                Description = description,
+                Date = date,
+                Images = ImagesFromFileNames(files)
+            });
+
+            ctx.SaveChanges();
+
+            ctx.Dispose();
+
+            return RedirectToAction("ActualEvents", "Event");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ParseEventUpdate(string title, string description, DateTime date, ICollection<IFormFile> files)
+        {
+            JDSContext ctx = new JDSContext();
+
+            ctx.Events.Update(new Event
             {
                 Title = title,
                 Description = description,
@@ -87,26 +135,29 @@ namespace JDSWeb.Controllers
             return images;
         }
 
-        private static Event[] FetchActualEvents()
+        private static Event[] FetchEvents()
         {
             JDSContext ctx = new JDSContext();
 
             Event[] events = ctx.Events.Fetch();
-            Event[] actualEvents = events.Where(e => DateTime.Compare(e.Date, DateTime.Now) >= 0).ToArray();
 
             ctx.Dispose();
+
+            return events;
+        }
+
+        private static Event[] FetchActualEvents()
+        {
+            Event[] events = FetchEvents();
+            Event[] actualEvents = events.Where(e => DateTime.Compare(e.Date, DateTime.Now) >= 0).ToArray();
 
             return actualEvents;
         }
 
         private static Event[] FetchPassedEvents()
         {
-            JDSContext ctx = new JDSContext();
-
-            Event[] events = ctx.Events.Fetch();
+            Event[] events = FetchEvents();
             Event[] passedEvents = events.Where(e => DateTime.Compare(e.Date, DateTime.Now) < 0).ToArray();
-
-            ctx.Dispose();
 
             return passedEvents;
         }

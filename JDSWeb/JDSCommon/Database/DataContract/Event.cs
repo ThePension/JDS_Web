@@ -28,6 +28,7 @@ namespace JDSCommon.Database.DataContract
         public string Description { get; set; }
         public ICollection<Image> Images { get; set; }
         public string StringDate => Date.ToString("dd MMMM yyyy");
+        public string StringInputDate => Date.ToString("yyyy-MM-dd");
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                            CONSTRUCTORS                           *|

@@ -1,0 +1,35 @@
+﻿@{
+	ViewData["Title"] = "Modifier un événement";
+}
+
+@model EventViewModel
+
+<div id="jds_login" class="d-flex justify-content-center align-items-center">
+	<div class="col p-4">
+		<form class="" enctype="multipart/form-data" method="post" asp-controller="Event" asp-action="ParseEventUpdate">
+			<label>
+				Titre
+				<input type="text" name="title" required value="@Model.Events[0].Title"/>
+			</label>
+			<label>
+				Description
+				<textarea rows="4" name="description" required >@Model.Events[0].Description</textarea>
+			</label>
+			<label>
+				Date
+				<input type="date" name="date" required value="@Model.Events[0].StringInputDate" />
+			</label>
+			<label>
+				Images
+				<input type="file" multiple name="files" accept=".jpg, .jpeg, .png" />
+			</label>
+			<button type="submit" class="jds-button jds-primary">
+				<span class="left"></span>
+				<span class="top"></span>
+				<span class="right"></span>
+				<span class="bottom"></span>
+				Ajouter
+			</button>
+		</form>
+	</div>
+</div>
