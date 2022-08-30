@@ -54,10 +54,10 @@
         transition: 0.5s;
     }
 
-    .jds-login-form a:hover {
-        color: var(--saffron);
-        letter-spacing: 0.1em;
-    }
+        .jds-login-form a:hover {
+            color: var(--saffron);
+            letter-spacing: 0.1em;
+        }
 
     .jds-login-form h1,
     .jds-login-form a {
@@ -74,6 +74,12 @@
     position: relative;
     width: 250px;
 }
+
+    .jds-group-box.jds-login-error input,
+    .jds-group-box.jds-login-error input:focus,
+    .jds-group-box.jds-login-error input:valid {
+        border: 1px solid #ff0808;
+    }
 
     .jds-group-box input {
         width: 100%;

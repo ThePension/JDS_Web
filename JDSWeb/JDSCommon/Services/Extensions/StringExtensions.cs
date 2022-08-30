@@ -11,6 +11,8 @@ namespace JDSCommon.Services.Extensions
     {
         public static string ToSHA256(this string password)
         {
+            if (password == null) return "";
+
             return string.Join("", SHA256.Create().ComputeHash(Encoding.ASCII.GetBytes(password)).Select(s => s.ToString("x2")));
         }
     }
