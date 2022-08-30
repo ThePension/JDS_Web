@@ -27,6 +27,7 @@ namespace JDSCommon.Database
                 .Include(c => c.ColorNavigation)
                 .Include(c => c.SizeNavigation)
                 .Include(c => c.TypeNavigation)
+                .Include(c => c.Images)
                 .Select(c => c.ToDataContract())
                 .Copy();
         }
@@ -34,6 +35,7 @@ namespace JDSCommon.Database
         public static DataContract.Event[] Fetch(this DbSet<Models.Event> events)
         {
             return events
+                .Include(e => e.Images)
                 .Select(e => e.ToDataContract())
                 .Copy();
         }
@@ -105,7 +107,10 @@ namespace JDSCommon.Database
                 clothToUpdate.Color = entity.Color.Id;
                 clothToUpdate.Name = entity.Name;
                 clothToUpdate.Description = entity.Description;
+                clothToUpdate.UniqueSize = entity.UniqueSize;
+                clothToUpdate.Images = entity.Images.Select(i => i.ToModel()).ToArray();
 
+                /*
                 #region Update images in database
 
                 JDSContext ctx = new JDSContext();
@@ -143,6 +148,7 @@ namespace JDSCommon.Database
                 ctx.Dispose();
 
                 #endregion
+                */
 
                 return table.Update(clothToUpdate);
             }
@@ -161,7 +167,9 @@ namespace JDSCommon.Database
                 eventToUpdate.Date = entity.Date;
                 eventToUpdate.Title = entity.Title;
                 eventToUpdate.Description = entity.Description;
+                eventToUpdate.Images = entity.Images.Select(i => i.ToModel()).ToArray();
 
+                /*
                 #region Update images in database
 
                 JDSContext ctx = new JDSContext();
@@ -199,6 +207,7 @@ namespace JDSCommon.Database
                 ctx.Dispose();
 
                 #endregion
+                */
 
                 return table.Update(eventToUpdate);
             }

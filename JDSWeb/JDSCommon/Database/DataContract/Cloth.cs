@@ -30,7 +30,8 @@ namespace JDSCommon.Database.DataContract
         public ClothColor Color { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Image> Images { get; private set; }
+        public bool UniqueSize { get; set; }
+        public ICollection<Image> Images { get; set; }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                            CONSTRUCTORS                           *|
@@ -41,18 +42,7 @@ namespace JDSCommon.Database.DataContract
 		|*                           PUBLIC METHODS                          *|
 		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public void LoadImages()
-        {
-            JDSContext ctx = new JDSContext();
 
-            Images = ctx.ShopGalleries
-                .Include(s => s.Image)
-                .Where(s => s.ClothId == Id)
-                .Select(s => s.Image.ToDataContract())
-                .ToArray();
-
-            ctx.Dispose();
-        }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                          PRIVATE METHODS                          *|

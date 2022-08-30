@@ -27,7 +27,7 @@ namespace JDSCommon.Database.DataContract
         public string Title { get; set; }
         public string Description { get; set; }
         public ICollection<Image> Images { get; set; }
-        public string StringDate => this.Date.ToString("dd MMMM yyyy");
+        public string StringDate => Date.ToString("dd MMMM yyyy");
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                            CONSTRUCTORS                           *|
@@ -45,18 +45,7 @@ namespace JDSCommon.Database.DataContract
         |*                          PRIVATE METHODS                          *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public void LoadImages()
-        {
-            JDSContext ctx = new JDSContext();
 
-            Images = ctx.EventGalleries
-                .Include(e => e.Image)
-                .Where(e => e.EventId == Id)
-                .Select(e => e.Image.ToDataContract())
-                .ToArray();
-
-            ctx.Dispose();
-        }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                         PROTECTED METHODS                         *|

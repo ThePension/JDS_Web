@@ -16,22 +16,17 @@ namespace JDSCommon.Database.DataContract
 
         #region Cloth map extension
 
-        public static Cloth ToDataContract(this Models.Cloth cloth)
+        public static Cloth ToDataContract(this Models.Cloth cloth) => new Cloth
         {
-            Cloth newCloth = new Cloth
-            {
-                Id = cloth.Id,
-                Type = cloth.TypeNavigation.ToDataContract(),
-                Size = cloth.SizeNavigation.ToDataContract(),
-                Color = cloth.ColorNavigation.ToDataContract(),
-                Name = cloth.Name,
-                Description = cloth.Description,
-            };
-
-            newCloth.LoadImages();
-
-            return newCloth;
-        }
+            Id = cloth.Id,
+            Type = cloth.TypeNavigation.ToDataContract(),
+            Size = cloth.SizeNavigation.ToDataContract(),
+            Color = cloth.ColorNavigation.ToDataContract(),
+            Name = cloth.Name,
+            Description = cloth.Description,
+            UniqueSize = cloth.UniqueSize,
+            Images = cloth.Images.Select(i => i.ToDataContract()).ToArray(),
+        };
 
         public static Models.Cloth ToModel(this Cloth cloth) => new Models.Cloth
         {
@@ -40,6 +35,8 @@ namespace JDSCommon.Database.DataContract
             Color = cloth.Color.Id,
             Name = cloth.Name,
             Description = cloth.Description,
+            UniqueSize = cloth.UniqueSize,
+            Images = cloth.Images.Select(i => i.ToModel()).ToArray(),
         };
 
         public static Models.Cloth? ToModel(this Cloth cloth, DbSet<Models.Cloth> table)
@@ -100,26 +97,21 @@ namespace JDSCommon.Database.DataContract
 
         #region Event map extension
 
-        public static Event ToDataContract(this Models.Event @event)
+        public static Event ToDataContract(this Models.Event @event) => new Event
         {
-            Event dataContractEvent = new Event
-            {
-                Id = @event.Id,
-                Date = @event.Date,
-                Title = @event.Title,
-                Description = @event.Description,
-            };
-
-            dataContractEvent.LoadImages();
-
-            return dataContractEvent;
-        }
+            Id = @event.Id,
+            Date = @event.Date,
+            Title = @event.Title,
+            Description = @event.Description,
+            Images = @event.Images.Select(i => i.ToDataContract()).ToArray(),
+        };
 
         public static Models.Event ToModel(this Event @event) => new Models.Event
         {
             Date = @event.Date,
             Title = @event.Title,
             Description = @event.Description,
+            Images = @event.Images.Select(i => i.ToModel()).ToArray(),
         };
 
         public static Models.Event? ToModel(this Event @event, DbSet<Models.Event> table)
