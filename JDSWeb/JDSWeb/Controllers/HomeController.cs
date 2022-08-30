@@ -15,7 +15,20 @@ namespace JDSWeb.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            Request.Cookies.TryGetValue(UserViewModel.CookieKeyLoggedIn, out string? loggedIn);
+            Request.Cookies.TryGetValue(UserViewModel.CookieKeyLoggedOut, out string? loggedOut);
+            
+            Response.Cookies.Delete(UserViewModel.CookieKeyLoggedIn);
+            Response.Cookies.Delete(UserViewModel.CookieKeyLoggedOut);
+
+            HomeViewModel vm = new HomeViewModel
+            {
+                UserLoggedIn = bool.Parse(loggedIn ?? "false"),
+                UserLoggedOut = bool.Parse(loggedOut ?? "false"),
+            };
+
+            return View(vm);
+
         }
 
         public IActionResult Privacy()
@@ -31,11 +44,6 @@ namespace JDSWeb.Controllers
         
 
         public IActionResult Members()
-        {
-            return View();
-        }
-
-        public IActionResult Committee()
         {
             return View();
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JDSCommon.Services
+namespace JDSCommon.Services.Extensions
 {
     public static class IEnumerableExtensions
     {

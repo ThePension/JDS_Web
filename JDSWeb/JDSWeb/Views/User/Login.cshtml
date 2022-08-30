@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Connexion";
     ViewData["Active"] = "login";
+    ViewData["MobileActive"] = "login";
 }
+
+@model UserViewModel
 
 <div id="jds_login" class="d-flex justify-content-center align-items-center">
     <div class="jds-login-card d-flex">
@@ -11,10 +14,10 @@
             </div>
         </div>
         <div class="col p-4">
-            <form class="jds-login-form needs-validation">
+            <form class="jds-login-form needs-validation" method="post" asp-controller="User" asp-action="ParseLogin">
                 <h1>Bienvenue</h1>
                 <div class="jds-group-box">
-                    <input type="text" name="username" required />
+                    <input type="text" name="username" value="@Model.Username" required />
                     <span>Nom d&rsquo;Utilisateur</span>
                 </div>
                 <div class="jds-group-box">

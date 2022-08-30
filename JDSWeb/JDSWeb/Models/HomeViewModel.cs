@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-#nullable disable
-
-namespace JDSCommon.Database.DataContract
+﻿namespace JDSWeb.Models
 {
-    public class Role
+    public class HomeViewModel
     {
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                               FIELDS                              *|
@@ -20,9 +12,8 @@ namespace JDSCommon.Database.DataContract
         |*                             PROPERTIES                            *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public int Id => (int)ERole;
-        public ERole ERole { get; set; }
-        public string Name { get; set; }
+        public bool UserLoggedIn { get; set; }
+        public bool UserLoggedOut { get; set; }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                            CONSTRUCTORS                           *|
@@ -70,12 +61,5 @@ namespace JDSCommon.Database.DataContract
         |*                         OPERATORS OVERLOAD                        *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    }
-
-    public enum ERole
-    {
-        Member,
-        Manager,
-        Admin
     }
 }

@@ -29,7 +29,7 @@
             <div class="jds-navbar-expended">
                 <ul class="navbar-nav jds-navbar-left">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="event_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle @(ViewData["Active"] as string == "event" ? "jds-active" : "")" href="#" id="event_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Événements
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="event_dropdown">
@@ -38,7 +38,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle @(ViewData["Active"] as string == "committee" ? "jds-active" : "")" href="#" id="society_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle @(ViewData["Active"] as string == "society" ? "jds-active" : "")" href="#" id="society_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             La société
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="society_dropdown">
@@ -59,7 +59,7 @@
                     <li><div class="jds-vr"></div></li>
                     <li style="min-width: 112px;"><a class="nav-link @(ViewData["Active"] as string == "login" ? "jds-active" : "")" asp-controller="User" asp-action="Login"><i class="fa-solid fa-user-tie"></i> Connexion</a></li>
                     <li style="min-width: 100px;">
-                        <a class="nav-link position-relative">
+                        <a class="nav-link position-relative @(ViewData["Active"] as string == "shopping" ? "jds-active" : "")">
                             <i class="fa-solid fa-cart-shopping"></i>
                             <span class="position-absolute top-10 translate-middle rounded-circle badge bg-danger">
                                 0
@@ -105,22 +105,22 @@
             <li class="jds-mobile-menu-item jds-mobile-dropdown">
                 <a>Événements</a>
                 <ul>
-                    <li class="jds-mobile-submenu-item"><a asp-controller="Event" asp-action="ActualEvents">Actualité</a></li>
-                    <li class="jds-mobile-submenu-item"><a asp-controller="Event" asp-action="PassedEvents">Archives</a></li>
+                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "actual_events" ? "jds-mobile-menu-active" : "")" asp-controller="Event" asp-action="ActualEvents">Actualité</a></li>
+                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "passed_events" ? "jds-mobile-menu-active" : "")" asp-controller="Event" asp-action="PassedEvents">Archives</a></li>
                 </ul>
             </li>
             <li class="jds-mobile-menu-item jds-mobile-dropdown">
                 <a>La société</a>
                 <ul>
-                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["Active"] as string == "committee" ? "jds-mobile-menu-active" : "")" asp-controller="Society" asp-action="Committee">Comité</a></li>
-                    <li class="jds-mobile-submenu-item"><a href="#">Nos produits</a></li>
-                    <li class="jds-mobile-submenu-item"><a asp-controller="Home" asp-action="About">À propos</a></li>
-                    <li class="jds-mobile-submenu-item"><a asp-controller="Home" asp-action="Developpers">Développeurs</a></li>
+                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "committee" ? "jds-mobile-menu-active" : "")" asp-controller="Society" asp-action="Committee">Comité</a></li>
+                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "products" ? "jds-mobile-menu-active" : "")" href="#">Nos produits</a></li>
+                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "about" ? "jds-mobile-menu-active" : "")" asp-controller="Home" asp-action="About">À propos</a></li>
+                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "developers" ? "jds-mobile-menu-active" : "")" asp-controller="Home" asp-action="Developpers">Développeurs</a></li>
                 </ul>
             </li>
-            <li class="jds-mobile-menu-item"><a asp-controller="Home" asp-action="Members">Espace Membres</a></li>
-            <li class="jds-mobile-menu-item"><a class="@(ViewData["Active"] as string == "login" ? "jds-mobile-menu-active" : "")" asp-controller="User" asp-action="Login">Connexion</a></li>
-            <li class="jds-mobile-menu-item"><a href="#">Panier</a></li>
+            <li class="jds-mobile-menu-item"><a class="@(ViewData["MobileActive"] as string == "members" ? "jds-mobile-menu-active" : "")" asp-controller="Home" asp-action="Members">Espace Membres</a></li>
+            <li class="jds-mobile-menu-item"><a class="@(ViewData["MobileActive"] as string == "login" ? "jds-mobile-menu-active" : "")" asp-controller="User" asp-action="Login">Connexion</a></li>
+            <li class="jds-mobile-menu-item"><a class="@(ViewData["MobileActive"] as string == "shop" ? "jds-mobile-menu-active" : "")" href="#">Panier</a></li>
         </ul>
     </div>
 

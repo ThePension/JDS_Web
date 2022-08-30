@@ -1,6 +1,25 @@
-﻿@{
+﻿@model HomeViewModel
+@{
     ViewData["Title"] = "Jeunesse de Savagnier";
 }
+
+<div class="container">
+    @if (Model.UserLoggedIn)
+    {
+        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            Bienvenue <strong>@Context.Session.GetString(UserViewModel.SessionKeyUserName)</strong>, vous êtes à présent connecté
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (Model.UserLoggedOut)
+    {
+        <div class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+            Vous vous êtes déconnecté
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+</div>
 
 <div id="jds_index_carousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
@@ -47,5 +66,5 @@
             <p class="card-text">La JDS propose divers vêtements aux couleurs de Savagnier</p>
             <a href="#" class="btn btn-primary">Plus d'infos</a>
         </div>
-    </div> 
+    </div>
 </div>

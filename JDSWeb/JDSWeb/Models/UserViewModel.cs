@@ -1,28 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-#nullable disable
-
-namespace JDSCommon.Database.DataContract
+﻿namespace JDSWeb.Models
 {
-    public class Role
+    public class UserViewModel
     {
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                               FIELDS                              *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+        public static readonly string SessionKeyUserId = "_User.Id";
+        public static readonly string SessionKeyUserName = "_User.Name";
 
+        public static readonly string CookieKeyUsername = "c_User.Name";
+        public static readonly string CookieKeyError = "c_User.Error";
+        public static readonly string CookieKeyLoggedIn = "c_User.Login";
+        public static readonly string CookieKeyLoggedOut = "c_User.Logout";
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                             PROPERTIES                            *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public int Id => (int)ERole;
-        public ERole ERole { get; set; }
-        public string Name { get; set; }
+        public string? Username { get; set; }
+        public bool Error { get; set; } = false;
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                            CONSTRUCTORS                           *|
@@ -70,12 +67,5 @@ namespace JDSCommon.Database.DataContract
         |*                         OPERATORS OVERLOAD                        *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    }
-
-    public enum ERole
-    {
-        Member,
-        Manager,
-        Admin
     }
 }

@@ -1,6 +1,6 @@
 ﻿using JDSCommon.Database.DataContract;
 using JDSCommon.Database.Models;
-using JDSCommon.Services;
+using JDSCommon.Services.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -38,6 +38,7 @@ namespace JDSCommon.Database
         public static DataContract.User[] Fetch(this DbSet<Models.User> users)
         {
             return users
+                .Include(u => u.RoleNavigation)
                 .Select(u => u.ToDataContract())
                 .Copy();
         }

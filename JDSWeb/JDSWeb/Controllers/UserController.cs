@@ -1,5 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using JDSCommon.Database;
+using JDSCommon.Database.DataContract;
+using JDSCommon.Services;
+using JDSCommon.Services.Extensions;
+using JDSWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
+using System.Text;
+using DBUser = JDSCommon.Database.DataContract.User;
+using JDSContext = JDSCommon.Database.Models.JDSContext;
 
 namespace JDSWeb.Controllers
 {
@@ -7,7 +15,64 @@ namespace JDSWeb.Controllers
     {
         public ActionResult Login()
         {
-            return View();
+            if (HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId) is not null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            Request.Cookies.TryGetValue(UserViewModel.CookieKeyUsername, out string? username);
+            Request.Cookies.TryGetValue(UserViewModel.CookieKeyError, out string? error);
+
+            UserViewModel vm = new UserViewModel
+            {
+                Username = username,
+                Error = bool.Parse(error ?? "false"),
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ParseLogin(string username, string password)
+        {
+            JDSContext ctx = new JDSContext();
+
+            DBUser? user = ctx.Users
+                .Fetch()
+                .FirstOrDefault(u => u.Username == username);
+
+            ctx.Dispose();
+
+            string hPwd = password.ToSHA256();
+
+            if (user is null || hPwd != user.Password)
+            {
+                Response.Cookies.Append(UserViewModel.CookieKeyUsername, username);
+                Response.Cookies.Append(UserViewModel.CookieKeyError, "true");
+
+                return RedirectToAction(nameof(Login));
+            }
+
+            Response.Cookies.Delete(UserViewModel.CookieKeyUsername);
+            Response.Cookies.Delete(UserViewModel.CookieKeyError);
+
+            HttpContext.Session.SetInt32(UserViewModel.SessionKeyUserId, user.Id);
+            HttpContext.Session.SetString(UserViewModel.SessionKeyUserName, user.Username);
+
+            Response.Cookies.Append(UserViewModel.CookieKeyLoggedIn, "true");
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Remove(UserViewModel.SessionKeyUserId);
+            HttpContext.Session.Remove(UserViewModel.SessionKeyUserName);
+
+            Response.Cookies.Append(UserViewModel.CookieKeyLoggedOut, "true");
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: UserController
