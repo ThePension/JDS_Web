@@ -1,4 +1,6 @@
 ﻿@using JDSCommon.Database.DataContract
+@using Newtonsoft.Json
+@using System.Globalization
 @{
     bool UserLogged = Context.Session.GetString(UserViewModel.SessionKeyUserName) is not null;
     ERole role = (ERole)(Context.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);

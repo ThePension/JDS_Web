@@ -21,6 +21,7 @@ namespace JDSCommon.Database.DataContract
         {
             Id = cloth.Id,
             Type = cloth.TypeNavigation.ToDataContract(),
+            Size = cloth.SizeNavigation?.ToDataContract(),
         };
 
         public static Models.Cloth ToModel(this Cloth cloth) => new Models.Cloth
@@ -72,6 +73,7 @@ namespace JDSCommon.Database.DataContract
 
         public static ClothType ToDataContract(this Models.ClothType clothType) => new ClothType
         {
+            Id = clothType.Id,
             Name = clothType.Name,
             Color = clothType.ColorNavigation.ToDataContract(),
             Description = clothType.Description,
