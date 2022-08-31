@@ -8,6 +8,7 @@
 <h1 class="text-center mt-4">Liste des utilisateurs</h1>
 
 <main id="jds-userlist-main">
+	<a class="btn btn-success mb-4" href="@Url.Action("Create", "User")" >Créer un nouvel utilisateur</a>
 	<ul class="list-group">
 		@for (int i = 0; i < Model.Users.Length; i++)
 		{
@@ -15,13 +16,11 @@
 				<p class="align-middle">@Model.Users[i].Username</p>
 				<p class="align-middle">@Model.Users[i].Role.Name</p>
 				<p class="align-middle">@Model.Users[i].Email</p>
-				<p class="align-middle">Newsletter : <input type="checkbox" checked="@Model.Users[i].Newsletter" disabled /></p>
+				<p class="align-middle">Newsletter : <input type="checkbox" @(Model.Users[i].Newsletter ? "checked" : "") disabled/></p>
 
 				<div>
-
-					<a class="btn btn-primary" href="@Url.Action("User", "Update", new { id = Model.Users[i].Id })">Modifier</a>
-					<a class="btn btn-danger" href="@Url.Action("User", "Delete", new { id = Model.Users[i].Id })">Supprimer</a>
-					
+					<a class="btn btn-primary" href="@Url.Action("Update", "User", new { id = Model.Users[i].Id })">Modifier</a>
+					<a class="btn btn-danger" href="@Url.Action("Delete", "User", new { id = Model.Users[i].Id })">Supprimer</a>
 				</div>
 			</li>
 		}

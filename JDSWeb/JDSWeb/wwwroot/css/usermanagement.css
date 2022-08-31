@@ -1,5 +1,21 @@
-﻿#jds-userlist-main
-{
+﻿#jds-userlist-main {
     width: 80%;
     margin: 50px auto;
+}
+
+#jds-usercreate-main:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    content: '';
+    background: url(../img//wallpaper/login_bg.svg);
+    background-size: cover;
+    z-index: -100;
+}
+
+#jds-usercreate-main label {
+    color: var(--snow-drift);
 }

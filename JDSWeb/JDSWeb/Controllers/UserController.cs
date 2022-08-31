@@ -4,6 +4,7 @@ using JDSCommon.Services;
 using JDSCommon.Services.Extensions;
 using JDSWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 using DBUser = JDSCommon.Database.DataContract.User;
@@ -95,6 +96,30 @@ namespace JDSWeb.Controllers
             ctx.Dispose();
 
             return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ParseCreate(string username, string email, string password, int role, string newsletter)
+        {
+            JDSContext ctx = new JDSContext();
+
+            Role role_ = ctx.Roles.FirstOrDefault(r => r.Id == role).ToDataContract();
+
+            ctx.Users.Add(new User
+            {
+                Username = username,
+                Email = email,
+                Password = password.ToSHA256(),
+                Role = role_,
+                Newsletter = newsletter == "on" ? true : false,
+            });
+
+            ctx.SaveChanges();
+
+            ctx.Dispose();
+
+            return RedirectToAction("List", "User");
         }
 
         // GET: UserController/Details/5

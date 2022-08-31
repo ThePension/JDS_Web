@@ -1,0 +1,51 @@
+﻿@using JDSCommon.Database.DataContract
+@{
+	ViewData["Title"] = "Créer un nouvel utilisateur";
+}
+
+@model UserViewModel;
+
+
+<h1 class="text-center mt-4">Créer un nouvel utilisateur</h1>
+
+<main id="jds-usercreate-main">
+	<div class="p-4">
+		<form class="row g-3" enctype="multipart/form-data" method="post" asp-controller="User" asp-action="ParseCreate">
+			<div class="col-6">
+				<label for="username" class="form-label">Nom d'utilisateur</label>
+				<input class="form-control" type="text" id="username" name="username" required />
+			</div>
+			<div class="col-6">
+				<label for="email" class="form-label">Email</label>
+				<input class="form-control" type="email" id="email" name="email" required />
+			</div>
+			<div class="col-6">
+				<label for="password" class="form-label">Mot-de-passe</label>
+				<input class="form-control" type="password" id="password" name="password" required />
+			</div>
+			<div class="col-6">
+				<label for="role" class="form-label">Role</label>
+				<select class="form-select" id="role" name="role">
+					@foreach (var role in Enum.GetValues(typeof(ERole)))
+					{
+						<option value="@((int)role)">@role</option>
+					}
+				</select>
+			</div>
+
+			<div class="col-6">
+				
+				<label for="newsletter" class="form-label">Abonné à la newsletter ?</label>
+				<input class="form-check-input" type="checkbox" id="newsletter" name="newsletter" />
+			</div>
+
+			<button type="submit" class="jds-button jds-primary">
+				<span class="left"></span>
+				<span class="top"></span>
+				<span class="right"></span>
+				<span class="bottom"></span>
+				Ajouter
+			</button>
+		</form>
+	</div>
+</main>
