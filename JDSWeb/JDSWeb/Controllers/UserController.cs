@@ -78,9 +78,23 @@ namespace JDSWeb.Controllers
         }
 
         // GET: UserController
-        public ActionResult Index()
+        public ActionResult List()
         {
-            return View();
+            //if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
+            //{
+            //    return RedirectToAction("Home", "Index");
+            //}
+
+            JDSContext ctx = new JDSContext();
+
+            UserViewModel vm = new UserViewModel
+            {
+                Users = ctx.Users.Fetch(),
+            };
+
+            ctx.Dispose();
+
+            return View(vm);
         }
 
         // GET: UserController/Details/5

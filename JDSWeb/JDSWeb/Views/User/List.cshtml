@@ -1,0 +1,29 @@
+﻿@{
+	ViewData["Title"] = "Liste des utilisateurs";
+}
+
+@model UserViewModel;
+
+
+<h1 class="text-center mt-4">Liste des utilisateurs</h1>
+
+<main id="jds-userlist-main">
+	<ul class="list-group">
+		@for (int i = 0; i < Model.Users.Length; i++)
+		{
+			<li class="list-group-item d-flex justify-content-between align-items-center">
+				<p class="align-middle">@Model.Users[i].Username</p>
+				<p class="align-middle">@Model.Users[i].Role.Name</p>
+				<p class="align-middle">@Model.Users[i].Email</p>
+				<p class="align-middle">Newsletter : <input type="checkbox" checked="@Model.Users[i].Newsletter" disabled /></p>
+
+				<div>
+
+					<a class="btn btn-primary" href="@Url.Action("User", "Update", new { id = Model.Users[i].Id })">Modifier</a>
+					<a class="btn btn-danger" href="@Url.Action("User", "Delete", new { id = Model.Users[i].Id })">Supprimer</a>
+					
+				</div>
+			</li>
+		}
+	</ul>
+</main>

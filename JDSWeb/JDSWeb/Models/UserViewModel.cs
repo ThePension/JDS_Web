@@ -1,4 +1,6 @@
-﻿namespace JDSWeb.Models
+﻿using JDSCommon.Database.DataContract;
+
+namespace JDSWeb.Models
 {
     public class UserViewModel
     {
@@ -20,6 +22,7 @@
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
         public string? Username { get; set; }
+        public User[]? Users { get; set; }
         public bool Error { get; set; } = false;
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
