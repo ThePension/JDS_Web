@@ -63,28 +63,54 @@ namespace JDSTest
         [TestMethod]
         public void AddImages()
         {
-            /*
-            byte[] img1 = ImageService.FromImageToBytes(@"");
-            byte[] img2 = ImageService.FromImageToBytes(@"");
-            byte[] img3 = ImageService.FromImageToBytes(@"");
-            byte[] img4 = ImageService.FromImageToBytes(@"");
-            byte[] img5 = ImageService.FromImageToBytes(@"");
-            byte[] img6 = ImageService.FromImageToBytes(@"");
-            byte[] img7 = ImageService.FromImageToBytes(@"");
-            byte[] img8 = ImageService.FromImageToBytes(@"");
+            //byte[] ib4 = ImageService.FromImageToBytes(@"C:\Users\Théo\Pictures\HE-Arc\HES-ETE\jds_cap.jpg");
+            //byte[] ib5 = ImageService.FromImageToBytes(@"C:\Users\Théo\Pictures\HE-Arc\HES-ETE\jds_hat.jpg");
+            byte[] ib6 = ImageService.FromImageToBytes(@"C:\Users\Théo\Pictures\HE-Arc\HES-ETE\jds_tshirt.jpg");
+            //byte[] ib7 = ImageService.FromImageToBytes(@"C:\Users\Théo\Pictures\HE-Arc\HES-ETE\jds_yellow_pullover.jpg");
+            //byte[] ib8 = ImageService.FromImageToBytes(@"C:\Users\Théo\Pictures\HE-Arc\HES-ETE\jds_blue_pullover.jpg");
 
-            JDSCommon.Database.Models.Image image = new JDSCommon.Database.Models.Image
+            //JDSCommon.Database.Models.Image img4 = new JDSCommon.Database.Models.Image
+            //{
+            //    Alt = "Cap",
+            //    Picture = ib4,
+            //};
+
+            //JDSCommon.Database.Models.Image img5 = new JDSCommon.Database.Models.Image
+            //{
+            //    Alt = "Hat",
+            //    Picture = ib5,
+            //};
+
+            JDSCommon.Database.Models.Image img6 = new JDSCommon.Database.Models.Image
             {
-                Alt = "test",
-                Picture = byteImage,
+                Alt = "T-Shirt",
+                Picture = ib6,
             };
+
+            //JDSCommon.Database.Models.Image img7 = new JDSCommon.Database.Models.Image
+            //{
+            //    Alt = "Yellow pullover",
+            //    Picture = ib7,
+            //};
+
+            //JDSCommon.Database.Models.Image img8 = new JDSCommon.Database.Models.Image
+            //{
+            //    Alt = "Blue pullover",
+            //    Picture = ib8,
+            //};
 
             JDSContext ctx = new JDSContext();
 
-            // Add to database
-            ctx.Images.Add(image);
+            //// Add to database
+            //ctx.Images.Add(img4);
+            //ctx.Images.Add(img5);
+            ctx.Images.Add(img6);
+            //ctx.Images.Add(img7);
+            //ctx.Images.Add(img8);
+
             ctx.SaveChanges();
-            */
+
+            ctx.Dispose();
         }
     }
 }

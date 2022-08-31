@@ -1,7 +1,5 @@
 ﻿using JDSCommon.Database.DataContract;
 
-#nullable disable
-
 namespace JDSWeb.Models
 {
     public class EventViewModel
@@ -16,7 +14,8 @@ namespace JDSWeb.Models
 		|*                             PROPERTIES                            *|
 		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public Event[] Events { get; set; }
+        public Event[]? Events { get; set; }
+		public Event? Event { get; set; }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                            CONSTRUCTORS                           *|

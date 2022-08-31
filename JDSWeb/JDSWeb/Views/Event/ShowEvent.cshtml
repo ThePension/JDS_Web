@@ -1,22 +1,25 @@
-﻿@using JDSCommon.Database.DataContract;
-@model Event
+﻿@model EventViewModel
 
 @{
-	ViewData["Title"] = Model.Title;
+	ViewData["Title"] = Model.Event.Title;
 }
+
+<a class="btn btn-primary" href="@Url.Action("Update", "Event", new { id = Model.Event.Id })">Modifier</a>
+<a class="btn btn-danger" href="@Url.Action("Delete", "Event", new { id = Model.Event.Id })">Supprimer</a>
 
 <table>
 	<tr>
-		<td>@Model.Title</td>
+		<td>@Model.Event.Title</td>
 	</tr>
 	<tr>
-		<td>@Model.Description</td>
+		<td>@Model.Event.Description</td>
 	</tr>
 	<tr>
-		<td>@Model.StringDate</td>
+		<td>@Model.Event.StringDate</td>
 	</tr>
 </table>
-	@foreach(var img in Model.Images)
-	{
-		<img src="@img.URL" alt="@img.Alt">
-	}
+
+@foreach (var img in Model.Event.Images)
+{
+	<img src="@img.URL" alt="@img.Alt">
+}

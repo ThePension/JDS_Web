@@ -1,34 +1,38 @@
 ﻿@{
-	ViewData["Title"] = "Créer un événement";
+	ViewData["Title"] = "Ajouter un événement";
 }
 
-<div id="jds_login" class="d-flex justify-content-center align-items-center">
-	<div class="col p-4">
-		<form class="" enctype="multipart/form-data" method="post" asp-controller="Event" asp-action="ParseEvent">
-			<label>
-				Titre
-				<input type="text" name="title" required />
-			</label>
-			<label>
-				Description
-				<textarea rows="4" name="description" required></textarea>
-			</label>
-			<label>
-				Date
-				<input type="date" name="date" required />
-			</label>
-			<label>
-				Images
-				<input type="file" multiple name="files" accept=".jpg, .jpeg, .png"/>
-			</label>
-			<button type="submit" class="jds-button jds-primary">
-				<span class="left"></span>
-				<span class="top"></span>
-				<span class="right"></span>
-				<span class="bottom"></span>
-				Ajouter
-			</button>
-		</form>
-	</div>
+<div class="text-center my-4">
+	<h1 style="color:white">Ajouter un événement</h1>
 </div>
 
+<div id="jds-create-event-container" class="d-flex justify-content-center align-items-center">
+	<form class="jds-create-event" enctype="multipart/form-data" method="post" asp-controller="Event" asp-action="ParseEvent">
+		<div class="mb-3">
+			<label for="title" class="form-label">Titre</label>
+			<input id="title" name="title" class="form-control" type="text" required placeholder="Titre" aria-label="Titre">
+		</div>
+		<div class="mb-3">
+			<label for="description" class="form-label">Description</label>
+			<textarea class="form-control" id="description" name="description" placeholder="Description" rows="3"></textarea>
+		</div>
+		<div class="jds-create-event-flex-row">
+			<div class="mb-3">
+				<label for="date" class="form-label">Date</label>
+				<input id="date" name="date" class="form-control" type="date" required>
+			</div>
+			<div class="jds-strut-30"></div>
+			<div class="mb-3">
+				<label for="images" class="form-label">Images</label>
+				<input class="form-control" type="file" id="images" accept=".jpg, .jpeg, .png" name="files" multiple>
+			</div>
+		</div>
+		<button type="submit" class="my-3 jds-button jds-primary">
+			<span class="left"></span>
+			<span class="top"></span>
+			<span class="right"></span>
+			<span class="bottom"></span>
+			Ajouter
+		</button>
+	</form>
+</div>

@@ -64,6 +64,19 @@ namespace JDSCommon.Database
 
         #endregion
 
+        #region Fetch by ID Extensions
+
+        public static DataContract.Event? FetchById(this DbSet<Models.Event> events, int id)
+        {
+            Models.Event? @event = events
+                .Include(e => e.Images)
+                .FirstOrDefault(e => e.Id == id);
+
+            return @event is null ? null : @event.ToDataContract();
+        }
+
+        #endregion
+
         #region Add Extensions
 
         public static EntityEntry<Models.Cloth> Add(this DbSet<Models.Cloth> table, DataContract.Cloth entity)

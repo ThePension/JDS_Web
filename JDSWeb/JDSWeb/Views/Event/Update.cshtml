@@ -4,32 +4,77 @@
 
 @model EventViewModel
 
-<div id="jds_login" class="d-flex justify-content-center align-items-center">
-	<div class="col p-4">
-		<form class="" enctype="multipart/form-data" method="post" asp-controller="Event" asp-action="ParseEventUpdate">
-			<label>
-				Titre
-				<input type="text" name="title" required value="@Model.Events[0].Title"/>
-			</label>
-			<label>
-				Description
-				<textarea rows="4" name="description" required >@Model.Events[0].Description</textarea>
-			</label>
-			<label>
-				Date
-				<input type="date" name="date" required value="@Model.Events[0].StringInputDate" />
-			</label>
-			<label>
-				Images
-				<input type="file" multiple name="files" accept=".jpg, .jpeg, .png" />
-			</label>
-			<button type="submit" class="jds-button jds-primary">
-				<span class="left"></span>
-				<span class="top"></span>
-				<span class="right"></span>
-				<span class="bottom"></span>
-				Ajouter
-			</button>
-		</form>
-	</div>
+<div class="text-center my-4">
+	<h1 style="color:white">Modifier un événement</h1>
 </div>
+
+<div id="jds-update-event-background"></div>
+
+<div id="jds-update-event-container" class="d-flex justify-content-center">
+	<form class="jds-create-event" enctype="multipart/form-data" method="post" asp-controller="Event" asp-action="ParseEventUpdate">
+		<input type="hidden" name="id" value="@Model.Event.Id" />
+		<div class="mb-3">
+			<label for="title" class="form-label">Titre</label>
+			<input id="title" name="title" class="form-control" value="@Model.Event.Title" type="text" required placeholder="Titre" aria-label="Titre">
+		</div>
+		<div class="mb-3">
+			<label for="description" class="form-label">Description</label>
+			<textarea class="form-control" id="description" name="description" placeholder="Description" rows="3">@Model.Event.Description</textarea>
+		</div>
+		<div class="mb-3">
+			<label for="date" class="form-label">Date</label>
+			<input id="date" name="date" class="form-control" value="@Model.Event.StringInputDate" type="date" required>
+		</div>
+
+		<button id="addImage" type="button" class="btn btn-success">Ajouter une image</button>
+		<div id="newRow">
+			<input type="hidden" id="total" value="0" />
+		</div>
+
+		@foreach (var image in Model.Event.Images)
+		{
+			<div id="inputImage">
+				<img src="@image.URL" width="300" />
+				<button id="removeImage" type="button" class="btn btn-danger">Remove</button>
+			</div>
+		}
+
+		<div>Add images</div>
+		<div class="mb-3">
+			<label for="images" class="form-label">Images</label>
+			<input class="form-control" type="file" id="images" accept=".jpg, .jpeg, .png" name="files" multiple>
+		</div>
+		<button type="submit" class="my-3 jds-button jds-primary">
+			<span class="left"></span>
+			<span class="top"></span>
+			<span class="right"></span>
+			<span class="bottom"></span>
+			Modifier
+		</button>
+	</form>
+</div>
+
+
+@section Scripts
+	{
+	<script>
+		$("#addImage").click(function () {
+			var rowCount = parseInt($("#total").val());
+			rowCount++;
+			$("#total").val(rowCount);
+			var html = '';
+			html += '<div id="inputImage">';
+			html += '<img src="~/img/jds_event.jpg" width="300" />';
+			html += '<button id="removeImage" type="button" class="btn btn-danger">Remove</button>';
+			html += '</div>';
+
+			$('#newRow').append(html);
+		});
+		$(document).on('click', '#removeImage', function () {
+			var rowCount = parseInt($("#total").val());
+			rowCount--;
+			$("#total").val(rowCount);
+			$(this).closest('#inputImage').remove();
+		});
+	</script>
+ }
