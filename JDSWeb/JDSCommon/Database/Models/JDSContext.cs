@@ -40,38 +40,26 @@ namespace JDSCommon.Database.Models
             {
                 entity.ToTable("Cloth");
 
-                entity.Property(e => e.Description)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.ColorNavigation)
-                    .WithMany(p => p.Cloths)
-                    .HasForeignKey(d => d.Color)
-                    .HasConstraintName("FK__Cloth__Color__3A4CA8FD");
-
                 entity.HasOne(d => d.SizeNavigation)
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Size)
-                    .HasConstraintName("FK__Cloth__Size__395884C4");
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK__Cloth__Size__477199F1");
 
                 entity.HasOne(d => d.TypeNavigation)
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Type)
-                    .HasConstraintName("FK__Cloth__Type__3864608B");
+                    .HasConstraintName("FK__Cloth__Type__467D75B8");
 
                 entity.HasMany(d => d.Images)
                     .WithMany(p => p.Cloths)
                     .UsingEntity<Dictionary<string, object>>(
                         "ShopGallery",
-                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImageId").HasConstraintName("FK__ShopGalle__Image__45BE5BA9"),
-                        r => r.HasOne<Cloth>().WithMany().HasForeignKey("ClothId").HasConstraintName("FK__ShopGalle__Cloth__44CA3770"),
+                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImageId").HasConstraintName("FK__ShopGalle__Image__53D770D6"),
+                        r => r.HasOne<Cloth>().WithMany().HasForeignKey("ClothId").HasConstraintName("FK__ShopGalle__Cloth__52E34C9D"),
                         j =>
                         {
-                            j.HasKey("ClothId", "ImageId").HasName("PK__ShopGall__82C3FA3F6127AD31");
+                            j.HasKey("ClothId", "ImageId").HasName("PK__ShopGall__82C3FA3F2A277404");
 
                             j.ToTable("ShopGallery");
                         });
@@ -111,13 +99,20 @@ namespace JDSCommon.Database.Models
             {
                 entity.ToTable("ClothType");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Description)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Price).HasColumnType("decimal(6, 2)");
+
+                entity.HasOne(d => d.ColorNavigation)
+                    .WithMany(p => p.ClothTypes)
+                    .HasForeignKey(d => d.Color)
+                    .HasConstraintName("FK__ClothType__Color__41B8C09B");
             });
 
             modelBuilder.Entity<Event>(entity =>
@@ -138,11 +133,11 @@ namespace JDSCommon.Database.Models
                     .WithMany(p => p.Events)
                     .UsingEntity<Dictionary<string, object>>(
                         "EventGallery",
-                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImageId").HasConstraintName("FK__EventGall__Image__489AC854"),
-                        r => r.HasOne<Event>().WithMany().HasForeignKey("EventId").HasConstraintName("FK__EventGall__Event__47A6A41B"),
+                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImageId").HasConstraintName("FK__EventGall__Image__57A801BA"),
+                        r => r.HasOne<Event>().WithMany().HasForeignKey("EventId").HasConstraintName("FK__EventGall__Event__56B3DD81"),
                         j =>
                         {
-                            j.HasKey("EventId", "ImageId").HasName("PK__EventGal__AE15A760995DABD5");
+                            j.HasKey("EventId", "ImageId").HasName("PK__EventGal__AE15A76068077F06");
 
                             j.ToTable("EventGallery");
                         });
@@ -187,7 +182,7 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.RoleNavigation)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.Role)
-                    .HasConstraintName("FK__User__Role__3F115E1A");
+                    .HasConstraintName("FK__User__Role__4C364F0E");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -20,9 +20,10 @@ namespace JDSCommon.Database.DataContract
         |*                             PROPERTIES                            *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public int Id => (int)EType;
-        public EType EType { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
+        public ClothColor Color { get; set; }
+        public string Description { get; set; }
         public decimal Price { get; set; }
 
 
@@ -72,13 +73,5 @@ namespace JDSCommon.Database.DataContract
         |*                         OPERATORS OVERLOAD                        *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    }
-
-    public enum EType
-    {
-        TShirt,
-        Pull,
-        Cap,
-        Bob
     }
 }

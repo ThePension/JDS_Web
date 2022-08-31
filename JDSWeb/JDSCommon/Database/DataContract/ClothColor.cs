@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#nullable disable
-
 namespace JDSCommon.Database.DataContract
 {
     public class ClothColor
@@ -21,10 +19,10 @@ namespace JDSCommon.Database.DataContract
 		|*                             PROPERTIES                            *|
 		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public string Hexa { get; set; }
-		public Color Color => ColorTranslator.FromHtml(Hexa);
+		public int? Id { get; set; }
+		public string? Name { get; set; }
+		public string? Hexa { get; set; }
+		public Color? Color => ColorTranslator.FromHtml(Hexa ?? "");
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                            CONSTRUCTORS                           *|

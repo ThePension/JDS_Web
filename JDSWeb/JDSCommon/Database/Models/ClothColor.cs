@@ -7,13 +7,13 @@ namespace JDSCommon.Database.Models
     {
         public ClothColor()
         {
-            Cloths = new HashSet<Cloth>();
+            ClothTypes = new HashSet<ClothType>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string Hexa { get; set; } = null!;
 
-        public virtual ICollection<Cloth> Cloths { get; set; }
+        public virtual ICollection<ClothType> ClothTypes { get; set; }
     }
 }

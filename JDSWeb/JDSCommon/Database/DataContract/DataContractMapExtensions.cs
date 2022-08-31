@@ -20,22 +20,13 @@ namespace JDSCommon.Database.DataContract
         {
             Id = cloth.Id,
             Type = cloth.TypeNavigation.ToDataContract(),
-            Size = cloth.SizeNavigation.ToDataContract(),
-            Color = cloth.ColorNavigation.ToDataContract(),
-            Name = cloth.Name,
-            Description = cloth.Description,
-            UniqueSize = cloth.UniqueSize,
             Images = cloth.Images.Select(i => i.ToDataContract()).ToArray(),
         };
 
         public static Models.Cloth ToModel(this Cloth cloth) => new Models.Cloth
         {
             Type = cloth.Type.Id,
-            Size = cloth.Size.Id,
-            Color = cloth.Color.Id,
-            Name = cloth.Name,
-            Description = cloth.Description,
-            UniqueSize = cloth.UniqueSize,
+            Size = cloth.Size?.Id,
             Images = cloth.Images.Select(i => i.ToModel()).ToArray(),
         };
 
@@ -46,11 +37,11 @@ namespace JDSCommon.Database.DataContract
 
         #region ClothColor map extension
 
-        public static ClothColor ToDataContract(this Models.ClothColor clothColor) => new ClothColor
+        public static ClothColor ToDataContract(this Models.ClothColor? clothColor) => new ClothColor
         {
-            Id = clothColor.Id,
-            Name = clothColor.Name,
-            Hexa = clothColor.Hexa,
+            Id = clothColor?.Id,
+            Name = clothColor?.Name,
+            Hexa = clothColor?.Hexa,
         };
 
         public static Models.ClothColor ToModel(this ClothColor clothColor) => new Models.ClothColor
@@ -83,13 +74,15 @@ namespace JDSCommon.Database.DataContract
         public static ClothType ToDataContract(this Models.ClothType clothType) => new ClothType
         {
             Name = clothType.Name,
+            Color = clothType.ColorNavigation.ToDataContract(),
+            Description = clothType.Description,
             Price = clothType.Price,
-            EType = (EType)clothType.Id,
         };
 
         public static Models.ClothType ToModel(this ClothType clothType) => new Models.ClothType
         {
             Name = clothType.Name,
+            Description = clothType.Description,
             Price = clothType.Price,
         };
 

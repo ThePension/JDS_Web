@@ -9,7 +9,7 @@
 
 @if (role >= ERole.Manager)
 {
-    <a class="btn btn-primary" asp-controller="Event" asp-action="Create">Ajouter</a>
+	<a class="btn btn-primary" asp-controller="Event" asp-action="Create">Ajouter</a>
 	<a class="btn btn-primary" asp-controller="Event" asp-action="Update">Modifier</a>
 	<a class="btn btn-danger" asp-controller="Event" asp-action="Delete">Supprimer</a>
 }
@@ -21,7 +21,7 @@
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
 	<div class="carousel-indicators">
 
-		@for(int i=0; i<@Model.Events.Length; i++)
+		@for (int i = 0; i < @Model.Events.Length; i++)
 		{
 			<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="@i" @(i==0 ? "class=active aria-current=true" : "") aria-label="Slide @(i+1)"></button>
 		}
@@ -29,17 +29,19 @@
 	</div>
 	<div class="carousel-inner">
 
-		@for(int i=0; i<@Model.Events.Length; i++)
+		@for (int i = 0; i < @Model.Events.Length; i++)
 		{
 			<div class="carousel-item @(i==0 ? "active" : "")">
-				<img src="@Model.Events[i].Images.FirstOrDefault()?.URL" class="d-block w-100" alt="test">
-				<div class="carousel-caption d-none d-md-block">
-					<h2>@Model.Events[i].Title - @Model.Events[i].StringDate</h2>
-					<h5>@Model.Events[i].Description</h5>
-				</div>
+				<a href="@Url.Action("ShowEvent", "Event", new { id = Model.Events[i].Id })">
+					<img src="@Model.Events[i].Images.FirstOrDefault()?.URL" class="d-block w-100" alt="test">
+					<div class="carousel-caption d-none d-md-block">
+						<h2>@Model.Events[i].Title - @Model.Events[i].StringDate</h2>
+						<h5>@Model.Events[i].Description</h5>
+					</div>
+				</a>
 			</div>
 		}
-		
+
 	</div>
 	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
 		<span class="carousel-control-prev-icon" aria-hidden="true"></span>

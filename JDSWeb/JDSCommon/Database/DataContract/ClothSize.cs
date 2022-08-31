@@ -79,6 +79,7 @@ namespace JDSCommon.Database.DataContract
         Small,
         Medium,
         Large,
-        XLarge
+        XLarge,
+        XXLarge
     }
 }

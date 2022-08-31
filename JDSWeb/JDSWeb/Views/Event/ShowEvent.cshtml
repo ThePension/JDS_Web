@@ -1,0 +1,22 @@
+﻿@using JDSCommon.Database.DataContract;
+@model Event
+
+@{
+	ViewData["Title"] = Model.Title;
+}
+
+<table>
+	<tr>
+		<td>@Model.Title</td>
+	</tr>
+	<tr>
+		<td>@Model.Description</td>
+	</tr>
+	<tr>
+		<td>@Model.StringDate</td>
+	</tr>
+</table>
+	@foreach(var img in Model.Images)
+	{
+		<img src="@img.URL" alt="@img.Alt">
+	}

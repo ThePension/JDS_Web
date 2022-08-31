@@ -34,6 +34,24 @@ namespace JDSWeb.Controllers
             return View(vm);
         }
 
+        public IActionResult ShowEvent(int id)
+        {
+            JDSContext ctx = new JDSContext();
+
+            JDSCommon.Database.Models.Event? @event = ctx.Events.FirstOrDefault(e => e.Id == id);
+
+            ctx.Dispose();
+
+            if (@event is null)
+            {
+                return RedirectToAction("ActualEvents", "Event");
+            }
+            else
+            {
+                return View(@event.ToDataContract());
+            }
+        }
+
         public IActionResult Create()
         {
             if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
@@ -123,7 +141,7 @@ namespace JDSWeb.Controllers
 
             int count = 0;
 
-            foreach(var image in files)
+            foreach (var image in files)
             {
                 images[count++] = new Image
                 {

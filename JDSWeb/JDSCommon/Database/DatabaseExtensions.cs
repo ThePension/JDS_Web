@@ -24,7 +24,6 @@ namespace JDSCommon.Database
         public static DataContract.Cloth[] Fetch(this DbSet<Models.Cloth> cloths)
         {
             return cloths
-                .Include(c => c.ColorNavigation)
                 .Include(c => c.SizeNavigation)
                 .Include(c => c.TypeNavigation)
                 .Include(c => c.Images)
@@ -117,68 +116,6 @@ namespace JDSCommon.Database
         #endregion
 
         #region Update Extensions
-
-        public static EntityEntry<Models.Cloth>? Update(this DbSet<Models.Cloth> table, DataContract.Cloth entity)
-        {
-            Models.Cloth? clothToUpdate = entity.ToModel(table);
-
-            if (clothToUpdate is not null)
-            {
-                clothToUpdate.Type = entity.Type.Id;
-                clothToUpdate.Size = entity.Size.Id;
-                clothToUpdate.Color = entity.Color.Id;
-                clothToUpdate.Name = entity.Name;
-                clothToUpdate.Description = entity.Description;
-                clothToUpdate.UniqueSize = entity.UniqueSize;
-                clothToUpdate.Images = entity.Images.Select(i => i.ToModel()).ToArray();
-
-                /*
-                #region Update images in database
-
-                JDSContext ctx = new JDSContext();
-
-                // Get image for this cloth in database
-                var clothDBImages = ctx.ShopGalleries
-                    .Where(i => i.ClothId == entity.Id)
-                    .ToArray();
-
-                // Erase all relation clothId - Image
-                foreach (var cloth in clothDBImages)
-                {
-                    ctx.ShopGalleries.Remove(cloth);
-                }
-
-                // Add every relation clothId - Image
-                foreach (var image in entity.Images)
-                {
-                    // Check if image exist
-                    var imageDB = ctx.Images.FirstOrDefault(i => i.Id == image.Id);
-
-                    if (imageDB is null)
-                    {
-                        ctx.Images.Add(image.ToModel());
-                    }
-
-                    ctx.ShopGalleries.Add(new ShopGallery
-                    {
-                        ClothId = clothToUpdate.Id,
-                        ImageId = image.Id,
-                    });
-                }
-
-                ctx.SaveChanges();
-                ctx.Dispose();
-
-                #endregion
-                */
-
-                return table.Update(clothToUpdate);
-            }
-            else
-            {
-                return null;
-            }
-        }
 
         public static EntityEntry<Models.Event>? Update(this DbSet<Models.Event> table, DataContract.Event entity)
         {

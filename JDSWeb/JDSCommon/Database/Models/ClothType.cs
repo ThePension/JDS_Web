@@ -12,8 +12,11 @@ namespace JDSCommon.Database.Models
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;
+        public int Color { get; set; }
+        public string Description { get; set; } = null!;
         public decimal Price { get; set; }
 
+        public virtual ClothColor ColorNavigation { get; set; } = null!;
         public virtual ICollection<Cloth> Cloths { get; set; }
     }
 }
