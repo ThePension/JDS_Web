@@ -13,12 +13,16 @@ namespace JDSWeb.Controllers
             JDSContext ctx = new JDSContext();
 
             Cloth[] clothes = ctx.Cloths.Fetch();
+            ClothType[] types = ctx.ClothTypes.Fetch();
+            ClothSize[] sizes = ctx.ClothSizes.Fetch();
 
             ctx.Dispose();
 
             ShopViewModel vm = new ShopViewModel
             {
-                Clothes = clothes
+                Clothes = clothes,
+                ClothSizes = sizes,
+                ClothTypes = types.OrderBy(t => t.Name).ToArray(),
             };
 
             return View(vm);

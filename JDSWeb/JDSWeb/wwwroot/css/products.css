@@ -2,6 +2,7 @@
 
 .jds-product-card {
     position: relative;
+    margin: 10px 5px;
     width: 300px;
     height: 380px;
     background: black;
@@ -105,24 +106,32 @@
 
         .jds-product-card .jds-product-details .jds-product-size li {
             list-style: none;
-            color: var(--snow-drift);
-            font-size: 0.9em;
-            width: 35px;
-            height: 35px;
-            border: 2px solid var(--snow-drift);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 500;
-            opacity: 0.65;
-            cursor: pointer;
         }
 
-            .jds-product-card .jds-product-details .jds-product-size li:hover {
-                color: var(--saffron);
-                background: var(--snow-drift);
-                opacity: 1;
+            .jds-product-card .jds-product-details .jds-product-size li label {
+                color: var(--snow-drift);
+                font-size: 0.9em;
+                width: 35px;
+                height: 35px;
+                border: 2px solid var(--snow-drift);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: 500;
+                opacity: 0.65;
+                cursor: pointer;
             }
+
+            .jds-product-card .jds-product-details .jds-product-size li input[type=radio] {
+                display: none;
+            }
+
+                .jds-product-card .jds-product-details .jds-product-size li input[type=radio]:checked + label,
+                .jds-product-card .jds-product-details .jds-product-size li label:hover {
+                    color: var(--saffron);
+                    background: var(--snow-drift);
+                    opacity: 1;
+                }
 
     .jds-product-card .jds-product-details .jds-product-buy {
         position: relative;

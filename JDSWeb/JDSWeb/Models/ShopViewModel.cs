@@ -17,6 +17,8 @@ namespace JDSWeb.Models
 		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
         public Cloth[] Clothes { get; set; }
+		public ClothSize[] ClothSizes { get; set; }
+		public ClothType[] ClothTypes { get; set; }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                            CONSTRUCTORS                           *|

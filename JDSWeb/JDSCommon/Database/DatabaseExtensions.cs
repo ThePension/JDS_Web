@@ -31,6 +31,20 @@ namespace JDSCommon.Database
                 .Copy();
         }
 
+        public static DataContract.ClothType[] Fetch(this DbSet<Models.ClothType> clothTypes)
+        {
+            return clothTypes
+                .Select(t => t.ToDataContract())
+                .Copy();
+        }
+
+        public static DataContract.ClothSize[] Fetch(this DbSet<Models.ClothSize> clothSizes)
+        {
+            return clothSizes
+                .Select(s => s.ToDataContract())
+                .Copy();
+        }
+
         public static DataContract.Event[] Fetch(this DbSet<Models.Event> events)
         {
             return events
