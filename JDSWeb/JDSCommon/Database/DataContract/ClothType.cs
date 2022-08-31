@@ -25,6 +25,8 @@ namespace JDSCommon.Database.DataContract
         public ClothColor Color { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
+        public ICollection<Image> Images { get; set; } = null!;
+
 
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\

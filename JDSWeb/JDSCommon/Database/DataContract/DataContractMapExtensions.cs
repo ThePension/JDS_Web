@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JDSCommon.Database.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,14 +21,12 @@ namespace JDSCommon.Database.DataContract
         {
             Id = cloth.Id,
             Type = cloth.TypeNavigation.ToDataContract(),
-            Images = cloth.Images.Select(i => i.ToDataContract()).ToArray(),
         };
 
         public static Models.Cloth ToModel(this Cloth cloth) => new Models.Cloth
         {
             Type = cloth.Type.Id,
             Size = cloth.Size?.Id,
-            Images = cloth.Images.Select(i => i.ToModel()).ToArray(),
         };
 
         public static Models.Cloth? ToModel(this Cloth cloth, DbSet<Models.Cloth> table)
@@ -46,8 +45,8 @@ namespace JDSCommon.Database.DataContract
 
         public static Models.ClothColor ToModel(this ClothColor clothColor) => new Models.ClothColor
         {
-            Name = clothColor.Name,
-            Hexa = clothColor.Hexa,
+            Name = clothColor.Name ?? "",
+            Hexa = clothColor.Hexa ?? "",
         };
 
         #endregion
@@ -77,6 +76,7 @@ namespace JDSCommon.Database.DataContract
             Color = clothType.ColorNavigation.ToDataContract(),
             Description = clothType.Description,
             Price = clothType.Price,
+            Images = clothType.Images.Select(i => i.ToDataContract()).ToArray(),
         };
 
         public static Models.ClothType ToModel(this ClothType clothType) => new Models.ClothType
@@ -84,6 +84,7 @@ namespace JDSCommon.Database.DataContract
             Name = clothType.Name,
             Description = clothType.Description,
             Price = clothType.Price,
+            Images = clothType.Images.Select(i => i.ToModel()).ToArray(),
         };
 
         #endregion
@@ -117,13 +118,13 @@ namespace JDSCommon.Database.DataContract
         public static Image ToDataContract(this Models.Image image) => new Image
         {
             Id = image.Id,
-            Picture = image.Picture,
+            //Picture = image.Picture,
             Alt = image.Alt,
         };
 
         public static Models.Image ToModel(this Image image) => new Models.Image
         {
-            Picture = image.Picture,
+            //Picture = image.Picture,
             Alt = image.Alt,
         };
 

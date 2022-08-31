@@ -7,7 +7,7 @@ namespace JDSCommon.Database.Models
     {
         public Image()
         {
-            Cloths = new HashSet<Cloth>();
+            ClothTypes = new HashSet<ClothType>();
             Events = new HashSet<Event>();
         }
 
@@ -15,7 +15,7 @@ namespace JDSCommon.Database.Models
         public byte[] Picture { get; set; } = null!;
         public string Alt { get; set; } = null!;
 
-        public virtual ICollection<Cloth> Cloths { get; set; }
+        public virtual ICollection<ClothType> ClothTypes { get; set; }
         public virtual ICollection<Event> Events { get; set; }
     }
 }

@@ -8,6 +8,7 @@ namespace JDSCommon.Database.Models
         public ClothType()
         {
             Cloths = new HashSet<Cloth>();
+            Images = new HashSet<Image>();
         }
 
         public int Id { get; set; }
@@ -18,5 +19,7 @@ namespace JDSCommon.Database.Models
 
         public virtual ClothColor ColorNavigation { get; set; } = null!;
         public virtual ICollection<Cloth> Cloths { get; set; }
+
+        public virtual ICollection<Image> Images { get; set; }
     }
 }

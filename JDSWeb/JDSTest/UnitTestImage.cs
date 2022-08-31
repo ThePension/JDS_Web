@@ -59,5 +59,32 @@ namespace JDSTest
             // Test
             Assert.IsNull(imageFromDatabase);
         }
+
+        [TestMethod]
+        public void AddImages()
+        {
+            /*
+            byte[] img1 = ImageService.FromImageToBytes(@"");
+            byte[] img2 = ImageService.FromImageToBytes(@"");
+            byte[] img3 = ImageService.FromImageToBytes(@"");
+            byte[] img4 = ImageService.FromImageToBytes(@"");
+            byte[] img5 = ImageService.FromImageToBytes(@"");
+            byte[] img6 = ImageService.FromImageToBytes(@"");
+            byte[] img7 = ImageService.FromImageToBytes(@"");
+            byte[] img8 = ImageService.FromImageToBytes(@"");
+
+            JDSCommon.Database.Models.Image image = new JDSCommon.Database.Models.Image
+            {
+                Alt = "test",
+                Picture = byteImage,
+            };
+
+            JDSContext ctx = new JDSContext();
+
+            // Add to database
+            ctx.Images.Add(image);
+            ctx.SaveChanges();
+            */
+        }
     }
 }

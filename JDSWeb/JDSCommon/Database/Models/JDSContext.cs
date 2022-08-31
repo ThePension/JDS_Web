@@ -44,25 +44,12 @@ namespace JDSCommon.Database.Models
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Size)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__Cloth__Size__477199F1");
+                    .HasConstraintName("FK__Cloth__Size__7FB5F314");
 
                 entity.HasOne(d => d.TypeNavigation)
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Type)
-                    .HasConstraintName("FK__Cloth__Type__467D75B8");
-
-                entity.HasMany(d => d.Images)
-                    .WithMany(p => p.Cloths)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "ShopGallery",
-                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImageId").HasConstraintName("FK__ShopGalle__Image__53D770D6"),
-                        r => r.HasOne<Cloth>().WithMany().HasForeignKey("ClothId").HasConstraintName("FK__ShopGalle__Cloth__52E34C9D"),
-                        j =>
-                        {
-                            j.HasKey("ClothId", "ImageId").HasName("PK__ShopGall__82C3FA3F2A277404");
-
-                            j.ToTable("ShopGallery");
-                        });
+                    .HasConstraintName("FK__Cloth__Type__7EC1CEDB");
             });
 
             modelBuilder.Entity<ClothColor>(entity =>
@@ -112,7 +99,20 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.ColorNavigation)
                     .WithMany(p => p.ClothTypes)
                     .HasForeignKey(d => d.Color)
-                    .HasConstraintName("FK__ClothType__Color__41B8C09B");
+                    .HasConstraintName("FK__ClothType__Color__79FD19BE");
+
+                entity.HasMany(d => d.Images)
+                    .WithMany(p => p.ClothTypes)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "ShopGallery",
+                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImageId").HasConstraintName("FK__ShopGalle__Image__0C1BC9F9"),
+                        r => r.HasOne<ClothType>().WithMany().HasForeignKey("ClothTypeId").HasConstraintName("FK__ShopGalle__Cloth__0B27A5C0"),
+                        j =>
+                        {
+                            j.HasKey("ClothTypeId", "ImageId").HasName("PK__ShopGall__C4BEF453D146C61E");
+
+                            j.ToTable("ShopGallery");
+                        });
             });
 
             modelBuilder.Entity<Event>(entity =>
@@ -133,11 +133,11 @@ namespace JDSCommon.Database.Models
                     .WithMany(p => p.Events)
                     .UsingEntity<Dictionary<string, object>>(
                         "EventGallery",
-                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImageId").HasConstraintName("FK__EventGall__Image__57A801BA"),
-                        r => r.HasOne<Event>().WithMany().HasForeignKey("EventId").HasConstraintName("FK__EventGall__Event__56B3DD81"),
+                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImageId").HasConstraintName("FK__EventGall__Image__0FEC5ADD"),
+                        r => r.HasOne<Event>().WithMany().HasForeignKey("EventId").HasConstraintName("FK__EventGall__Event__0EF836A4"),
                         j =>
                         {
-                            j.HasKey("EventId", "ImageId").HasName("PK__EventGal__AE15A76068077F06");
+                            j.HasKey("EventId", "ImageId").HasName("PK__EventGal__AE15A760F2523D11");
 
                             j.ToTable("EventGallery");
                         });
@@ -182,7 +182,7 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.RoleNavigation)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.Role)
-                    .HasConstraintName("FK__User__Role__4C364F0E");
+                    .HasConstraintName("FK__User__Role__047AA831");
             });
 
             OnModelCreatingPartial(modelBuilder);
