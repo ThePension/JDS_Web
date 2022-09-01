@@ -22,12 +22,14 @@ namespace JDSCommon.Database.DataContract
             Id = cloth.Id,
             Type = cloth.TypeNavigation.ToDataContract(),
             Size = cloth.SizeNavigation?.ToDataContract(),
+            Booked = cloth.BookedNavigation?.ToDataContract(),
         };
 
         public static Models.Cloth ToModel(this Cloth cloth) => new Models.Cloth
         {
             Type = cloth.Type.Id,
             Size = cloth.Size?.Id,
+            Booked = cloth.Booked?.Id,
         };
 
         public static Models.Cloth? ToModel(this Cloth cloth, DbSet<Models.Cloth> table)

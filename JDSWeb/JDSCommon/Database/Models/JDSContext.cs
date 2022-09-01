@@ -40,6 +40,12 @@ namespace JDSCommon.Database.Models
             {
                 entity.ToTable("Cloth");
 
+                entity.HasOne(d => d.BookedNavigation)
+                    .WithMany(p => p.Cloths)
+                    .HasForeignKey(d => d.Booked)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK__Cloth__Booked__1F2E9E6D");
+
                 entity.HasOne(d => d.SizeNavigation)
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Size)

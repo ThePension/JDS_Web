@@ -30,6 +30,8 @@ namespace JDSCommon.Database.DataContract
 
         public ClothSize? Size { get; set; }
 
+		public User? Booked { get; set; }
+
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                            CONSTRUCTORS                           *|
 		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

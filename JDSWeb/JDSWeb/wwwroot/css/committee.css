@@ -15,6 +15,7 @@
     transition: 0.5s;
 }
 
+    .jds-committee-container .jds-committee-card.jds-mobile-hover.jds-hover,
     .jds-committee-container .jds-committee-card:hover {
         height: 450px;
     }
@@ -33,6 +34,7 @@
         transition: 0.5s;
     }
 
+    .jds-committee-container .jds-committee-card.jds-mobile-hover.jds-hover .jds-committee-img-box,
     .jds-committee-container .jds-committee-card:hover .jds-committee-img-box {
         width: 250px;
         height: 250px;
@@ -65,6 +67,7 @@
             transform: translateY(160px);
         }
 
+    .jds-committee-container .jds-committee-card.jds-mobile-hover.jds-hover .jds-committee-content .jds-committee-details,
     .jds-committee-container .jds-committee-card:hover .jds-committee-content .jds-committee-details {
         transform: none;
     }

@@ -28,7 +28,11 @@ namespace JDSWeb.Controllers
             };
 
             return View(vm);
+        }
 
+        public IActionResult Developers()
+        {
+            return View();
         }
 
         public IActionResult Privacy()

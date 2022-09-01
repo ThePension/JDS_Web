@@ -2,3 +2,15 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+function isTouchDevice() {
+    return ('ontouchstart' in window);
+}
+
+$(document).ready(() => {
+    if (isTouchDevice()) {
+        $(".jds-mobile-hover").each(function (index, obj) {
+            $(obj).addClass('jds-hover');
+        });
+    }
+});

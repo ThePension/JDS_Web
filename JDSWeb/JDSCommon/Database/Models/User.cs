@@ -5,6 +5,11 @@ namespace JDSCommon.Database.Models
 {
     public partial class User
     {
+        public User()
+        {
+            Cloths = new HashSet<Cloth>();
+        }
+
         public int Id { get; set; }
         public int Role { get; set; }
         public string Username { get; set; } = null!;
@@ -13,5 +18,6 @@ namespace JDSCommon.Database.Models
         public bool Newsletter { get; set; }
 
         public virtual Role RoleNavigation { get; set; } = null!;
+        public virtual ICollection<Cloth> Cloths { get; set; }
     }
 }

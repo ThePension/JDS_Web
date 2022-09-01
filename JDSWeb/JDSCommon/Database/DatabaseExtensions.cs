@@ -26,6 +26,8 @@ namespace JDSCommon.Database
             return cloths
                 .Include(c => c.SizeNavigation)
                 .Include(c => c.TypeNavigation)
+                .Include(c => c.TypeNavigation.ColorNavigation)
+                .Include(c => c.BookedNavigation)
                 .Select(c => c.ToDataContract())
                 .Copy();
         }
