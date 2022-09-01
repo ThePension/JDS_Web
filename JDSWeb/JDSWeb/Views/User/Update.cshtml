@@ -1,0 +1,58 @@
+﻿@using JDSCommon.Database.DataContract
+@{
+	ViewData["Title"] = "Mise à jour d'un utilisateur";
+}
+
+@model User
+
+<h1 class="text-center mt-4">Mise à jour d'un utilisateur</h1>
+
+<main id="jds-usercreate-main">
+	<div class="p-4">
+		<form class="row g-3" enctype="multipart/form-data" method="post" asp-controller="User" asp-action="ParseUpdate">
+			<input type="number" name="id" value="@Model.Id" hidden />
+			<div class="col-6">
+				<label for="username" class="form-label">Nom d'utilisateur</label>
+				<input class="form-control" type="text" id="username" name="username" required value="@Model.Username" />
+			</div>
+			<div class="col-6">
+				<label for="email" class="form-label">Email</label>
+				<input class="form-control" type="email" id="email" name="email" value="@Model.Email" required />
+			</div>
+			<div class="col-6">
+				<label for="password" class="form-label">Mot-de-passe</label>
+				<input class="form-control" type="password" id="password" name="password" required />
+			</div>
+			<div class="col-6">
+				<label for="role" class="form-label">Role</label>
+				<select class="form-select" id="role" name="role">
+					@foreach (int role in Enum.GetValues(typeof(ERole)))
+					{
+						if (Model.Role.Id == role)
+						{
+							<option selected value="@((int)role)">@((ERole)role)</option>
+						}
+						else
+						{
+							<option value="@((int)role)">@((ERole)role)</option>
+						}
+					}
+				</select>
+			</div>
+
+			<div class="col-6">
+
+				<label for="newsletter" class="form-label">Abonné à la newsletter ?</label>
+				<input class="form-check-input" type="checkbox" @(Model.Newsletter ? "checked" : "") id="newsletter" name="newsletter" />
+			</div>
+
+			<button type="submit" class="jds-button jds-primary">
+				<span class="left"></span>
+				<span class="top"></span>
+				<span class="right"></span>
+				<span class="bottom"></span>
+				Modifier
+			</button>
+		</form>
+	</div>
+</main>

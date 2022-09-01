@@ -1,5 +1,6 @@
 ﻿using JDSCommon.Database;
 using JDSCommon.Database.DataContract;
+using JDSCommon.Database.Models;
 using JDSCommon.Services;
 using JDSCommon.Services.Extensions;
 using JDSWeb.Models;
@@ -9,6 +10,8 @@ using System.Security.Cryptography;
 using System.Text;
 using DBUser = JDSCommon.Database.DataContract.User;
 using JDSContext = JDSCommon.Database.Models.JDSContext;
+using Role = JDSCommon.Database.DataContract.Role;
+using User = JDSCommon.Database.DataContract.User;
 
 namespace JDSWeb.Controllers
 {
@@ -108,6 +111,49 @@ namespace JDSWeb.Controllers
 
             ctx.Users.Add(new User
             {
+                Username = username,
+                Email = email,
+                Password = password.ToSHA256(),
+                Role = role_,
+                Newsletter = newsletter == "on" ? true : false,
+            });
+
+            ctx.SaveChanges();
+
+            ctx.Dispose();
+
+            return RedirectToAction("List", "User");
+        }
+        
+        public ActionResult Update(int id)
+        {
+            JDSContext ctx = new JDSContext();
+
+            User? user = ctx.Users.Fetch().FirstOrDefault(u => u.Id == id);
+
+            ctx.Dispose();
+
+            if (user is null)
+            {
+                return RedirectToAction("List", "User");
+            }
+            else
+            {
+                return View(user);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ParseUpdate(int id, string username, string email, string password, int role, string newsletter)
+        {
+            JDSContext ctx = new JDSContext();
+
+            Role role_ = ctx.Roles.FirstOrDefault(r => r.Id == role).ToDataContract();
+
+            ctx.Users.Update(new User
+            {
+                Id = id,
                 Username = username,
                 Email = email,
                 Password = password.ToSHA256(),
