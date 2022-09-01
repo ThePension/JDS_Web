@@ -3,6 +3,7 @@ using JDSCommon.Database.DataContract;
 using JDSCommon.Database.Models;
 using JDSCommon.Services;
 using JDSCommon.Services.Extensions;
+using JDSCommon.Services.Mails;
 using JDSWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -108,7 +109,9 @@ namespace JDSWeb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View();
+            string rndPw = SecurityService.GeneratePassword(12);
+
+            return View("Create", rndPw);
         }
 
         [HttpPost]
@@ -131,6 +134,15 @@ namespace JDSWeb.Controllers
             ctx.SaveChanges();
 
             ctx.Dispose();
+
+            // Provide random generated password to the user (Email)
+            Message message = new Message(
+                new string[] { email },
+                "JDS Mot-de-passe",
+                $"Bonjour {username}, voici votre mot-de-passe {password}"
+            );
+
+            EmailKitAPI.SendEmail(message);
 
             return RedirectToAction("List", "User");
         }

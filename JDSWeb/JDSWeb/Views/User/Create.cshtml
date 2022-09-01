@@ -3,7 +3,7 @@
 	ViewData["Title"] = "Créer un nouvel utilisateur";
 }
 
-@model UserViewModel;
+@model string;
 
 
 <h1 class="text-center mt-4">Créer un nouvel utilisateur</h1>
@@ -19,10 +19,7 @@
 				<label for="email" class="form-label">Email</label>
 				<input class="form-control" type="email" id="email" name="email" required />
 			</div>
-			<div class="col-6">
-				<label for="password" class="form-label">Mot-de-passe</label>
-				<input class="form-control" type="password" id="password" name="password" required />
-			</div>
+				<input class="form-control" type="text" name="password" value="@Model" hidden />
 			<div class="col-6">
 				<label for="role" class="form-label">Role</label>
 				<select class="form-select" id="role" name="role">

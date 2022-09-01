@@ -1,3 +1,5 @@
+using JDSCommon.Services.Mails;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
