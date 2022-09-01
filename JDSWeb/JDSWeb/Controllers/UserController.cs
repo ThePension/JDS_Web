@@ -86,7 +86,7 @@ namespace JDSWeb.Controllers
         {
             if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
             {
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Index", "Home");
             }
 
             JDSContext ctx = new JDSContext();
@@ -99,6 +99,16 @@ namespace JDSWeb.Controllers
             ctx.Dispose();
 
             return View(vm);
+        }
+
+        public ActionResult Create()
+        {
+            if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
         }
 
         [HttpPost]
@@ -127,6 +137,11 @@ namespace JDSWeb.Controllers
         
         public ActionResult Update(int id)
         {
+            if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager && (HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId) ?? -1) != id)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             JDSContext ctx = new JDSContext();
 
             User? user = ctx.Users.Fetch().FirstOrDefault(u => u.Id == id);
@@ -172,7 +187,7 @@ namespace JDSWeb.Controllers
         {
             if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
             {
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Index", "Home");
             }
 
             JDSContext ctx = new JDSContext();

@@ -133,7 +133,7 @@ VALUES (1, 0), (1, 1), (1, 2), (1, 3),(1, 4), (1, 5),
 		
 		
 INSERT INTO Role
-VALUES (0, 'Member'), (1, 'Manager'), (2, 'Admin');
+VALUES (-1, 'None'), (0, 'Member'), (1, 'Manager'), (2, 'Admin');
 
 INSERT INTO [User] (Role, Username, Email, Password, Newsletter)
 VALUES (2, 'dev.vinz', 'vincent@jeannin.ch', 'a0f3285b07c26c0dcd2191447f391170d06035e8d57e31a048ba87074f3a9a15', 0);

@@ -88,7 +88,7 @@
                                 Mon Compte
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="user_dropdown">
-                                <li><a class="dropdown-item" asp-controller="User" asp-action="Update">Modifier</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Update", "User", new { id = userId })">Modifier</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" asp-controller="User" asp-action="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Déconnexion</a></li>
                             </ul>

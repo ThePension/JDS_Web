@@ -1,5 +1,7 @@
 ﻿@using JDSCommon.Database.DataContract
 @{
+	ERole userRole = (ERole)(Context.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
+
 	ViewData["Title"] = "Mise à jour d'un utilisateur";
 }
 
@@ -23,22 +25,30 @@
 				<label for="password" class="form-label">Mot-de-passe</label>
 				<input class="form-control" type="password" id="password" name="password" required />
 			</div>
-			<div class="col-6">
-				<label for="role" class="form-label">Role</label>
-				<select class="form-select" id="role" name="role">
-					@foreach (int role in Enum.GetValues(typeof(ERole)))
-					{
-						if (Model.Role.Id == role)
+			@if (userRole >= ERole.Manager)
+			{
+				<div class="col-6">
+					<label for="role" class="form-label">Role</label>
+					<select class="form-select" id="role" name="role">
+						@foreach (int role in Enum.GetValues(typeof(ERole)))
 						{
-							<option selected value="@((int)role)">@((ERole)role)</option>
+							if (Model.Role.Id == role)
+							{
+								<option selected value="@((int)role)">@((ERole)role)</option>
+							}
+							else
+							{
+								<option value="@((int)role)">@((ERole)role)</option>
+							}
 						}
-						else
-						{
-							<option value="@((int)role)">@((ERole)role)</option>
-						}
-					}
-				</select>
-			</div>
+					</select>
+				</div>
+
+			}
+			else
+			{
+				<input name="role" value="@((int)userRole)" hidden />
+			}
 
 			<div class="col-6">
 
