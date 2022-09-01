@@ -1,13 +1,80 @@
-﻿@{
+﻿@using JDSCommon.Database.DataContract
+@using System.Globalization
+@{
     ViewData["Title"] = "Panier";
     ViewData["Active"] = "shop";
     ViewData["MobileActive"] = "shop";
 }
 
-<nav aria-label="Navigation Panier">
+@model ShopViewModel
+
+<nav class="py-4" aria-label="Navigation Panier">
     <ul class="pagination justify-content-center">
-        <li class="page-item"><a class="page-link" href="#">@ShopViewModel.Overview</a></li>
-        <li class="page-item"><a class="page-link" href="#">@ShopViewModel.Contact</a></li>
-        <li class="page-item"><a class="page-link" href="#">@ShopViewModel.Confirmation</a></li>
+        <li class="page-item active"><a class="page-link">Récapitulatif</a></li>
+        <li class="page-item disabled"><a class="page-link">Contact</a></li>
+        <li class="page-item disabled"><a class="page-link">Confirmation</a></li>
     </ul>
 </nav>
+
+<div class="container mt-2">
+    @if (Model.Error)
+    {
+        <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div class="ms-2">
+                Désolé, une erreur s'est produite
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (Model.Clothes.Length > 0)
+    {
+        @foreach (Cloth cloth in Model.Clothes)
+        {
+            <div class="card my-2" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="@cloth.Type.Images.FirstOrDefault()?.URL" class="img-fluid rounded-start" alt="@cloth.Type.Images.FirstOrDefault()?.Alt">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@cloth.Type.Name</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@cloth.Type.Color.Name</h6>
+                            <ul class="card-text">
+                                <li>
+                                    <b>Taille :</b> @(
+                            cloth.Size?.Shortcut ?? "Unique"
+                            )
+                                </li>
+                                <li><b>Prix :</b> @cloth.Type.Price.ToString("0.00", new CultureInfo("en-US", false)) CHF</li>
+                            </ul>
+                            <a class="card-link btn btn-outline-danger" asp-controller="Shop" asp-action="RemoveFromCart" asp-route-cloth_id="@cloth.Id">
+                                <i class="fa-solid fa-trash"></i>
+                                Supprimer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <span class="my-4"><b>Sous-Total :</b> @Model.Clothes.Sum(c => c.Type.Price).ToString("0.00", new CultureInfo("en-US", false)) CHF</span>
+
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-outline-primary" asp-controller="Shop" asp-action="Cart" asp-route-id="@ShopViewModel.Contact">
+                <i class="fa-solid fa-angles-right me-1"></i>
+                Suivant
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning d-flex align-items-center" role="alert">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div class="ms-2">
+                Le panier est vide
+            </div>
+        </div>
+    }
+</div>

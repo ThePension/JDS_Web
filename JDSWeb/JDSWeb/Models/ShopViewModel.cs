@@ -15,9 +15,8 @@ namespace JDSWeb.Models
 
 		public static readonly string Overview = "Overview";
 		public static readonly string Contact = "Contact";
-		public static readonly string Confirmation = "Confirmation";
 
-		public static readonly string[] PossibleViews = { Overview, Contact, Confirmation };
+		public static readonly string[] PossibleViews = { Overview, Contact };
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                             PROPERTIES                            *|
@@ -28,6 +27,7 @@ namespace JDSWeb.Models
 		public ClothType[] ClothTypes { get; set; }
 		public bool Error { get; set; }
 		public bool ArticleAdded { get; set; }
+		public User User { get; set; }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                            CONSTRUCTORS                           *|

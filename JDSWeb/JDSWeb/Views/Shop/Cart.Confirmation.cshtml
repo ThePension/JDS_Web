@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Panier";
+    ViewData["Active"] = "shop";
+    ViewData["MobileActive"] = "shop";
+}
+
+<nav class="my-4" aria-label="Navigation Panier">
+    <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" asp-controller="Shop" asp-action="Cart" asp-route-id="@ShopViewModel.Overview">Récapitulatif</a></li>
+        <li class="page-item"><a class="page-link" asp-controller="Shop" asp-action="Cart" asp-route-id="@ShopViewModel.Contact">Contact</a></li>
+        <li class="page-item active"><a class="page-link">Confirmation</a></li>
+    </ul>
+</nav>

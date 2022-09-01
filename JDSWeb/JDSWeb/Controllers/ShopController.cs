@@ -39,21 +39,51 @@ namespace JDSWeb.Controllers
             return View(vm);
         }
 
-        public IActionResult Cart(string step)
+        public IActionResult Cart(string id)
         {
-            if (HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId) is null)
+            int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
+            
+            Request.Cookies.TryGetValue(ShopViewModel.CookieKeyError, out string? error);
+            Response.Cookies.Delete(ShopViewModel.CookieKeyError);
+
+            if (userId is null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            if (ShopViewModel.PossibleViews.Contains(step))
+            JDSContext ctx = new JDSContext();
+
+            User user = ctx.Users.Fetch().First(u => u.Id == userId);
+            Cloth[] clothes = ctx.Cloths
+                .Fetch()
+                .Where(c => c.Booked?.Id == userId)
+                .ToArray();
+
+            ctx.Dispose();
+
+            ShopViewModel vm = new ShopViewModel
             {
-                return View($"Cart.{step}");
+                Clothes = clothes,
+                Error = bool.Parse(error ?? "false"),
+                User = user,
+            };
+
+            if (ShopViewModel.PossibleViews.Contains(id))
+            {
+                return View($"Cart.{id}", vm);
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(Cart), "Shop", new { id = ShopViewModel.Overview });
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Shop/Cart/Confirmation")]
+        public IActionResult Confirm(string first_name, string last_name, string email)
+        {
+            return View("Cart.Confirmation");
         }
 
         [HttpPost]
@@ -98,6 +128,40 @@ namespace JDSWeb.Controllers
             Response.Cookies.Append(ShopViewModel.CookieKeyArticleAdded, "true");
 
             return RedirectToAction(nameof(Products));
+        }
+
+        public IActionResult RemoveFromCart(int cloth_id)
+        {
+            int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
+
+            if (userId is null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            JDSContext ctx = new JDSContext();
+
+            Cloth? cloth = ctx.Cloths
+                .Fetch()
+                .FirstOrDefault(c => c.Id == cloth_id);
+
+            if (cloth is null || cloth.Booked?.Id != userId)
+            {
+                // Error : This product is not booked by the user
+
+                Response.Cookies.Append(ShopViewModel.CookieKeyError, "true");
+            }
+            else
+            {
+                cloth.Booked = null;
+
+                ctx.Cloths.Update(cloth);
+                ctx.SaveChanges();
+            }
+
+            ctx.Dispose();
+
+            return RedirectToAction(nameof(Cart), "Shop", new { id = ShopViewModel.Overview });
         }
     }
 }

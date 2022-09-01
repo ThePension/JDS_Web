@@ -23,6 +23,7 @@
 
     <link rel="stylesheet" href="~/css/aboutus.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/button.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/cart.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/committee.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/developers.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/developpers.css" asp-append-version="true" />
@@ -90,7 +91,7 @@
                         </li>
 
                         <li style="min-width: 100px;">
-                            <a class="nav-link position-relative @(ViewData["Active"] as string == "shop" ? "jds-active" : "")" asp-controller="Shop" asp-action="Cart">
+                            <a class="nav-link position-relative @(ViewData["Active"] as string == "shop" ? "jds-active" : "")" asp-controller="Shop" asp-action="Cart" asp-route-id="Overview">
                                 @{
                                     JDSCommon.Database.Models.JDSContext ctx = new JDSCommon.Database.Models.JDSContext();
                                     Cloth[] cart = ctx.Cloths.Fetch().Where(c => c.Booked?.Id == userId).ToArray();
