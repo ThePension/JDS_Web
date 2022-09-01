@@ -182,7 +182,7 @@ namespace JDSCommon.Database
                 eventToUpdate.Date = entity.Date;
                 eventToUpdate.Title = entity.Title;
                 eventToUpdate.Description = entity.Description;
-                eventToUpdate.Images = entity.Images.Select(i => i.ToModel()).ToArray();
+                //eventToUpdate.Images = entity.Images.Select(i => i.ToModel()).ToArray();
 
                 /*
                 #region Update images in database

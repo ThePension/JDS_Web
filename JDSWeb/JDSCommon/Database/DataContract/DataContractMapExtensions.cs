@@ -113,7 +113,7 @@ namespace JDSCommon.Database.DataContract
         };
 
         public static Models.Event? ToModel(this Event @event, DbSet<Models.Event> table)
-            => table.FirstOrDefault(e => e.Id == @event.Id);
+            => table.Include(e => e.Images).FirstOrDefault(e => e.Id == @event.Id);
 
         #endregion
 
@@ -131,6 +131,9 @@ namespace JDSCommon.Database.DataContract
             Url = image.URL,
             Alt = image.Alt,
         };
+
+        public static Models.Image? ToModel(this Image image, DbSet<Models.Image> table)
+            => table.FirstOrDefault(i => i.Id == image.Id);
 
         #endregion
 

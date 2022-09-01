@@ -94,20 +94,20 @@ namespace JDSWeb.Controllers
 
         public IActionResult Delete(int id)
         {
-            if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) >= ERole.Manager)
+            //if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) >= ERole.Manager)
+            //{
+            Event? eventToDelete = FetchEventById(id);
+
+            if (eventToDelete is not null)
             {
-                Event? eventToDelete = FetchEventById(id);
+                JDSContext ctx = new JDSContext();
 
-                if (eventToDelete is not null)
-                {
-                    JDSContext ctx = new JDSContext();
+                ctx.Events.Remove(eventToDelete);
 
-                    ctx.Events.Remove(eventToDelete);
-
-                    ctx.SaveChanges();
-                    ctx.Dispose();
-                }
+                ctx.SaveChanges();
+                ctx.Dispose();
             }
+            //}
 
             return RedirectToAction("ActualEvents", "Event");
         }
@@ -136,8 +136,6 @@ namespace JDSWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ParseEventUpdate(int id, string title, string description, DateTime date, ICollection<IFormFile> files)
         {
-            
-
             Event? eventToUpdate = FetchEventById(id);
 
             if (eventToUpdate is not null)
@@ -147,13 +145,20 @@ namespace JDSWeb.Controllers
                 eventToUpdate.Title = title;
                 eventToUpdate.Description = description;
                 eventToUpdate.Date = date;
-                eventToUpdate.Images = ImagesFromFileNames(files);
+
+                var images = ctx.Events.Include(e => e.Images).FirstOrDefault(e => e.Id == id).Images;
+
+                foreach (var image in ImagesFromFileNames(files))
+                {
+                    images.Add(image.ToModel());
+                }
+                ctx.SaveChanges();
 
                 ctx.Events.Update(eventToUpdate);
 
                 ctx.SaveChanges();
                 ctx.Dispose();
-            }            
+            }
 
             return RedirectToAction("ActualEvents", "Event");
         }
@@ -169,8 +174,7 @@ namespace JDSWeb.Controllers
             {
                 JDSContext ctx = new JDSContext();
 
-                @event.Images.Remove(imageToDelete);
-                ctx.Events.Update(@event);
+                ctx.Events.Include(e => e.Images).FirstOrDefault(e => e.Id == @event.Id).Images.Remove(imageToDelete.ToModel(ctx.Images));
 
                 ctx.SaveChanges();
                 ctx.Dispose();
