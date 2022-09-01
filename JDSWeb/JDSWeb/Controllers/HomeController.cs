@@ -34,19 +34,7 @@ namespace JDSWeb.Controllers
         public IActionResult Developers()
         {
             return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public IActionResult ActualEvents()
-        {
-            return View();
-        }
-
-        
+        }        
 
         public IActionResult Members()
         {
@@ -54,11 +42,6 @@ namespace JDSWeb.Controllers
         }
 
         public IActionResult About()
-        {
-            return View();
-        }
-
-        public IActionResult Developpers()
         {
             return View();
         }

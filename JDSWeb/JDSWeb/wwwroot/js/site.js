@@ -13,4 +13,8 @@ $(document).ready(() => {
             $(obj).addClass('jds-hover');
         });
     }
+
+    $("#cookie_toast").on('hide.bs.toast', () => {
+        document.cookie = "c_Cookie.Accepted=true;path=/";
+    });
 });

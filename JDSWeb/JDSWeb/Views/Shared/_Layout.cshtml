@@ -6,6 +6,8 @@
     bool UserLogged = Context.Session.GetString(UserViewModel.SessionKeyUserName) is not null;
     ERole role = (ERole)(Context.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
     int? userId = Context.Session.GetInt32(UserViewModel.SessionKeyUserId);
+
+    string CookieKeyCookieAccepted = "c_Cookie.Accepted";
 }
 
 <!DOCTYPE html>
@@ -26,7 +28,6 @@
     <link rel="stylesheet" href="~/css/cart.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/committee.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/developers.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/developpers.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
@@ -181,15 +182,54 @@
         </ul>
     </div>
 
+    @if (!Context.Request.Cookies.TryGetValue(CookieKeyCookieAccepted, out string? _))
+    {
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="cookie_toast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                <div class="toast-header">
+                    <i class="fa-solid fa-cookie me-1"></i>
+                    <strong class="me-auto">Cookies</strong>
+                </div>
+                <div class="toast-body" style="text-align: justify;">
+                    Ce site utilise des cookies afin de vous proposer la meilleure expérience utilisateur possible.
+                    <div class="mt-2 pt-2 border-top">
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="toast">
+                            <i class="fa-solid fa-check me-1"></i>
+                            Compris
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     <main id="jds-main-content" role="main" class="pb-3">
         @RenderBody()
     </main>
+
+    @if (ViewData["Active"] as string != "login")
+    {
+        <div class="container">
+            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4 border-top">
+                <p class="col-md-4 mb-0 text-muted">&copy; 2022 HE-ARC, Inc</p>
+
+                <a class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                    <img src="~/img/jds_logo/blue.png" width="40" height="40" class="me-2" alt="[JDS]" />
+                </a>
+
+                <ul class="nav col-md-4 justify-content-end">
+                    <li class="nav-item"><a class="nav-link px-2 text-muted" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-2 text-muted" asp-controller="Event" asp-action="Actuals">Événements</a></li>
+                    <li class="nav-item"><a class="nav-link px-2 text-muted" asp-controller="Society" asp-action="About">À Propos</a></li>
+                </ul>
+            </footer>
+        </div>
+    }
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/navbar.js" asp-append-version="true"></script>
-    <script src="~/js/developpers.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -15,7 +15,7 @@
 </nav>
 
 <div id="jds-cart-contact">
-    <form class="row g-3 needs-validation" method="post" asp-controller="Shop" asp-action="Confirm">
+    <form class="row g-3 needs-validation" method="post" asp-controller="Shop" asp-action="Confirm" novalidate>
         <div class="col-md-6">
             <label for="first_name" class="form-label">Prénom</label>
             <input type="text" class="form-control" id="first_name" name="first_name" required>
@@ -49,3 +49,25 @@
         </div>
     </form>
 </div>
+
+@section Scripts {
+    <script>
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+}

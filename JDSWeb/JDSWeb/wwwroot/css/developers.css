@@ -1,5 +1,9 @@
-﻿/* Developer Card */
+﻿#jds-developers .jds-hearc-container img {
+    width: 100%;
+    max-width: 500px;
+}
 
+/* Developer Card */
 .jds-dev-box {
     position: relative;
     width: 400px;
