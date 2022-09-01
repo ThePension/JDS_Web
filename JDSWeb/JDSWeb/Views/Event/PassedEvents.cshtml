@@ -1,4 +1,6 @@
-﻿@{
+﻿@using JDSCommon.Database.DataContract
+
+@{
     ViewData["Title"] = "Événements passés";
 }
 
@@ -8,12 +10,12 @@
     <h1 class="my-4">Événements passés</h1>
 </div>
 
-@foreach(var e in @Model.Events)
+@foreach(Event e in @Model.Events)
 {
     <div class="card mb-3">
         <div class="row g-0">
             <div class="col-md-4">
-                <img src="@e.Images.FirstOrDefault().URL" class="img-fluid rounded-start">
+                <img src="@e.Images.FirstOrDefault()?.URL" class="img-fluid rounded-start">
             </div>
             <div class="col-md-8">
                 <div class="card-body">

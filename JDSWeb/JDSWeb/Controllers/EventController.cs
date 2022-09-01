@@ -22,7 +22,7 @@ namespace JDSWeb.Controllers
                 Events = FetchActualEvents(),
             };
 
-            return View(vm);
+            return (vm.Events is null) ? RedirectToAction("Index", "Home") : View(vm);
         }
 
         public IActionResult PassedEvents()
@@ -32,7 +32,7 @@ namespace JDSWeb.Controllers
                 Events = FetchPassedEvents(),
             };
 
-            return View(vm);
+            return (vm.Events is null) ? RedirectToAction("Index", "Home") : View(vm);
         }
 
         public IActionResult ShowEvent(int id)
@@ -47,7 +47,7 @@ namespace JDSWeb.Controllers
             {
                 EventViewModel vm = new EventViewModel
                 {
-                    Event = @event,
+                    Events = new Event[] { @event },
                 };
 
                 return View(vm);
@@ -56,24 +56,20 @@ namespace JDSWeb.Controllers
 
         public IActionResult Create()
         {
-            /*
             if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
             {
                 return RedirectToAction("ActualEvents", "Event");
             }
-            */
 
             return View();
         }
 
         public IActionResult Update(int id)
         {
-            /*
             if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
             {
                 return RedirectToAction("ActualEvents", "Event");
             }
-            */
 
             Event? @event = FetchEventById(id);
 
@@ -85,7 +81,7 @@ namespace JDSWeb.Controllers
             {
                 EventViewModel vm = new EventViewModel
                 {
-                    Event = @event,
+                    Events = new Event[] { @event },
                 };
 
                 return View(vm);
@@ -94,20 +90,20 @@ namespace JDSWeb.Controllers
 
         public IActionResult Delete(int id)
         {
-            //if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) >= ERole.Manager)
-            //{
-            Event? eventToDelete = FetchEventById(id);
-
-            if (eventToDelete is not null)
+            if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) >= ERole.Manager)
             {
-                JDSContext ctx = new JDSContext();
+                Event? eventToDelete = FetchEventById(id);
 
-                ctx.Events.Remove(eventToDelete);
+                if (eventToDelete is not null)
+                {
+                    JDSContext ctx = new JDSContext();
 
-                ctx.SaveChanges();
-                ctx.Dispose();
+                    ctx.Events.Remove(eventToDelete);
+
+                    ctx.SaveChanges();
+                    ctx.Dispose();
+                }
             }
-            //}
 
             return RedirectToAction("ActualEvents", "Event");
         }
@@ -146,13 +142,15 @@ namespace JDSWeb.Controllers
                 eventToUpdate.Description = description;
                 eventToUpdate.Date = date;
 
-                var images = ctx.Events.Include(e => e.Images).FirstOrDefault(e => e.Id == id).Images;
+                //var images = ctx.Events.Include(e => e.Images).FirstOrDefault(e => e.Id == id).Images;
 
-                foreach (var image in ImagesFromFileNames(files))
-                {
-                    images.Add(image.ToModel());
-                }
-                ctx.SaveChanges();
+                ctx.AddImagesInEvent(id, ImagesFromFileNames(files));
+
+                //foreach (var image in ImagesFromFileNames(files))
+                //{
+                //    images.Add(image.ToModel());
+                //}
+                //ctx.SaveChanges();
 
                 ctx.Events.Update(eventToUpdate);
 
@@ -165,19 +163,27 @@ namespace JDSWeb.Controllers
 
         public IActionResult DeleteImage(int imageId, int eventId)
         {
-            // NEED TO BE PROTECTED BY TEST ON USER'S RIGHT !
-
-            Event? @event = FetchEventById(eventId);
-            Image? imageToDelete = (@event is null) ? null : @event.Images.FirstOrDefault(i => i.Id == imageId);
-
-            if (imageToDelete is not null && @event is not null)
+            if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) >= ERole.Manager)
             {
                 JDSContext ctx = new JDSContext();
 
-                ctx.Events.Include(e => e.Images).FirstOrDefault(e => e.Id == @event.Id).Images.Remove(imageToDelete.ToModel(ctx.Images));
+                ctx.RemoveImageInEvent(eventId, imageId);
 
                 ctx.SaveChanges();
                 ctx.Dispose();
+
+                //event? @event = fetcheventbyid(eventid);
+                //image? imagetodelete = (@event is null) ? null : @event.images.firstordefault(i => i.id == imageid);
+
+                //if (imagetodelete is not null && @event is not null)
+                //{
+                //    jdscontext ctx = new jdscontext();
+
+                //    ctx.events.include(e => e.images).firstordefault(e => e.id == @event.id).images.remove(imagetodelete.tomodel(ctx.images));
+
+                //    ctx.savechanges();
+                //    ctx.dispose();
+                //}
             }
 
             return RedirectToAction("Update", "Event", new { id = eventId });

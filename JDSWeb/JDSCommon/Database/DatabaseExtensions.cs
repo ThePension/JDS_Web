@@ -4,6 +4,7 @@ using JDSCommon.Services.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -100,32 +101,24 @@ namespace JDSCommon.Database
         {
             return table.Add(entity.ToModel());
         }
-        //public static EntityEntry<Models.Event> AddEvent(this JDSContext ctx, DataContract.Event entity)
-        //{
-        //    EntityEntry<Models.Event> eventAdded = ctx.Events.Add(entity.ToModel());
-        //    ctx.SaveChanges();
-
-        //    foreach (var eventImage in entity.Images)
-        //    {
-        //        EntityEntry<Models.Image> imageAdded = ctx.Images.Add(eventImage.ToModel());
-        //        ctx.SaveChanges();
-
-        //        EventGallery eventGallery = new EventGallery
-        //        {
-        //            EventId = eventAdded.Entity.Id,
-        //            ImageId = imageAdded.Entity.Id,
-        //        };
-
-        //        ctx.Add(eventGallery);
-        //        ctx.SaveChanges();
-        //    }
-
-        //    return eventAdded;
-        //}
 
         public static EntityEntry<Models.User> Add(this DbSet<Models.User> table, DataContract.User entity)
         {
             return table.Add(entity.ToModel());
+        }
+
+        public static void AddImagesInEvent(this JDSContext ctx, int eventId, DataContract.Image[] images)
+        {
+            Models.Event? eventModel = ctx.Events.Include(e => e.Images).FirstOrDefault(e => e.Id == eventId);
+
+            if (eventModel is not null)
+            {
+                foreach (DataContract.Image image in images)
+                {
+                    Models.Image imageModel = ctx.Images.FirstOrDefault(i => i.Url == image.URL);
+                    eventModel.Images.Add(imageModel is not null ? imageModel : image.ToModel());
+                }
+            }
         }
 
         #endregion
@@ -151,6 +144,18 @@ namespace JDSCommon.Database
             Models.User? entityToRemove = entity.ToModel(table);
 
             return entityToRemove is null ? null : table.Remove(entityToRemove);
+        }
+
+        public static void RemoveImageInEvent(this JDSContext ctx, int eventId, int imageId)
+        {
+            Models.Event? eventModel = ctx.Events.Include(e => e.Images).FirstOrDefault(e => e.Id == eventId);
+
+            if (eventModel is not null)
+            {
+                Models.Image? imageModel = eventModel.Images.FirstOrDefault(i => i.Id == imageId);
+
+                if (imageModel is not null) eventModel.Images.Remove(imageModel);
+            }
         }
 
         #endregion
@@ -182,47 +187,6 @@ namespace JDSCommon.Database
                 eventToUpdate.Date = entity.Date;
                 eventToUpdate.Title = entity.Title;
                 eventToUpdate.Description = entity.Description;
-                //eventToUpdate.Images = entity.Images.Select(i => i.ToModel()).ToArray();
-
-                /*
-                #region Update images in database
-
-                JDSContext ctx = new JDSContext();
-
-                // Get image for this event in database
-                var eventDBImages = ctx.EventGalleries
-                    .Where(i => i.EventId == entity.Id)
-                    .ToArray();
-
-                // Erase all relation eventId - Image
-                foreach (var @event in eventDBImages)
-                {
-                    ctx.EventGalleries.Remove(@event);
-                }
-
-                // Add every relation eventId - Image
-                foreach (var image in entity.Images)
-                {
-                    // Check if image exist
-                    var imageDB = ctx.Images.FirstOrDefault(i => i.Id == image.Id);
-
-                    if (imageDB is null)
-                    {
-                        ctx.Images.Add(image.ToModel());
-                    }
-
-                    ctx.EventGalleries.Add(new EventGallery
-                    {
-                        EventId = eventToUpdate.Id,
-                        ImageId = image.Id,
-                    });
-                }
-
-                ctx.SaveChanges();
-                ctx.Dispose();
-
-                #endregion
-                */
 
                 return table.Update(eventToUpdate);
             }

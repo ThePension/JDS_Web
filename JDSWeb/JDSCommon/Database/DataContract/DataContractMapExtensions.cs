@@ -1,5 +1,7 @@
 ﻿using JDSCommon.Database.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -105,12 +107,12 @@ namespace JDSCommon.Database.DataContract
         };
 
         public static Models.Event ToModel(this Event @event) => new Models.Event
-        {
-            Date = @event.Date,
-            Title = @event.Title,
-            Description = @event.Description,
-            Images = @event.Images.Select(i => i.ToModel()).ToArray(),
-        };
+            {
+                Date = @event.Date,
+                Title = @event.Title,
+                Description = @event.Description,
+                Images = @event.Images.Select(i => i.ToModel()).ToArray(),
+            };
 
         public static Models.Event? ToModel(this Event @event, DbSet<Models.Event> table)
             => table.Include(e => e.Images).FirstOrDefault(e => e.Id == @event.Id);

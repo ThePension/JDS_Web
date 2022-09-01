@@ -1,4 +1,5 @@
-﻿@model EventViewModel
+﻿@using JDSCommon.Database.DataContract
+@model EventViewModel
 
 @{
 	ViewData["Title"] = Model.Event.Title;
@@ -19,7 +20,7 @@
 	</tr>
 </table>
 
-@foreach (var img in Model.Event.Images)
+@foreach (Image img in Model.Event.Images)
 {
 	<img src="@img.URL" alt="@img.Alt">
 }
