@@ -1,4 +1,5 @@
-﻿using JDSCommon.Database;
+﻿using JDSCommon.Api;
+using JDSCommon.Database;
 using JDSCommon.Database.DataContract;
 using JDSCommon.Services;
 using JDSWeb.Models;
@@ -184,8 +185,6 @@ namespace JDSWeb.Controllers
 
         private static Image[] ImagesFromFileNames(ICollection<IFormFile> files)
         {
-            // TODO : Adapt
-
             Image[] images = new Image[files.Count];
 
             int count = 0;
@@ -194,8 +193,8 @@ namespace JDSWeb.Controllers
             {
                 images[count++] = new Image
                 {
-                    Alt = "none",
-                    URL = "TODO in Event Controller",
+                    Alt = image.FileName,
+                    URL = ImageKitAPI.UploadImage(ImageService.FromStreamToBytes(image.OpenReadStream()), image.FileName),
                 };
             }
 

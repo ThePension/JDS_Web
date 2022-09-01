@@ -14,7 +14,7 @@ namespace JDSCommon.Api
         |*                               FIELDS                              *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        private static readonly ServerImagekit server; 
+        private static readonly ServerImagekit server;
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                             PROPERTIES                            *|
@@ -44,6 +44,15 @@ namespace JDSCommon.Api
             return taskUpload.Result;
         }
 
+        public static string UploadImage(byte[] image, string name)
+        {
+            Task<string> taskUpload = UploadImageAsync(image, name);
+
+            taskUpload.Wait();
+
+            return taskUpload.Result;
+        }
+
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                          PRIVATE METHODS                          *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -53,6 +62,15 @@ namespace JDSCommon.Api
             ImagekitResponse response = await server
                 .FileName(name)
                 .UploadAsync(path);
+
+            return response.URL;
+        }
+
+        private static async Task<string> UploadImageAsync(byte[] image, string name)
+        {
+            ImagekitResponse response = await server
+                .FileName(name)
+                .UploadAsync(image);
 
             return response.URL;
         }
