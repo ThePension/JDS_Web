@@ -22,8 +22,8 @@
 				<input class="form-control" type="email" id="email" name="email" value="@Model.Email" required />
 			</div>
 			<div class="col-6">
-				<label for="password" class="form-label">Mot-de-passe</label>
-				<input class="form-control" type="password" id="password" name="password" required />
+				<label for="password" class="form-label">Mot-de-passe (laisser vide pour conserver le précédent)</label>
+				<input class="form-control" type="password" id="password" name="password" />
 			</div>
 			@if (userRole >= ERole.Manager)
 			{

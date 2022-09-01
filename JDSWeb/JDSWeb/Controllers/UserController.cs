@@ -1,14 +1,10 @@
 ﻿using JDSCommon.Database;
 using JDSCommon.Database.DataContract;
-using JDSCommon.Database.Models;
 using JDSCommon.Services;
 using JDSCommon.Services.Extensions;
 using JDSCommon.Services.Mails;
 using JDSWeb.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
 using DBUser = JDSCommon.Database.DataContract.User;
 using JDSContext = JDSCommon.Database.Models.JDSContext;
 using Role = JDSCommon.Database.DataContract.Role;
@@ -178,15 +174,23 @@ namespace JDSWeb.Controllers
 
             Role role_ = ctx.Roles.FirstOrDefault(r => r.Id == role).ToDataContract();
 
-            ctx.Users.Update(new User
+            User? user = ctx.Users.Fetch().FirstOrDefault(u => u.Id == id);
+
+            if(user is null)
             {
-                Id = id,
-                Username = username,
-                Email = email,
-                Password = password.ToSHA256(),
-                Role = role_,
-                Newsletter = newsletter == "on" ? true : false,
-            });
+                ctx.Dispose();
+
+                return RedirectToAction("List", "User");
+            }
+
+            user.Username = username;
+            user.Email = email;
+            user.Role = role_;
+            user.Newsletter = newsletter == "on" ? true : false;
+
+            if (password is not null && password != "") user.Password = password.ToSHA256();
+
+            ctx.Users.Update(user);
 
             ctx.SaveChanges();
 
