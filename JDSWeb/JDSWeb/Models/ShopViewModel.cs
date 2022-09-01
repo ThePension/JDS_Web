@@ -10,7 +10,14 @@ namespace JDSWeb.Models
 		|*                               FIELDS                              *|
 		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-		
+		public static readonly string CookieKeyError = "c_Shop.Error";
+		public static readonly string CookieKeyArticleAdded = "c_Shop.ArticleAdded";
+
+		public static readonly string Overview = "Overview";
+		public static readonly string Contact = "Contact";
+		public static readonly string Confirmation = "Confirmation";
+
+		public static readonly string[] PossibleViews = { Overview, Contact, Confirmation };
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                             PROPERTIES                            *|
@@ -19,6 +26,8 @@ namespace JDSWeb.Models
         public Cloth[] Clothes { get; set; }
 		public ClothSize[] ClothSizes { get; set; }
 		public ClothType[] ClothTypes { get; set; }
+		public bool Error { get; set; }
+		public bool ArticleAdded { get; set; }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                            CONSTRUCTORS                           *|

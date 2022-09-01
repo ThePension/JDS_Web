@@ -27,7 +27,9 @@ namespace JDSCommon.Database
                 .Include(c => c.SizeNavigation)
                 .Include(c => c.TypeNavigation)
                 .Include(c => c.TypeNavigation.ColorNavigation)
+                .Include(c => c.TypeNavigation.Images)
                 .Include(c => c.BookedNavigation)
+                .Include(c => c.BookedNavigation!.RoleNavigation)
                 .Select(c => c.ToDataContract())
                 .Copy();
         }
@@ -154,6 +156,22 @@ namespace JDSCommon.Database
         #endregion
 
         #region Update Extensions
+
+        public static EntityEntry<Models.Cloth>? Update(this DbSet<Models.Cloth> table, DataContract.Cloth entity)
+        {
+            Models.Cloth? clothToUpdate = entity.ToModel(table);
+
+            if (clothToUpdate is not null)
+            {
+                clothToUpdate.Booked = entity.Booked?.Id;
+
+                return table.Update(clothToUpdate);
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public static EntityEntry<Models.Event>? Update(this DbSet<Models.Event> table, DataContract.Event entity)
         {

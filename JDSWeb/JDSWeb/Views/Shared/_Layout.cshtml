@@ -1,9 +1,11 @@
-﻿@using JDSCommon.Database.DataContract
+﻿@using JDSCommon.Database
+@using JDSCommon.Database.DataContract
 @using Newtonsoft.Json
 @using System.Globalization
 @{
     bool UserLogged = Context.Session.GetString(UserViewModel.SessionKeyUserName) is not null;
     ERole role = (ERole)(Context.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
+    int? userId = Context.Session.GetInt32(UserViewModel.SessionKeyUserId);
 }
 
 <!DOCTYPE html>
@@ -60,7 +62,7 @@
                             <li><a class="dropdown-item" asp-controller="Shop" asp-action="Products">Nos Produits</a></li>
                             <li><a class="dropdown-item" asp-controller="Home" asp-action="About">À propos</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Developpers">Développeurs</a></li>
+                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Developers">Développeurs</a></li>
                         </ul>
                     </li>
                     @if (UserLogged)
@@ -86,14 +88,21 @@
                                 <li><a class="dropdown-item" asp-controller="User" asp-action="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Déconnexion</a></li>
                             </ul>
                         </li>
+
                         <li style="min-width: 100px;">
-                            <a class="nav-link position-relative">
+                            <a class="nav-link position-relative @(ViewData["Active"] as string == "shop" ? "jds-active" : "")" asp-controller="Shop" asp-action="Cart">
+                                @{
+                                    JDSCommon.Database.Models.JDSContext ctx = new JDSCommon.Database.Models.JDSContext();
+                                    Cloth[] cart = ctx.Cloths.Fetch().Where(c => c.Booked?.Id == userId).ToArray();
+                                    ctx.Dispose();
+                                }
+
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <span class="position-absolute top-10 translate-middle rounded-circle badge bg-danger">
-                                    0
-                                    <span class="visually-hidden">0 articles</span>
+                                    @cart.Length
+                                    <span class="visually-hidden">@cart.Length articles</span>
                                 </span>
-                                <span class="ms-2">0.00 CHF</span>
+                                <span class="ms-2">@cart.Sum(c => c.Type.Price).ToString("0.00", new CultureInfo("en-US", false)) CHF</span>
                             </a>
                         </li>
                     }
@@ -148,7 +157,7 @@
                     <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "committee" ? "jds-mobile-menu-active" : "")" asp-controller="Society" asp-action="Committee">Comité</a></li>
                     <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "products" ? "jds-mobile-menu-active" : "")" asp-controller="Shop" asp-action="Products">Nos produits</a></li>
                     <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "about" ? "jds-mobile-menu-active" : "")" asp-controller="Home" asp-action="About">À propos</a></li>
-                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "developers" ? "jds-mobile-menu-active" : "")" asp-controller="Home" asp-action="Developpers">Développeurs</a></li>
+                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "developers" ? "jds-mobile-menu-active" : "")" asp-controller="Home" asp-action="Developers">Développeurs</a></li>
                 </ul>
             </li>
             @if (UserLogged)
@@ -161,7 +170,7 @@
                         <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "logout" ? "jds-mobile-menu-active" : "")" asp-controller="User" asp-action="Logout">Déconnexion</a></li>
                     </ul>
                 </li>
-                <li class="jds-mobile-menu-item"><a class="@(ViewData["MobileActive"] as string == "shop" ? "jds-mobile-menu-active" : "")" href="#">Panier</a></li>
+                <li class="jds-mobile-menu-item"><a class="@(ViewData["MobileActive"] as string == "shop" ? "jds-mobile-menu-active" : "")" asp-controller="Shop" asp-action="Cart">Panier</a></li>
             }
             else
             {

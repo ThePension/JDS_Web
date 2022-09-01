@@ -47,7 +47,6 @@
         background: var(--saffron);
         display: flex;
         justify-content: center;
-        /*align-items: center;*/
         padding: 20px;
         flex-direction: column;
         z-index: 1;

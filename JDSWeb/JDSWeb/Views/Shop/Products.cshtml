@@ -4,6 +4,8 @@
     ViewData["Title"] = "Nos produits";
     ViewData["Active"] = "society";
     ViewData["MobileActive"] = "products";
+
+    bool userLogged = Context.Session.GetString(UserViewModel.SessionKeyUserName) is not null;
 }
 
 @model ShopViewModel
@@ -13,6 +15,28 @@
         <h1>Produits</h1>
     </div>
     <div class="jds-products-container">
+
+        @if (Model.Error)
+        {
+            <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div class="ms-2">
+                    Désolé, ce produit n'est malheureusement plus disponible
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (Model.ArticleAdded)
+        {
+            <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-check"></i>
+                <div class="ms-2">
+                    L'article a été ajouté au panier !
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
 
         @foreach (ClothType type in Model.ClothTypes)
         {
@@ -30,8 +54,8 @@
                     <p>@type.Description</p>
 
                     @{
-                        bool isSized = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Size is not null);
-                        bool hasOne = Model.Clothes.Any(c => c.Type.Id == type.Id);
+                        bool isSized = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Booked is null && c.Size is not null);
+                        bool hasOne = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Booked is null);
                     }
 
                     @if (isSized)
@@ -40,7 +64,7 @@
                         <ul class="jds-product-size">
                             @foreach (ClothSize size in Model.ClothSizes)
                             {
-                                bool hasSize = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Size?.Id == size.Id);
+                                bool hasSize = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Size?.Id == size.Id && c.Booked is null);
 
                                 <li>
                                     <input type="radio" name="cloth_size" value="@size.Id" id="@(type.Id)_@size.Shortcut" required @(hasSize ? "" : "disabled") />
@@ -61,13 +85,17 @@
                             int floatPrice = (int)(type.Price % 1 * 100);
                         }
                         <h2><sup>CHF</sup>@price<small>.@floatPrice.ToString("D2")</small></h2>
-                        <button type="submit" class="jds-button jds-info" @(hasOne ? "" : "disabled")>
-                            Ajouter
-                            <span class="top"></span>
-                            <span class="right"></span>
-                            <span class="bottom"></span>
-                            <span class="left"></span>
-                        </button>
+
+                        @if (hasOne && userLogged)
+                        {
+                            <button type="submit" class="jds-button jds-info" @(hasOne ? "" : "disabled")>
+                                Ajouter
+                                <span class="top"></span>
+                                <span class="right"></span>
+                                <span class="bottom"></span>
+                                <span class="left"></span>
+                            </button>
+                        }
                     </div>
                 </div>
             </form>
@@ -85,8 +113,8 @@
                         <li class="list-group-item"><b>Prix :</b> @type.Price CHF</li>
 
                         @{
-                            bool isSizedMobile = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Size is not null);
-                            bool hasOneMobile = Model.Clothes.Any(c => c.Type.Id == type.Id);
+                            bool isSizedMobile = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Booked is null && c.Size is not null);
+                            bool hasOneMobile = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Booked is null);
                         }
 
                         @if (isSizedMobile)
@@ -94,7 +122,7 @@
                             <ul>
                                 @foreach (ClothSize size in Model.ClothSizes)
                                 {
-                                    bool hasSize = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Size?.Id == size.Id);
+                                    bool hasSize = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Size?.Id == size.Id && c.Booked is null);
 
                                     <li>
                                         <input type="radio" class="btn-check" name="cloth_size" value="@size.Id" id="mobile_@(type.Id)_@size.Shortcut" autocomplete="off" required @(hasSize ? "" : "disabled") />
@@ -109,9 +137,13 @@
                             <li class="list-group-item"><b>PLUS DISPONIBLE</b></li>
                         }
                     </ul>
-                    <div class="card-body d-flex justify-content-end">
-                        <button type="submit" class="btn btn-outline-primary" @(hasOneMobile ? "" : "disabled")>Ajouter</button>
-                    </div>
+
+                    @if (hasOneMobile && userLogged)
+                    {
+                        <div class="card-body d-flex justify-content-end">
+                            <button type="submit" class="btn btn-outline-primary" @(hasOneMobile ? "" : "disabled")>Ajouter</button>
+                        </div>
+                    }
                 </div>
             </form>
         }

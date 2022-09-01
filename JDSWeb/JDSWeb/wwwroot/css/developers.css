@@ -67,6 +67,7 @@
 
     .jds-dev-box .jds-dev-content h2 {
         position: relative;
+        margin: 0 15px;
         font-size: 1.5em;
         text-align: center;
         color: black;
