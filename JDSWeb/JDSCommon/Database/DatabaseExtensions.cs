@@ -77,6 +77,14 @@ namespace JDSCommon.Database
             return @event is null ? null : @event.ToDataContract();
         }
 
+        public static DataContract.Image? FetchById(this DbSet<Models.Image> images, int id)
+        {
+            Models.Image? image = images
+                .FirstOrDefault(i => i.Id == id);
+
+            return image is null ? null : image.ToDataContract();
+        }
+
         #endregion
 
         #region Add Extensions

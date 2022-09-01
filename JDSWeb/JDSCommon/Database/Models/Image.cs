@@ -12,7 +12,7 @@ namespace JDSCommon.Database.Models
         }
 
         public int Id { get; set; }
-        public byte[] Picture { get; set; } = null!;
+        public string Url { get; set; } = null!;
         public string Alt { get; set; } = null!;
 
         public virtual ICollection<ClothType> ClothTypes { get; set; }

@@ -44,18 +44,18 @@ namespace JDSCommon.Database.Models
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Booked)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__Cloth__Booked__1F2E9E6D");
+                    .HasConstraintName("FK__Cloth__Booked__4277DAAA");
 
                 entity.HasOne(d => d.SizeNavigation)
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Size)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__Cloth__Size__7FB5F314");
+                    .HasConstraintName("FK__Cloth__Size__4183B671");
 
                 entity.HasOne(d => d.TypeNavigation)
                     .WithMany(p => p.Cloths)
                     .HasForeignKey(d => d.Type)
-                    .HasConstraintName("FK__Cloth__Type__7EC1CEDB");
+                    .HasConstraintName("FK__Cloth__Type__408F9238");
             });
 
             modelBuilder.Entity<ClothColor>(entity =>
@@ -105,17 +105,17 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.ColorNavigation)
                     .WithMany(p => p.ClothTypes)
                     .HasForeignKey(d => d.Color)
-                    .HasConstraintName("FK__ClothType__Color__79FD19BE");
+                    .HasConstraintName("FK__ClothType__Color__3BCADD1B");
 
                 entity.HasMany(d => d.Images)
                     .WithMany(p => p.ClothTypes)
                     .UsingEntity<Dictionary<string, object>>(
                         "ShopGallery",
-                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImageId").HasConstraintName("FK__ShopGalle__Image__0C1BC9F9"),
-                        r => r.HasOne<ClothType>().WithMany().HasForeignKey("ClothTypeId").HasConstraintName("FK__ShopGalle__Cloth__0B27A5C0"),
+                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImageId").HasConstraintName("FK__ShopGalle__Image__4A18FC72"),
+                        r => r.HasOne<ClothType>().WithMany().HasForeignKey("ClothTypeId").HasConstraintName("FK__ShopGalle__Cloth__4924D839"),
                         j =>
                         {
-                            j.HasKey("ClothTypeId", "ImageId").HasName("PK__ShopGall__C4BEF453D146C61E");
+                            j.HasKey("ClothTypeId", "ImageId").HasName("PK__ShopGall__C4BEF453FEA0B781");
 
                             j.ToTable("ShopGallery");
                         });
@@ -139,11 +139,11 @@ namespace JDSCommon.Database.Models
                     .WithMany(p => p.Events)
                     .UsingEntity<Dictionary<string, object>>(
                         "EventGallery",
-                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImageId").HasConstraintName("FK__EventGall__Image__0FEC5ADD"),
-                        r => r.HasOne<Event>().WithMany().HasForeignKey("EventId").HasConstraintName("FK__EventGall__Event__0EF836A4"),
+                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImageId").HasConstraintName("FK__EventGall__Image__4DE98D56"),
+                        r => r.HasOne<Event>().WithMany().HasForeignKey("EventId").HasConstraintName("FK__EventGall__Event__4CF5691D"),
                         j =>
                         {
-                            j.HasKey("EventId", "ImageId").HasName("PK__EventGal__AE15A760F2523D11");
+                            j.HasKey("EventId", "ImageId").HasName("PK__EventGal__AE15A7604339D58A");
 
                             j.ToTable("EventGallery");
                         });
@@ -155,6 +155,10 @@ namespace JDSCommon.Database.Models
 
                 entity.Property(e => e.Alt)
                     .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Url)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
             });
 
@@ -188,7 +192,7 @@ namespace JDSCommon.Database.Models
                 entity.HasOne(d => d.RoleNavigation)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.Role)
-                    .HasConstraintName("FK__User__Role__047AA831");
+                    .HasConstraintName("FK__User__Role__370627FE");
             });
 
             OnModelCreatingPartial(modelBuilder);

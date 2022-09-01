@@ -41,6 +41,7 @@
 
     .jds-index-flex-container img {
         object-fit: cover;
+        height: 400px;
     }
 
     .jds-index-flex-container card {

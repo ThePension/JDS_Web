@@ -5,7 +5,7 @@
 @model EventViewModel
 
 <div class="text-center my-4">
-	<h1 style="color:white">Modifier un événement</h1>
+	<h1>Modifier un événement</h1>
 </div>
 
 <div id="jds-update-event-background"></div>
@@ -26,54 +26,35 @@
 			<input id="date" name="date" class="form-control" value="@Model.Event.StringInputDate" type="date" required>
 		</div>
 
-		<button id="addImage" type="button" class="btn btn-success">Ajouter une image</button>
-		<div id="newRow">
-			<input type="hidden" id="total" value="0" />
+		<label class="form-label">Gallerie des images</label>
+
+		<div id="jds-cardContainer">
+
+			@foreach (var image in Model.Event.Images)
+			{
+				<div id="inputImage" class="card mb-3">
+					<img src="@image.URL" class="card-img-top">
+					<div class="card-body">
+						<a href="@Url.Action("DeleteImage", "Event", new {imageId = image.Id, eventId = Model.Event.Id})" id="removeImage" class="btn btn-danger">Supprimer</a>
+					</div>
+				</div>
+			}
+
 		</div>
 
-		@foreach (var image in Model.Event.Images)
-		{
-			<div id="inputImage">
-				<img src="@image.URL" width="300" />
-				<button id="removeImage" type="button" class="btn btn-danger">Remove</button>
-			</div>
-		}
-
-		<div>Add images</div>
 		<div class="mb-3">
-			<label for="images" class="form-label">Images</label>
+			<label for="images" class="form-label">Ajouter des images</label>
 			<input class="form-control" type="file" id="images" accept=".jpg, .jpeg, .png" name="files" multiple>
 		</div>
-		<button type="submit" class="my-3 jds-button jds-primary">
-			<span class="left"></span>
-			<span class="top"></span>
-			<span class="right"></span>
-			<span class="bottom"></span>
-			Modifier
-		</button>
+
+		<button type="submit" class="btn btn-success">Modifier</button>
 	</form>
 </div>
-
 
 @section Scripts
 	{
 	<script>
-		$("#addImage").click(function () {
-			var rowCount = parseInt($("#total").val());
-			rowCount++;
-			$("#total").val(rowCount);
-			var html = '';
-			html += '<div id="inputImage">';
-			html += '<img src="~/img/jds_event.jpg" width="300" />';
-			html += '<button id="removeImage" type="button" class="btn btn-danger">Remove</button>';
-			html += '</div>';
-
-			$('#newRow').append(html);
-		});
 		$(document).on('click', '#removeImage', function () {
-			var rowCount = parseInt($("#total").val());
-			rowCount--;
-			$("#total").val(rowCount);
 			$(this).closest('#inputImage').remove();
 		});
 	</script>

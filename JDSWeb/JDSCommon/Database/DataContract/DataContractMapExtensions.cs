@@ -101,7 +101,7 @@ namespace JDSCommon.Database.DataContract
             Date = @event.Date,
             Title = @event.Title,
             Description = @event.Description,
-            Images = @event.Images.Select(i => i.ToDataContract()).ToArray(),
+            Images = @event.Images.Select(i => i.ToDataContract()).ToList(),
         };
 
         public static Models.Event ToModel(this Event @event) => new Models.Event
@@ -122,13 +122,13 @@ namespace JDSCommon.Database.DataContract
         public static Image ToDataContract(this Models.Image image) => new Image
         {
             Id = image.Id,
-            Picture = image.Picture,
+            URL = image.Url,
             Alt = image.Alt,
         };
 
         public static Models.Image ToModel(this Image image) => new Models.Image
         {
-            Picture = image.Picture,
+            Url = image.URL,
             Alt = image.Alt,
         };
 

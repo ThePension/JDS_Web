@@ -26,7 +26,7 @@ namespace JDSCommon.Database.DataContract
         public DateTime Date { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public ICollection<Image> Images { get; set; }
+        public IList<Image> Images { get; set; }
         public string StringDate => Date.ToString("dd MMMM yyyy");
         public string StringInputDate => Date.ToString("yyyy-MM-dd");
 

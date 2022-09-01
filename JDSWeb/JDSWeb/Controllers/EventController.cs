@@ -157,12 +157,35 @@ namespace JDSWeb.Controllers
             return RedirectToAction("ActualEvents", "Event");
         }
 
+        public IActionResult DeleteImage(int imageId, int eventId)
+        {
+            // NEED TO BE PROTECTED BY TEST ON USER'S RIGHT !
+
+            Event? @event = FetchEventById(eventId);
+            Image? imageToDelete = (@event is null) ? null : @event.Images.FirstOrDefault(i => i.Id == imageId);
+
+            if (imageToDelete is not null && @event is not null)
+            {
+                JDSContext ctx = new JDSContext();
+
+                @event.Images.Remove(imageToDelete);
+                ctx.Events.Update(@event);
+
+                ctx.SaveChanges();
+                ctx.Dispose();
+            }
+
+            return RedirectToAction("Update", "Event", new { id = eventId });
+        }
+
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                          PRIVATE METHODS                          *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
         private static Image[] ImagesFromFileNames(ICollection<IFormFile> files)
         {
+            // TODO : Adapt
+
             Image[] images = new Image[files.Count];
 
             int count = 0;
@@ -172,7 +195,7 @@ namespace JDSWeb.Controllers
                 images[count++] = new Image
                 {
                     Alt = "none",
-                    Picture = ImageService.FromStreamToBytes(image.OpenReadStream()),
+                    URL = "TODO in Event Controller",
                 };
             }
 
@@ -199,6 +222,17 @@ namespace JDSWeb.Controllers
             ctx.Dispose();
 
             return @event;
+        }
+
+        private static Image? FetchImageById(int id)
+        {
+            JDSContext ctx = new JDSContext();
+
+            Image? image = ctx.Images.FetchById(id);
+
+            ctx.Dispose();
+
+            return image;
         }
 
         private static Event[] FetchActualEvents()

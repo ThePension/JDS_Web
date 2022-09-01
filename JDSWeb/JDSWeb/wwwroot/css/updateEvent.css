@@ -9,37 +9,26 @@
         object-fit: cover;
     }
 
-#jds-update-event-background {
-    position: absolute;
-    top: 76px;
-    min-height: 100%;
-    background-color: var(--havelock-blue);
-    width: 100%;
-    z-index: -10;
-    background-repeat: repeat;
-    background-size: contain;
-}
-
-.jds-create-event {
-    color: white;
-    width: 50%;
-}
-
-    .jds-create-event > div {
-    }
-
-.jds-create-event-flex-row {
+#jds-cardContainer {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: space-around;
 }
 
-.jds-strut-30 {
-    width: 30px;
-}
-
-@media screen and (max-width:900px) {
-    .jds-create-event {
-        width: 95%;
+    #jds-cardContainer img {
+        height: 300px;
+        object-fit: cover;
     }
+
+    #jds-cardContainer .card {
+        max-width: 400px;
+        min-width: 300px;
+    }
+
+.jds-hiddenfile {
+    width: 0px;
+    height: 0px;
+    overflow: hidden;
 }
