@@ -1,151 +1,161 @@
 ﻿@using JDSCommon.Database.DataContract
 
 @{
-    ViewData["Title"] = "Nos produits";
-    ViewData["Active"] = "society";
-    ViewData["MobileActive"] = "products";
+	ViewData["Title"] = "Nos produits";
+	ViewData["Active"] = "society";
+	ViewData["MobileActive"] = "products";
 
-    bool userLogged = Context.Session.GetString(UserViewModel.SessionKeyUserName) is not null;
+	bool userLogged = Context.Session.GetString(UserViewModel.SessionKeyUserName) is not null;
 }
 
 @model ShopViewModel
 
 <div id="jds-products" class="container">
-    <div class="text-center my-4">
-        <h1>Produits</h1>
-    </div>
-    <div class="jds-products-container">
+	<div class="text-center my-4">
+		<h1>Produits</h1>
+	</div>
+	<div class="jds-products-container">
 
-        @if (Model.Error)
-        {
-            <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                <div class="ms-2">
-                    Désolé, ce produit n'est malheureusement plus disponible
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
+		@if (Model.Error)
+		{
+			<div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+				<i class="fa-solid fa-triangle-exclamation"></i>
+				<div class="ms-2">
+					Désolé, ce produit n'est malheureusement plus disponible
+				</div>
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		}
 
-        @if (Model.ArticleAdded)
-        {
-            <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
-                <i class="fa-solid fa-check"></i>
-                <div class="ms-2">
-                    L'article a été ajouté au <a class="alert-link" asp-controller="Shop" asp-action="Cart">panier</a> !
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
+		@if (Model.ArticleAdded)
+		{
+			<div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+				<i class="fa-solid fa-check"></i>
+				<div class="ms-2">
+					L'article a été ajouté au <a class="alert-link" asp-controller="Shop" asp-action="Cart">panier</a> !
+				</div>
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		}
 
-        @foreach (ClothType type in Model.ClothTypes)
-        {
-            <form class="jds-product-card jds-mobile-hover" method="post" asp-controller="Shop" asp-action="AddToCart">
-                <input type="hidden" name="cloth_type_id" value="@type.Id" />
-                <div class="jds-product-img-box">
-                    <img src="@type.Images.FirstOrDefault()?.URL" alt="@type.Images.FirstOrDefault()?.Alt" />
-                </div>
-                <div class="jds-product-details">
-                    <h3>
-                        @type.Name<br />
-                        <span>@type.Color.Name</span>
-                    </h3>
-                    <h4>Détails</h4>
-                    <p>@type.Description</p>
+		@foreach (ClothType type in Model.ClothTypes)
+		{
+			<form class="jds-product-card jds-mobile-hover" method="post" asp-controller="Shop" asp-action="AddToCart">
+				<input type="hidden" name="cloth_type_id" value="@type.Id" />
+				<div class="jds-product-img-box">
+					<img src="@type.Images.FirstOrDefault()?.URL" alt="@type.Images.FirstOrDefault()?.Alt" />
+				</div>
+				<div class="jds-product-details">
+					<h3>
+						@type.Name<br />
+						<span>@type.Color.Name</span>
+					</h3>
+					<h4>Détails</h4>
+					<p>@type.Description</p>
 
-                    @{
-                        bool isSized = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Booked is null && c.Size is not null);
-                        bool hasOne = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Booked is null);
-                    }
+					@{
+						bool isSized = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Booked is null && c.Size is not null);
+						bool hasOne = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Booked is null);
+					}
 
-                    @if (isSized)
-                    {
-                        <h4>Tailles</h4>
-                        <ul class="jds-product-size">
-                            @foreach (ClothSize size in Model.ClothSizes)
-                            {
-                                bool hasSize = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Size?.Id == size.Id && c.Booked is null);
+					@if (isSized)
+					{
+						<h4>Tailles</h4>
+						<ul class="jds-product-size">
+							@foreach (ClothSize size in Model.ClothSizes)
+							{
+								bool hasSize = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Size?.Id == size.Id && c.Booked is null);
 
-                                <li>
-                                    <input type="radio" name="cloth_size" value="@size.Id" id="@(type.Id)_@size.Shortcut" required @(hasSize ? "" : "disabled") />
-                                    <label for="@(type.Id)_@size.Shortcut">@size.Shortcut</label>
-                                </li>
-                            }
-                        </ul>
-                    }
+								<li>
+									<input type="radio" name="cloth_size" value="@size.Id" id="@(type.Id)_@size.Shortcut" required @(hasSize ? "" : "disabled") />
+									<label for="@(type.Id)_@size.Shortcut">@size.Shortcut</label>
+								</li>
+							}
+						</ul>
+					}
 
-                    @if (!hasOne)
-                    {
-                        <h4>Plus disponible</h4>
-                    }
+					@if (!hasOne)
+					{
+						<h4>Plus disponible</h4>
+					}
 
-                    <div class="jds-product-buy">
-                        @{
-                            int price = (int)type.Price;
-                            int floatPrice = (int)(type.Price % 1 * 100);
-                        }
-                        <h2><sup>CHF</sup>@price<small>.@floatPrice.ToString("D2")</small></h2>
+					<div class="jds-product-buy">
+						@{
+							int price = (int)type.Price;
+							int floatPrice = (int)(type.Price % 1 * 100);
+						}
+						<h2><sup>CHF</sup>@price<small>.@floatPrice.ToString("D2")</small></h2>
 
-                        @if (hasOne && userLogged)
-                        {
-                            <button type="submit" class="jds-button jds-info" @(hasOne ? "" : "disabled")>
-                                Ajouter
-                                <span class="top"></span>
-                                <span class="right"></span>
-                                <span class="bottom"></span>
-                                <span class="left"></span>
-                            </button>
-                        }
-                    </div>
-                </div>
-            </form>
+						@if (hasOne && userLogged)
+						{
+							<button type="submit" class="jds-button jds-info" @(hasOne ? "" : "disabled")>
+								Ajouter
+								<span class="top"></span>
+								<span class="right"></span>
+								<span class="bottom"></span>
+								<span class="left"></span>
+							</button>
+						}
+					</div>
 
-            <form class="jds-product-card-mobile" method="post" asp-controller="Shop" asp-action="AddToCart">
-                <div class="card" style="width: 18rem;">
-                    <input type="hidden" name="cloth_type_id" value="@type.Id" />
-                    <img src="@type.Images.FirstOrDefault()?.URL" class="card-img-top" alt="@type.Images.FirstOrDefault()?.Alt">
-                    <div class="card-body">
-                        <h5 class="card-title">@type.Name</h5>
-                        <p class="card-text">@type.Description</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><b>Couleur :</b> @type.Color.Name</li>
-                        <li class="list-group-item"><b>Prix :</b> @type.Price CHF</li>
+					@if (!userLogged)
+					{
+						<h4>Réservé aux membres</h4>
+					}
+				</div>
+			</form>
 
-                        @{
-                            bool isSizedMobile = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Booked is null && c.Size is not null);
-                            bool hasOneMobile = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Booked is null);
-                        }
+			<form class="jds-product-card-mobile" method="post" asp-controller="Shop" asp-action="AddToCart">
+				<div class="card" style="width: 18rem;">
+					<input type="hidden" name="cloth_type_id" value="@type.Id" />
+					<img src="@type.Images.FirstOrDefault()?.URL" class="card-img-top" alt="@type.Images.FirstOrDefault()?.Alt">
+					<div class="card-body">
+						<h5 class="card-title">@type.Name</h5>
+						<p class="card-text">@type.Description</p>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item"><b>Couleur :</b> @type.Color.Name</li>
+						<li class="list-group-item"><b>Prix :</b> @type.Price CHF</li>
 
-                        @if (isSizedMobile)
-                        {
-                            <ul>
-                                @foreach (ClothSize size in Model.ClothSizes)
-                                {
-                                    bool hasSize = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Size?.Id == size.Id && c.Booked is null);
+						@{
+							bool isSizedMobile = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Booked is null && c.Size is not null);
+							bool hasOneMobile = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Booked is null);
+						}
 
-                                    <li>
-                                        <input type="radio" class="btn-check" name="cloth_size" value="@size.Id" id="mobile_@(type.Id)_@size.Shortcut" autocomplete="off" required @(hasSize ? "" : "disabled") />
-                                        <label class="btn btn-outline-secondary" for="mobile_@(type.Id)_@size.Shortcut">@size.Shortcut</label>
-                                    </li>
-                                }
-                            </ul>
-                        }
+						@if (isSizedMobile)
+						{
+							<ul>
+								@foreach (ClothSize size in Model.ClothSizes)
+								{
+									bool hasSize = Model.Clothes.Any(c => c.Type.Id == type.Id && c.Size?.Id == size.Id && c.Booked is null);
 
-                        @if (!hasOneMobile)
-                        {
-                            <li class="list-group-item"><b>PLUS DISPONIBLE</b></li>
-                        }
-                    </ul>
+									<li>
+										<input type="radio" class="btn-check" name="cloth_size" value="@size.Id" id="mobile_@(type.Id)_@size.Shortcut" autocomplete="off" required @(hasSize ? "" : "disabled") />
+										<label class="btn btn-outline-secondary" for="mobile_@(type.Id)_@size.Shortcut">@size.Shortcut</label>
+									</li>
+								}
+							</ul>
+						}
 
-                    @if (hasOneMobile && userLogged)
-                    {
-                        <div class="card-body d-flex justify-content-end">
-                            <button type="submit" class="btn btn-outline-primary" @(hasOneMobile ? "" : "disabled")>Ajouter</button>
-                        </div>
-                    }
-                </div>
-            </form>
-        }
-    </div>
+						@if (!hasOneMobile)
+						{
+							<li class="list-group-item"><b>PLUS DISPONIBLE</b></li>
+						}
+
+						@if (!userLogged)
+						{
+							<li class="list-group-item">Réservé aux membres</li>
+						}
+					</ul>
+
+					@if (hasOneMobile && userLogged)
+					{
+						<div class="card-body d-flex justify-content-end">
+							<button type="submit" class="btn btn-outline-primary" @(hasOneMobile ? "" : "disabled")>Ajouter</button>
+						</div>
+					}					
+				</div>
+			</form>
+		}
+	</div>
 </div>
