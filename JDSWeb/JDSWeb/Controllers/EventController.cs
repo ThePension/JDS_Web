@@ -15,6 +15,8 @@ namespace JDSWeb.Controllers
         |*                           PUBLIC METHODS                          *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+        #region IActionResult Methods
+
         public IActionResult Actual()
         {
             EventViewModel vm = new EventViewModel
@@ -104,6 +106,25 @@ namespace JDSWeb.Controllers
             return RedirectToAction("Actual", "Event");
         }
 
+        public IActionResult DeleteImage(int imageId, int eventId)
+        {
+            if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) >= ERole.Manager)
+            {
+                JDSContext ctx = new JDSContext();
+
+                ctx.RemoveImageInEvent(eventId, imageId);
+
+                ctx.SaveChanges();
+                ctx.Dispose();
+            }
+
+            return RedirectToAction("Update", "Event", new { id = eventId });
+        }
+
+        #endregion
+
+        #region POST Actions
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ParseCreate(string title, string description, DateTime date, ICollection<IFormFile> files)
@@ -148,24 +169,13 @@ namespace JDSWeb.Controllers
             return RedirectToAction("Actual", "Event");
         }
 
-        public IActionResult DeleteImage(int imageId, int eventId)
-        {
-            if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) >= ERole.Manager)
-            {
-                JDSContext ctx = new JDSContext();
-
-                ctx.RemoveImageInEvent(eventId, imageId);
-
-                ctx.SaveChanges();
-                ctx.Dispose();
-            }
-
-            return RedirectToAction("Update", "Event", new { id = eventId });
-        }
+        #endregion
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                          PRIVATE METHODS                          *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+        #region Helper
 
         private static Image[] ImagesFromFileNames(ICollection<IFormFile> files)
         {
@@ -184,6 +194,10 @@ namespace JDSWeb.Controllers
 
             return images;
         }
+
+        #endregion
+
+        #region Fetch methods
 
         private static Event[] FetchEvents()
         {
@@ -220,5 +234,7 @@ namespace JDSWeb.Controllers
 
             return passedEvents;
         }
+
+        #endregion
     }
 }

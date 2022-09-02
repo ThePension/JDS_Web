@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace JDSCommon.Database
 {
@@ -88,6 +89,24 @@ namespace JDSCommon.Database
             return image is null ? null : image.ToDataContract();
         }
 
+        public static DataContract.User? FetchByUsername(this DbSet<Models.User> users, string username)
+        {
+            Models.User? user = users
+                .Include(u => u.RoleNavigation)
+                .FirstOrDefault(u => u.Username == username);
+
+            return user is null ? null : user.ToDataContract();
+        }
+
+        public static DataContract.User? FetchById(this DbSet<Models.User> users, int id)
+        {
+            Models.User? user = users
+                .Include(u => u.RoleNavigation)
+                .FirstOrDefault(u => u.Id == id);
+
+            return user is null ? null : user.ToDataContract();
+        }
+
         #endregion
 
         #region Add Extensions
@@ -115,7 +134,7 @@ namespace JDSCommon.Database
             {
                 foreach (DataContract.Image image in images)
                 {
-                    Models.Image imageModel = ctx.Images.FirstOrDefault(i => i.Url == image.URL);
+                    Models.Image? imageModel = ctx.Images.FirstOrDefault(i => i.Url == image.URL);
                     eventModel.Images.Add(imageModel is not null ? imageModel : image.ToModel());
                 }
             }
