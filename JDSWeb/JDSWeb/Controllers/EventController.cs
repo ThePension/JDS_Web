@@ -15,7 +15,7 @@ namespace JDSWeb.Controllers
         |*                           PUBLIC METHODS                          *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public IActionResult ActualEvents()
+        public IActionResult Actual()
         {
             EventViewModel vm = new EventViewModel
             {
@@ -25,7 +25,7 @@ namespace JDSWeb.Controllers
             return (vm.Events is null) ? RedirectToAction("Index", "Home") : View(vm);
         }
 
-        public IActionResult PassedEvents()
+        public IActionResult Passed()
         {
             EventViewModel vm = new EventViewModel
             {
@@ -35,13 +35,13 @@ namespace JDSWeb.Controllers
             return (vm.Events is null) ? RedirectToAction("Index", "Home") : View(vm);
         }
 
-        public IActionResult ShowEvent(int id)
+        public IActionResult Show(int id)
         {
             Event? @event = FetchEventById(id);
 
             if (@event is null)
             {
-                return RedirectToAction("ActualEvents", "Event");
+                return RedirectToAction("Actual", "Event");
             }
             else
             {
@@ -58,7 +58,7 @@ namespace JDSWeb.Controllers
         {
             if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
             {
-                return RedirectToAction("ActualEvents", "Event");
+                return RedirectToAction("Actual", "Event");
             }
 
             return View();
@@ -68,14 +68,14 @@ namespace JDSWeb.Controllers
         {
             if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
             {
-                return RedirectToAction("ActualEvents", "Event");
+                return RedirectToAction("Actual", "Event");
             }
 
             Event? @event = FetchEventById(id);
 
             if (@event is null)
             {
-                return RedirectToAction("ActualEvents", "Event");
+                return RedirectToAction("Actual", "Event");
             }
             else
             {
@@ -105,12 +105,12 @@ namespace JDSWeb.Controllers
                 }
             }
 
-            return RedirectToAction("ActualEvents", "Event");
+            return RedirectToAction("Actual", "Event");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ParseEvent(string title, string description, DateTime date, ICollection<IFormFile> files)
+        public ActionResult ParseCreate(string title, string description, DateTime date, ICollection<IFormFile> files)
         {
             JDSContext ctx = new JDSContext();
 
@@ -125,12 +125,12 @@ namespace JDSWeb.Controllers
             ctx.SaveChanges();
             ctx.Dispose();
 
-            return RedirectToAction("ActualEvents", "Event");
+            return RedirectToAction("Actual", "Event");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ParseEventUpdate(int id, string title, string description, DateTime date, ICollection<IFormFile> files)
+        public ActionResult ParseUpdate(int id, string title, string description, DateTime date, ICollection<IFormFile> files)
         {
             Event? eventToUpdate = FetchEventById(id);
 
@@ -158,7 +158,7 @@ namespace JDSWeb.Controllers
                 ctx.Dispose();
             }
 
-            return RedirectToAction("ActualEvents", "Event");
+            return RedirectToAction("Actual", "Event");
         }
 
         public IActionResult DeleteImage(int imageId, int eventId)

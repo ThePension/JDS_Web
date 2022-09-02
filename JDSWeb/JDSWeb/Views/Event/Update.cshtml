@@ -11,7 +11,7 @@
 <div id="jds-update-event-background"></div>
 
 <div id="jds-update-event-container" class="d-flex justify-content-center">
-	<form class="jds-create-event" enctype="multipart/form-data" method="post" asp-controller="Event" asp-action="ParseEventUpdate">
+	<form class="jds-create-event" enctype="multipart/form-data" method="post" asp-controller="Event" asp-action="ParseUpdate">
 		<input type="hidden" name="id" value="@Model.Event.Id" />
 		<div class="mb-3">
 			<label for="title" class="form-label">Titre</label>
