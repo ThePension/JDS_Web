@@ -5,6 +5,7 @@ using JDSCommon.Services;
 using JDSWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 using JDSContext = JDSCommon.Database.Models.JDSContext;
 
 namespace JDSWeb.Controllers
@@ -143,6 +144,30 @@ namespace JDSWeb.Controllers
             ctx.Dispose();
 
             return RedirectToAction("Actual", "Event");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SearchResults(string pattern)
+        {
+            Regex rx = new Regex(pattern, RegexOptions.IgnoreCase);
+            JDSContext ctx = new JDSContext();
+
+            Event[] events = ctx.Events
+                .Fetch()
+                .Where(e => rx.IsMatch(e.Title))
+                .OrderByDescending(e => e.Date)
+                .ToArray();
+
+            ctx.Dispose();
+
+            EventViewModel vm = new EventViewModel
+            {
+                Events = events,
+                SearchPattern = pattern,
+            };
+
+            return View(vm);
         }
 
         [HttpPost]

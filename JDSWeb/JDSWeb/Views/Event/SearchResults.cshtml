@@ -1,0 +1,44 @@
+﻿@using JDSCommon.Database.DataContract
+@model EventViewModel
+
+<div class="container">
+    <div class="text-center my-4">
+        <h1>Recherche d'Événements</h1>
+    </div>
+
+    <div class="container">
+        @if (Model.Events.Length < 1)
+        {
+            <div class="text-center">
+                <span class="badge rounded-pill bg-info text-dark py-2 px-3 mb-4">@Model.SearchPattern</span>
+
+                <h4>Aucun résultat n'a été trouvé avec cette recherche.</h4>
+            </div>
+        }
+        else
+        {
+            <span class="badge rounded-pill bg-info text-dark py-2 px-3">@Model.SearchPattern</span>
+
+            <ul class="list-group list-group-flush mt-3">
+                @foreach (Event e in Model.Events)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto d-grid">
+                            <div class="fw-bold"><a class="link-dark" asp-controller="Event" asp-action="Show" asp-route-id="@e.Id">@e.Title</a></div>
+                            <span class="text-truncate">@e.Description</span>
+                        </div>
+
+                        @if (e.Date < DateTime.Now)
+                        {
+                            <span class="badge bg-secondary rounded-pill">@e.StringDate</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success rounded-pill">@e.StringDate</span>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>

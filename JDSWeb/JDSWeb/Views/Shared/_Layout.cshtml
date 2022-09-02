@@ -137,22 +137,19 @@
         <span class="jds-navbar-search-close">
             <button id="jds-search-close-btn"><i class="fa-solid fa-xmark"></i></button>
         </span>
-        <form class="jds-search-form">
-            <input type="text" placeholder="Rechercher un événement" />
+        <form class="jds-search-form needs-validation" asp-controller="Event" asp-action="SearchResults">
+            <input type="text" id="search_input" name="pattern" placeholder="Rechercher un événement" autofocus required />
             <button class="jds-search-form-btn" type="submit">Rechercher</button>
         </form>
         <div class="jds-search-info">
-            <span>Commencez à écrire pour voir les événements</span>
-        </div>
-        <div class="jds-search-result">
-            <small>/* Les résultats viendront ici *\</small>
+            <span>Pressez enter pour effectuer la recherche</span>
         </div>
     </div>
 
     <div class="jds-mobile-nav" id="jds-mobile-nav">
         <div class="jds-mobile-search">
-            <form class="jds-mobile-search-form">
-                <input type="text" placeholder="Rechercher un événement" />
+            <form class="jds-mobile-search-form" asp-controller="Event" asp-action="SearchResults">
+                <input type="text" name="pattern" placeholder="Rechercher un événement" required />
                 <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
         </div>

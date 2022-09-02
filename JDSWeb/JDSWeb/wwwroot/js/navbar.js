@@ -45,6 +45,7 @@ $(document).ready(() => {
 
     function toggleSearchNavbar() {
         $("#jds-navbar-search").toggleClass("jds-navbar-search-opened");
+        $("#search_input").focus();
 
         if ($("#jds-navbar-search").hasClass("jds-navbar-search-opened")) {
             setTimeout(() => {

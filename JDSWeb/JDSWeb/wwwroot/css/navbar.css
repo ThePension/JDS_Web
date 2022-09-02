@@ -1,4 +1,5 @@
 ﻿/* Navbar Brand */
+
 .navbar-brand img {
     width: 50px;
     height: 50px;
@@ -390,6 +391,7 @@ main.jds-navbar-search-opened {
 
     .jds-mobile-nav .jds-mobile-search .jds-mobile-search-form {
         width: 100%;
+        display: flex;
     }
 
 .jds-mobile-search .jds-mobile-search-form input[type=text] {
