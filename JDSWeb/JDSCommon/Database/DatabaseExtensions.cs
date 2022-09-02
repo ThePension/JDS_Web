@@ -179,6 +179,18 @@ namespace JDSCommon.Database
 
         #endregion
 
+        #region RemoveRange Extensions
+
+        public static void RemoveRange(this DbSet<Models.Cloth> table, DataContract.Cloth[] cloths)
+        {
+            foreach (DataContract.Cloth cloth in cloths)
+            {
+                table.Remove(cloth);
+            }
+        }
+
+        #endregion
+
         #region Update Extensions
 
         public static EntityEntry<Models.Cloth>? Update(this DbSet<Models.Cloth> table, DataContract.Cloth entity)

@@ -1,5 +1,6 @@
 ﻿using JDSCommon.Api;
 using JDSWeb.Models;
+using MailKit;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -18,7 +19,7 @@ namespace JDSWeb.Controllers
         {
             Request.Cookies.TryGetValue(UserViewModel.CookieKeyLoggedIn, out string? loggedIn);
             Request.Cookies.TryGetValue(UserViewModel.CookieKeyLoggedOut, out string? loggedOut);
-            
+
             Response.Cookies.Delete(UserViewModel.CookieKeyLoggedIn);
             Response.Cookies.Delete(UserViewModel.CookieKeyLoggedOut);
 
@@ -29,7 +30,7 @@ namespace JDSWeb.Controllers
             };
 
             return View(vm);
-        }      
+        }
 
         public IActionResult Members()
         {

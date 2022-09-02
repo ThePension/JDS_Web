@@ -1,8 +1,12 @@
-﻿using JDSCommon.Database;
+﻿using JDSCommon.Api;
+using JDSCommon.Database;
 using JDSCommon.Database.DataContract;
+using JDSCommon.Settings;
 using JDSWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Newtonsoft.Json;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using DBUser = JDSCommon.Database.DataContract.User;
 using JDSContext = JDSCommon.Database.Models.JDSContext;
@@ -11,7 +15,7 @@ namespace JDSWeb.Controllers
 {
     public class ShopController : Controller
     {
-        public IActionResult Products()
+        public IActionResult Index()
         {
             Request.Cookies.TryGetValue(ShopViewModel.CookieKeyError, out string? error);
             Request.Cookies.TryGetValue(ShopViewModel.CookieKeyArticleAdded, out string? articleAdded);
@@ -37,6 +41,18 @@ namespace JDSWeb.Controllers
             };
 
             return View(vm);
+        }
+
+        public IActionResult Confirmation()
+        {
+            if (!Request.Cookies.TryGetValue(ShopViewModel.CookieKeyConfirmation, out string? confirmation) || !bool.Parse(confirmation ?? "false"))
+            {
+                return RedirectToAction(nameof(Cart), "Shop", new { id = ShopViewModel.Overview });
+            }
+
+            Response.Cookies.Delete(ShopViewModel.CookieKeyConfirmation);
+
+            return View();
         }
 
         public IActionResult Cart(string id)
@@ -80,8 +96,8 @@ namespace JDSWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Shop/Cart/Confirmation")]
-        public IActionResult Confirm(string first_name, string last_name, string email)
+        [Route("Shop/Cart/Validation")]
+        public IActionResult Validate(string first_name, string last_name, string email)
         {
             int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
 
@@ -109,7 +125,76 @@ namespace JDSWeb.Controllers
                 Email = email,
             };
 
-            return View("Cart.Confirmation", vm);
+            return View("Cart.Validation", vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ParseValidate(string first_name, string last_name, string email)
+        {
+            int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
+
+            if (userId is null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            JDSContext ctx = new JDSContext();
+
+            Cloth[] clothes = ctx.Cloths
+                .Fetch()
+                .Where(c => c.Booked?.Id == userId)
+                .ToArray();
+
+            ctx.Cloths.RemoveRange(clothes);
+            ctx.SaveChanges();
+
+            ctx.Dispose();
+
+            // Email to shop responsable
+            EMailMessage responsableEmail = new EMailMessage(Keys.ShopResponsable)
+                .AddSubject("Commande de vêtements")
+                .AddLine("Une nouvelle commande a été éffectuée sur le site.")
+                .AddEmptyLine()
+                .AddLine($"- <b>Client :</b> {first_name} {last_name}")
+                .AddLine($"- <b>Email :</b> {email}")
+                .AddEmptyLine()
+                .AddLine("La commande est composée des articles suivants :");
+
+            // Email to customer
+            EMailMessage customerEmail = new EMailMessage(email)
+                .AddSubject("Commande de vêtements")
+                .AddLine("Votre commande a bien été reçue, nous allons la traiter au plus vite.")
+                .AddEmptyLine()
+                .AddLine("Récapitulatif de la commande :");
+
+            // Fill both with same content
+            foreach (Cloth cloth in clothes)
+            {
+                responsableEmail.AddLine($"- {cloth.Type.Name} {cloth.Type.Color.Name} / {(cloth.Size is not null ? $"Taille : {cloth.Size.Shortcut} /" : "")} {cloth.Type.Price.ToString("0.00", new CultureInfo("en-US", false))} CHF");
+                customerEmail.AddLine($"- {cloth.Type.Name} {cloth.Type.Color.Name} / {(cloth.Size is not null ? $"Taille : {cloth.Size.Shortcut} /" : "")} {cloth.Type.Price.ToString("0.00", new CultureInfo("en-US", false))} CHF");
+            }
+
+            responsableEmail
+                .AddEmptyLine()
+                .AddLine($"Total : {clothes.Sum(c => c.Type.Price).ToString("0.00", new CultureInfo("en-US", false))} CHF")
+                .AddEmptyLine()
+                .AddLine("La bise Deub 😘");
+
+            customerEmail
+                .AddEmptyLine()
+                .AddLine($"Total : {clothes.Sum(c => c.Type.Price).ToString("0.00", new CultureInfo("en-US", false))} CHF")
+                .AddEmptyLine()
+                .AddLine("Toute bonne journée,")
+                .AddLine("La Jeunesse de Savagnier");
+
+            // Send emails
+            responsableEmail.Send();
+            customerEmail.Send();
+
+            Response.Cookies.Append(ShopViewModel.CookieKeyConfirmation, "true");
+
+            return RedirectToAction(nameof(Confirmation));
         }
 
         [HttpPost]
@@ -131,7 +216,7 @@ namespace JDSWeb.Controllers
 
                 Response.Cookies.Append(ShopViewModel.CookieKeyError, "true");
 
-                return RedirectToAction(nameof(Products));
+                return RedirectToAction(nameof(Index));
             }
 
             // Book this cloth for the user
@@ -153,7 +238,7 @@ namespace JDSWeb.Controllers
 
             Response.Cookies.Append(ShopViewModel.CookieKeyArticleAdded, "true");
 
-            return RedirectToAction(nameof(Products));
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult RemoveFromCart(int cloth_id)

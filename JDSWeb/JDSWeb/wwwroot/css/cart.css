@@ -9,9 +9,39 @@
     border-radius: 10px;
 }
 
-@media screen and (max-width: 650px)
-{
+@media screen and (max-width: 650px) {
     #jds-cart-contact {
         max-width: 95%;
     }
+}
+
+/* Cart.Validation */
+
+#jds-cart-confirmation {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 75px;
+    align-items: center;
+}
+
+    #jds-cart-confirmation .jds-cart-confirmation-overview,
+    #jds-cart-confirmation .jds-cart-confirmation-contact {
+        min-width: 300px;
+        margin: 20px 10px;
+    }
+
+    #jds-cart-confirmation .jds-cart-confirmation-contact {
+        border: 1px solid grey;
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+/* Cart Confirmation */
+
+#jds-confirmation {
+    margin-top: 50px;
+}
+
+#jds-confirmation h1 {
+    margin-bottom: 50px;
 }

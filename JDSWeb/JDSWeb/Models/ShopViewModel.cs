@@ -12,6 +12,7 @@ namespace JDSWeb.Models
 
 		public static readonly string CookieKeyError = "c_Shop.Error";
 		public static readonly string CookieKeyArticleAdded = "c_Shop.ArticleAdded";
+		public static readonly string CookieKeyConfirmation = "c_Shop.Confirmation";
 
 		public static readonly string Overview = "Overview";
 		public static readonly string Contact = "Contact";

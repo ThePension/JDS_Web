@@ -1,67 +1,91 @@
-﻿using MimeKit;
-using MailKit.Net.Smtp;
-using JDSCommon.Settings;
+﻿using JDSCommon.Settings;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace JDSCommon.Services.Mails
+namespace JDSCommon.Api
 {
-    public static class EmailKitAPI
+    public class EMailMessage : MailMessage
     {
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                               FIELDS                              *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+        private static readonly MailAddress address;
         private static readonly SmtpClient client;
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                             PROPERTIES                            *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
+        private new IList<string> Body { get; set; }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                            CONSTRUCTORS                           *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
-        static EmailKitAPI()
+        static EMailMessage()
         {
-            client = new SmtpClient();
+            client = new SmtpClient(Keys.EmailServer, Keys.EmailPort);
+            address = new MailAddress(Keys.EmailAdress, "Jeunesse de Savagnier");
 
-            client.Connect("smtp.gmail.com", 465, true);
-            client.AuthenticationMechanisms.Remove("XOAUTH2");
-            client.Authenticate("dev.jdsavagnier@gmail.com", Keys.EmailKitPassword);
+            NetworkCredential credential = new NetworkCredential(Keys.EmailAdress, Keys.EmailPassword);
+
+            client.EnableSsl = true;
+            client.UseDefaultCredentials = false;
+            client.Credentials = credential;
+        }
+
+        public EMailMessage(string to) : base(Keys.EmailAdress, to)
+        {
+            Body = new List<string>();
+
+            From = address;
+            BodyEncoding = Encoding.UTF8;
+            IsBodyHtml = true;
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                           PUBLIC METHODS                          *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public static void SendEmail(Message message)
+        public EMailMessage AddEmptyLine()
         {
-            var emailMessage = CreateEmailMessage(message);
-            Send(emailMessage);
+            AddLine("");
+
+            return this;
+        }
+
+        public EMailMessage AddLine(string message)
+        {
+            Body.Add(message);
+
+            return this;
+        }
+
+        public EMailMessage AddSubject(string subject)
+        {
+            Subject = subject;
+
+            return this;
+        }
+
+        public void Send()
+        {
+            base.Body = string.Join("<br />", Body);
+
+            client.Send(this);
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                          PRIVATE METHODS                          *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        private static MimeMessage CreateEmailMessage(Message message)
-        {
-            var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("JDS", "dev.jdsavagnier@gmail.com"));
-            emailMessage.To.AddRange(message.To);
-            emailMessage.Subject = message.Subject;
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
-
-            return emailMessage;
-        }
-
-        private static void Send(MimeMessage mailMessage)
-        {
-            client.Send(mailMessage);
-        }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                         PROTECTED METHODS                         *|

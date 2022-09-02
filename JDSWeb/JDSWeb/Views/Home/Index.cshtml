@@ -46,7 +46,7 @@
                     <p class="card-text">Découvrez les futurs événements auxquels la JDS participe</p>
                 </div>
                 <div>
-                    <a href="@Url.Action("ActualEvents", "Event")" class="btn btn-primary mt-3">Plus d'infos</a>
+                    <a asp-controller="Event" asp-action="Actual" class="btn btn-primary mt-3">Plus d'infos</a>
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
                     <p class="card-text">Le comité est formé de 6 gaillards super motivé</p>
                 </div>
                 <div>
-                    <a href="@Url.Action("Committee", "Society")" class="btn btn-primary mt-3">Plus d'infos</a>
+                    <a asp-controller="Society" asp-action="Committee" class="btn btn-primary mt-3">Plus d'infos</a>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
                     <p class="card-text">La JDS propose divers vêtements aux couleurs de Savagnier</p>
                 </div>
                 <div>
-                    <a href="@Url.Action("Products", "Shop")" class="btn btn-primary mt-3">Plus d'infos</a>
+                    <a asp-controller="Shop" asp-action="Index" class="btn btn-primary mt-3">Plus d'infos</a>
                 </div>
             </div>
         </div>

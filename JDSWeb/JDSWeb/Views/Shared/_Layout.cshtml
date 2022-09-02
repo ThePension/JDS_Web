@@ -64,7 +64,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="society_dropdown">
                             <li><a class="dropdown-item" asp-controller="Society" asp-action="Committee">Comité</a></li>
-                            <li><a class="dropdown-item" asp-controller="Shop" asp-action="Products">Nos Produits</a></li>
+                            <li><a class="dropdown-item" asp-controller="Shop" asp-action="Index">Nos Produits</a></li>
                             <li><a class="dropdown-item" asp-controller="Society" asp-action="About">À propos</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" asp-controller="Society" asp-action="Developers">Développeurs</a></li>
@@ -168,7 +168,7 @@
                 <a>La société</a>
                 <ul>
                     <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "committee" ? "jds-mobile-menu-active" : "")" asp-controller="Society" asp-action="Committee">Comité</a></li>
-                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "products" ? "jds-mobile-menu-active" : "")" asp-controller="Shop" asp-action="Products">Nos produits</a></li>
+                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "products" ? "jds-mobile-menu-active" : "")" asp-controller="Shop" asp-action="Index">Nos produits</a></li>
                     <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "about" ? "jds-mobile-menu-active" : "")" asp-controller="Society" asp-action="About">À propos</a></li>
                     <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "developers" ? "jds-mobile-menu-active" : "")" asp-controller="Society" asp-action="Developers">Développeurs</a></li>
                 </ul>

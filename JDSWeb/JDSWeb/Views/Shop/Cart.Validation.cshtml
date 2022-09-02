@@ -17,22 +17,23 @@
 </nav>
 
 <div id="jds-cart-confirmation" class="container">
-    <div class="jds-cart-confirmation-overview">
+    <div class="jds-cart-confirmation-overview col-8">
         <ul class="list-group list-group-flush">
             @foreach (Cloth cloth in Model.Clothes)
             {
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="ms-2 me-auto">
                         <div class="fw-bold">@cloth.Type.Name</div>
-                        Couleur : @cloth.Type.Color.Name / Taille : @(cloth.Size?.Shortcut ?? "Unique")
+                        Couleur : @cloth.Type.Color.Name<br />
+                        Taille : @(cloth.Size?.Shortcut ?? "Unique")
                     </div>
                     <span class="badge bg-info rounded-pill">@cloth.Type.Price.ToString("0.00", new CultureInfo("en-US", false)) CHF</span>
                 </li>
             }
         </ul>
     </div>
-    <div class="jds-cart-confirmation-contact">
-        <form class="row g-3" method="post">
+    <div class="jds-cart-confirmation-contact col">
+        <form class="row g-3" method="post" asp-controller="Shop" asp-action="ParseValidate">
             <input type="hidden" class="form-control" name="first_name" value="@Model.FirstName" required>
             <input type="hidden" class="form-control" name="last_name" value="@Model.LastName" required>
             <input type="hidden" class="form-control" name="email" value="@Model.Email" required>
@@ -43,6 +44,8 @@
                 <div>@Model.Email</div>
                 <div>Total : @Model.Clothes.Sum(c => c.Type.Price).ToString("0.00", new CultureInfo("en-US", false)) CHF</div>
             </div>
+
+            <hr />
 
             <div class="d-flex justify-content-between">
                 <a class="btn btn-outline-secondary" asp-controller="Shop" asp-action="Cart" asp-route-id="@ShopViewModel.Contact">

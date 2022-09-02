@@ -2,7 +2,6 @@
 using JDSCommon.Database.DataContract;
 using JDSCommon.Services;
 using JDSCommon.Services.Extensions;
-using JDSCommon.Services.Mails;
 using JDSWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -171,13 +170,6 @@ namespace JDSWeb.Controllers
             ctx.Dispose();
 
             // Provide random generated password to the user (Email)
-            Message message = new Message(
-                new string[] { email },
-                "JDS Mot-de-passe",
-                $"Bonjour {username}, voici votre mot-de-passe {password}"
-            );
-
-            EmailKitAPI.SendEmail(message);
 
             return RedirectToAction("List", "User");
         }
