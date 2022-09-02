@@ -56,13 +56,6 @@
                         <ul class="dropdown-menu" aria-labelledby="event_dropdown">
                             <li><a class="dropdown-item" asp-controller="Event" asp-action="Actual">Actualité</a></li>
                             <li><a class="dropdown-item" asp-controller="Event" asp-action="Passed">Archives</a></li>
-
-                            @if (role >= ERole.Manager)
-                            {
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" asp-controller="Event" asp-action="Create">Ajouter</a></li>
-                            }
-
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -77,12 +70,20 @@
                             <li><a class="dropdown-item" asp-controller="Society" asp-action="Developers">Développeurs</a></li>
                         </ul>
                     </li>
-                    @if (UserLogged)
+
+                    @if (role >= ERole.Manager)
                     {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Members">Espace Membres</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @(ViewData["Active"] as string == "admin" ? "jds-active" : "")" href="#" id="admin_dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Espace Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="admin_dropdown">
+                                <li><a class="dropdown-item" asp-controller="Event" asp-action="Create">Ajouter un événement</a></li>
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="List">Gérer les utilisateurs</a></li>
+                            </ul>
                         </li>
                     }
+                    
                 </ul>
                 <div class="jds-hspring"></div>
                 <ul class="navbar-nav jds-navbar-right hstack gap-2">
@@ -172,9 +173,20 @@
                     <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "developers" ? "jds-mobile-menu-active" : "")" asp-controller="Society" asp-action="Developers">Développeurs</a></li>
                 </ul>
             </li>
+
+            @if(role >= ERole.Manager)
+            {
+                <li class="jds-mobile-menu-item jds-mobile-dropdown">
+                <a>Espace Admin</a>
+                <ul>
+                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "create_event" ? "jds-mobile-menu-active" : "")" asp-controller="Event" asp-action="Create">Ajouter un événement</a></li>
+                    <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "crud_users" ? "jds-mobile-menu-active" : "")" asp-controller="User" asp-action="List">Gérer les utilisateurs</a></li>
+                </ul>
+            </li>
+            }
+
             @if (UserLogged)
             {
-                <li class="jds-mobile-menu-item"><a class="@(ViewData["MobileActive"] as string == "members" ? "jds-mobile-menu-active" : "")" asp-controller="Home" asp-action="Members">Espace Membres</a></li>
                 <li class="jds-mobile-menu-item jds-mobile-dropdown">
                     <a>Mon compte</a>
                     <ul>
