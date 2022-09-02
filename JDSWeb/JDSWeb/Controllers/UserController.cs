@@ -225,5 +225,19 @@ namespace JDSWeb.Controllers
 
             return RedirectToAction("List", "User");
         }
+
+        public ActionResult ForgottonPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(string email)
+        {
+            // TODO : Fetch the user by email, generate rnd pw, update user in db, send email 
+
+            return RedirectToAction("Login", "User");
+        }
     }
 }
