@@ -18,11 +18,13 @@ namespace JDSCommon.Api
         private static readonly MailAddress address;
         private static readonly SmtpClient client;
 
+        private readonly IList<string> body;
+
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                             PROPERTIES                            *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        private new IList<string> Body { get; set; }
+
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                            CONSTRUCTORS                           *|
@@ -42,7 +44,7 @@ namespace JDSCommon.Api
 
         public EMailMessage(string to) : base(Keys.EmailAdress, to)
         {
-            Body = new List<string>();
+            body = new List<string>();
 
             From = address;
             BodyEncoding = Encoding.UTF8;
@@ -62,7 +64,7 @@ namespace JDSCommon.Api
 
         public EMailMessage AddLine(string message)
         {
-            Body.Add(message);
+            body.Add(message);
 
             return this;
         }
@@ -76,7 +78,7 @@ namespace JDSCommon.Api
 
         public void Send()
         {
-            base.Body = string.Join("<br />", Body);
+            Body = string.Join("<br />", body);
 
             client.Send(this);
         }
