@@ -3,24 +3,38 @@
 
 @{
 	ViewData["Title"] = Model.Event.Title;
+	ERole role = (ERole)(Context.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1); //ERole role = ERole.Admin;
 }
 
-<a class="btn btn-primary" href="@Url.Action("Update", "Event", new { id = Model.Event.Id })">Modifier</a>
-<a class="btn btn-danger" href="@Url.Action("Delete", "Event", new { id = Model.Event.Id })">Supprimer</a>
-
-<table>
-	<tr>
-		<td>@Model.Event.Title</td>
-	</tr>
-	<tr>
-		<td>@Model.Event.Description</td>
-	</tr>
-	<tr>
-		<td>@Model.Event.StringDate</td>
-	</tr>
-</table>
-
-@foreach (Image img in Model.Event.Images)
+@if (role >= ERole.Manager)
 {
-	<img src="@img.URL" alt="@img.Alt">
+	<a class="btn btn-primary" href="@Url.Action("Update", "Event", new { id = Model.Event.Id })">Modifier</a>
+	<a class="btn btn-danger" href="@Url.Action("Delete", "Event", new { id = Model.Event.Id })">Supprimer</a>
 }
+
+<div class="container">
+	<div class="card mt-3 mb-3">
+		<div class="row g-0">
+			<div class="col-md-4">
+				<img src="@Model.Event.Images.FirstOrDefault()?.URL" class="img-fluid rounded-start">
+			</div>
+			<div class="col-md-8">
+				<div class="card-body">
+					<h5 class="card-title">@Model.Event.Title - @Model.Event.StringDate</h5>
+					<p class="card-text">@Model.Event.Description</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="jds-cardContainer">
+
+		@foreach (var image in Model.Event.Images)
+		{
+			<div id="inputImage" class="card mb-3">
+				<img src="@image.URL" class="card-img-top">
+			</div>
+		}
+
+	</div>
+</div>
