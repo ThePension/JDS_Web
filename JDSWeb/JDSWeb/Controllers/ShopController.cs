@@ -42,7 +42,7 @@ namespace JDSWeb.Controllers
         public IActionResult Cart(string id)
         {
             int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
-            
+
             Request.Cookies.TryGetValue(ShopViewModel.CookieKeyError, out string? error);
             Response.Cookies.Delete(ShopViewModel.CookieKeyError);
 
@@ -53,7 +53,7 @@ namespace JDSWeb.Controllers
 
             JDSContext ctx = new JDSContext();
 
-            User user = ctx.Users.Fetch().First(u => u.Id == userId);
+            DBUser user = ctx.Users.Fetch().First(u => u.Id == userId);
             Cloth[] clothes = ctx.Cloths
                 .Fetch()
                 .Where(c => c.Booked?.Id == userId)
@@ -83,7 +83,33 @@ namespace JDSWeb.Controllers
         [Route("Shop/Cart/Confirmation")]
         public IActionResult Confirm(string first_name, string last_name, string email)
         {
-            return View("Cart.Confirmation");
+            int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
+
+            if (userId is null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            JDSContext ctx = new JDSContext();
+
+            DBUser user = ctx.Users.Fetch().First(u => u.Id == userId);
+            Cloth[] clothes = ctx.Cloths
+                .Fetch()
+                .Where(c => c.Booked?.Id == userId)
+                .ToArray();
+
+            ctx.Dispose();
+
+            ShopViewModel vm = new ShopViewModel
+            {
+                User = user,
+                Clothes = clothes,
+                FirstName = first_name,
+                LastName = last_name,
+                Email = email,
+            };
+
+            return View("Cart.Confirmation", vm);
         }
 
         [HttpPost]

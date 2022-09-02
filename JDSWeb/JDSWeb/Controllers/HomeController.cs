@@ -29,19 +29,9 @@ namespace JDSWeb.Controllers
             };
 
             return View(vm);
-        }
-
-        public IActionResult Developers()
-        {
-            return View();
-        }        
+        }      
 
         public IActionResult Members()
-        {
-            return View();
-        }
-
-        public IActionResult About()
         {
             return View();
         }

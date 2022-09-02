@@ -8,3 +8,10 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
 }
+
+@media screen and (max-width: 650px)
+{
+    #jds-cart-contact {
+        max-width: 95%;
+    }
+}

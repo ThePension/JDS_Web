@@ -23,11 +23,22 @@ namespace JDSWeb.Models
 		\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
         public Cloth[] Clothes { get; set; }
+
 		public ClothSize[] ClothSizes { get; set; }
+
 		public ClothType[] ClothTypes { get; set; }
+
 		public bool Error { get; set; }
+
 		public bool ArticleAdded { get; set; }
+
 		public User User { get; set; }
+
+		public string FirstName { get; set; }
+
+		public string LastName { get; set; }
+
+		public string Email { get; set; }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 		|*                            CONSTRUCTORS                           *|
