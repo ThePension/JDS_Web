@@ -40,25 +40,43 @@
     <div class="card" style="width: 30rem;">
         <img src="~/img/jds_event.jpg" class="card-img-top" alt="events">
         <div class="card-body">
-            <h2 class="card-title">Événements</h2>
-            <p class="card-text">Découvrez les futurs événements auxquels la JDS participe</p>
-            <a href="@Url.Action("ActualEvents", "Event")" class="btn btn-primary">Plus d'infos</a>
+            <div class="d-flex justify-content-between h-100 flex-column">
+                <div>
+                    <h2 class="card-title">Événements</h2>
+                    <p class="card-text">Découvrez les futurs événements auxquels la JDS participe</p>
+                </div>
+                <div>
+                    <a href="@Url.Action("ActualEvents", "Event")" class="btn btn-primary mt-3">Plus d'infos</a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="card" style="width: 30rem;">
         <img src="~/img/jds_committee1.jpg" class="card-img-top" alt="committee">
         <div class="card-body">
-            <h2 class="card-title">Comité</h2>
-            <p class="card-text">Le comité est formé de 6 gaillards super motivé</p>
-            <a href="@Url.Action("Committee", "Society")" class="btn btn-primary">Plus d'infos</a>
+            <div class="d-flex justify-content-between h-100 flex-column">
+                <div>
+                    <h2 class="card-title">Comité</h2>
+                    <p class="card-text">Le comité est formé de 6 gaillards super motivé</p>
+                </div>
+                <div>
+                    <a href="@Url.Action("Committee", "Society")" class="btn btn-primary mt-3">Plus d'infos</a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="card" style="width: 30rem;">
         <img src="~/img/jds_tshirt_jaune.png" class="card-img-top" alt="store">
         <div class="card-body">
-            <h2 class="card-title">Nos produits</h2>
-            <p class="card-text">La JDS propose divers vêtements aux couleurs de Savagnier</p>
-            <a href="@Url.Action("Products", "Shop")" class="btn btn-primary">Plus d'infos</a>
+            <div class="d-flex justify-content-between h-100 flex-column">
+                <div>
+                    <h2 class="card-title">Nos produits</h2>
+                    <p class="card-text">La JDS propose divers vêtements aux couleurs de Savagnier</p>
+                </div>
+                <div>
+                    <a href="@Url.Action("Products", "Shop")" class="btn btn-primary mt-3">Plus d'infos</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
