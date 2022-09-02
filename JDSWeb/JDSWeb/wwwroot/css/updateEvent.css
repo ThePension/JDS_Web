@@ -35,3 +35,9 @@
     height: 0px;
     overflow: hidden;
 }
+
+@media screen and (max-width:850px) {
+    #jds-update-event-container {
+        max-width: 95%;
+    }
+}
