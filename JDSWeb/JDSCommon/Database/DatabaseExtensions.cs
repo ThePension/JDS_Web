@@ -107,6 +107,15 @@ namespace JDSCommon.Database
             return user is null ? null : user.ToDataContract();
         }
 
+        public static DataContract.User? FetchByEmail(this DbSet<Models.User> users, string email)
+        {
+            Models.User? user = users
+                .Include(u => u.RoleNavigation)
+                .FirstOrDefault(u => u.Email == email);
+
+            return user is null ? null : user.ToDataContract();
+        }
+
         #endregion
 
         #region Add Extensions

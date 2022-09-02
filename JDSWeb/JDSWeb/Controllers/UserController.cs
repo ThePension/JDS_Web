@@ -1,10 +1,13 @@
-﻿using JDSCommon.Database;
+﻿using JDSCommon.Api;
+using JDSCommon.Database;
 using JDSCommon.Database.DataContract;
+using JDSCommon.Database.Models;
 using JDSCommon.Services;
 using JDSCommon.Services.Extensions;
 using JDSWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Configuration;
 using DBUser = JDSCommon.Database.DataContract.User;
 using JDSContext = JDSCommon.Database.Models.JDSContext;
 using Role = JDSCommon.Database.DataContract.Role;
@@ -29,12 +32,16 @@ namespace JDSWeb.Controllers
 
             Request.Cookies.TryGetValue(UserViewModel.CookieKeyUsername, out string? username);
             Request.Cookies.TryGetValue(UserViewModel.CookieKeyError, out string? error);
+            Request.Cookies.TryGetValue(UserViewModel.CookieKeyPasswordResetSuccess, out string? passwordResetSuccess);
 
             UserViewModel vm = new UserViewModel
             {
                 Username = username,
                 Error = bool.Parse(error ?? "false"),
+                PasswordResetSuccess = bool.Parse(passwordResetSuccess ?? "false"),
             };
+
+            Response.Cookies.Delete(UserViewModel.CookieKeyPasswordResetSuccess);
 
             return View(vm);
         }
@@ -118,6 +125,38 @@ namespace JDSWeb.Controllers
             return View();
         }
 
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        public ActionResult ForgottenPasswordEmailInput()
+        {
+            Request.Cookies.TryGetValue(UserViewModel.CookieKeyError, out string? error);
+
+            UserViewModel vm = new UserViewModel
+            {
+                Error = bool.Parse(error ?? "false"),
+            };
+
+            Response.Cookies.Delete(UserViewModel.CookieKeyError);
+
+            return View(vm);
+        }
+        public ActionResult ForgottenPasswordCodeInput()
+        {
+            Request.Cookies.TryGetValue(UserViewModel.CookieKeyError, out string? error);
+
+            UserViewModel vm = new UserViewModel
+            {
+                Error = bool.Parse(error ?? "false"),
+            };
+
+            Response.Cookies.Delete(UserViewModel.CookieKeyError);
+
+            return View(vm);
+        }
+
         #endregion
 
         #region POST Actions
@@ -169,8 +208,6 @@ namespace JDSWeb.Controllers
 
             ctx.Dispose();
 
-            // Provide random generated password to the user (Email)
-
             return RedirectToAction("List", "User");
         }
 
@@ -203,9 +240,88 @@ namespace JDSWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ResetPassword(string email)
+        public ActionResult ForgottenPasswordSendCode(string email)
         {
-            // TODO : Fetch the user by email, generate rnd pw, update user in db, send email 
+            JDSContext ctx = new JDSContext();
+
+            User? user = FetchUserByEmail(email);
+
+            ctx.Dispose();
+
+            if (user is null)
+            {
+                Response.Cookies.Append(UserViewModel.CookieKeyError, "true");
+
+                return RedirectToAction("ForgottenPasswordEmailInput", "User");
+            }
+
+            // Generate random code
+            string code = SecurityService.GeneratePassword(6);
+
+            EMailMessage mail = new EMailMessage(email)
+                .AddSubject("JDS - Réinitialisation du mot-de-passe")
+                .AddLine($"Bonjour {user.Username}, voici votre code de réinitialisation : {code}.");
+
+            // Provide random generated code to the user (Email)
+            mail.Send();
+
+            // Keep track of the user id and reset code
+            HttpContext.Session.SetString(UserViewModel.SessionKeyUserResetPasswordCode, code);
+            HttpContext.Session.SetInt32(UserViewModel.SessionKeyUserId, user.Id);
+
+            return RedirectToAction("ForgottenPasswordCodeInput", "User");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ValidateResetPasswordCode(string code)
+        {
+            string? sentCode = HttpContext.Session.GetString(UserViewModel.SessionKeyUserResetPasswordCode);
+
+            if (sentCode is null) return RedirectToAction("Login", "User");
+
+            if (sentCode != code)
+            {
+                Response.Cookies.Append(UserViewModel.CookieKeyError, "true");
+
+                return RedirectToAction("ForgottenPasswordCodeInput", "User");
+            }
+
+            HttpContext.Session.Remove(UserViewModel.SessionKeyUserResetPasswordCode);
+
+            return RedirectToAction("ResetPassword", "User");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ParseNewPassword(string newPassword)
+        {
+            JDSContext ctx = new JDSContext();
+
+            int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
+
+            if (userId is null) return RedirectToAction("Login", "User");
+
+            User? user = FetchUserById(userId ?? -1);
+
+            if (user is null)
+            {
+                ctx.Dispose();
+
+                return RedirectToAction("Login", "User");
+            }
+
+            user.Password = newPassword.ToSHA256();
+
+            ctx.Users.Update(user);
+
+            ctx.SaveChanges();
+
+            ctx.Dispose();
+
+            HttpContext.Session.Remove(UserViewModel.SessionKeyUserId);
+
+            Response.Cookies.Append(UserViewModel.CookieKeyPasswordResetSuccess, "true");
 
             return RedirectToAction("Login", "User");
         }
@@ -245,6 +361,17 @@ namespace JDSWeb.Controllers
             JDSContext ctx = new JDSContext();
 
             DBUser? user = ctx.Users.FetchByUsername(username);
+
+            ctx.Dispose();
+
+            return user;
+        }
+
+        private static DBUser? FetchUserByEmail(string email)
+        {
+            JDSContext ctx = new JDSContext();
+
+            DBUser? user = ctx.Users.FetchByEmail(email);
 
             ctx.Dispose();
 
