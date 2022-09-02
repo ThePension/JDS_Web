@@ -1,15 +1,10 @@
-﻿@using JDSCommon.Database.DataContract
+﻿@using JDSCommon.Database.DataContract;
+
 @model EventViewModel
 
 @{
 	ViewData["Title"] = Model.Event.Title;
 	ERole role = (ERole)(Context.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1); //ERole role = ERole.Admin;
-}
-
-@if (role >= ERole.Manager)
-{
-	<a class="btn btn-primary" href="@Url.Action("Update", "Event", new { id = Model.Event.Id })">Modifier</a>
-	<a class="btn btn-danger" href="@Url.Action("Delete", "Event", new { id = Model.Event.Id })">Supprimer</a>
 }
 
 <div class="container">
@@ -22,6 +17,13 @@
 				<div class="card-body">
 					<h5 class="card-title">@Model.Event.Title - @Model.Event.StringDate</h5>
 					<p class="card-text">@Model.Event.Description</p>
+
+					@if (role >= ERole.Manager)
+					{
+						<a class="btn btn-primary" href="@Url.Action("Update", "Event", new { id = Model.Event.Id })">Modifier</a>
+						<a class="btn btn-danger" href="@Url.Action("Delete", "Event", new { id = Model.Event.Id })">Supprimer</a>
+					}
+
 				</div>
 			</div>
 		</div>

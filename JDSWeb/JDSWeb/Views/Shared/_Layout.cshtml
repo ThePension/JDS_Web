@@ -56,6 +56,13 @@
                         <ul class="dropdown-menu" aria-labelledby="event_dropdown">
                             <li><a class="dropdown-item" asp-controller="Event" asp-action="Actual">Actualité</a></li>
                             <li><a class="dropdown-item" asp-controller="Event" asp-action="Passed">Archives</a></li>
+
+                            @if (role >= ERole.Manager)
+                            {
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="Event" asp-action="Create">Ajouter</a></li>
+                            }
+
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

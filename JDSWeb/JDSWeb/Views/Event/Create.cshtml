@@ -3,36 +3,64 @@
 }
 
 <div class="text-center my-4">
-	<h1 style="color:white">Ajouter un événement</h1>
+	<h1>Ajouter un événement</h1>
 </div>
 
-<div id="jds-create-event-container" class="d-flex justify-content-center align-items-center">
-	<form class="jds-create-event" enctype="multipart/form-data" method="post" asp-controller="Event" asp-action="ParseCreate">
+<div id="jds-create-event-container" class="d-flex justify-content-center">
+	<form class="jds-create-event needs-validation row g-3" enctype="multipart/form-data" method="post" asp-controller="Event" asp-action="ParseCreate" novalidate>
 		<div class="mb-3">
 			<label for="title" class="form-label">Titre</label>
 			<input id="title" name="title" class="form-control" type="text" required placeholder="Titre" aria-label="Titre">
+			<div class="invalid-feedback">
+				Champ requis.
+			</div>
 		</div>
 		<div class="mb-3">
 			<label for="description" class="form-label">Description</label>
-			<textarea class="form-control" id="description" name="description" placeholder="Description" rows="3"></textarea>
+			<textarea class="form-control" id="description" name="description" placeholder="Description" rows="3" required></textarea>
+			<div class="invalid-feedback">
+				Champ requis.
+			</div>
 		</div>
 		<div class="jds-create-event-flex-row">
 			<div class="mb-3">
 				<label for="date" class="form-label">Date</label>
 				<input id="date" name="date" class="form-control" type="date" required>
+				<div class="invalid-feedback">
+					Champ requis.
+				</div>
 			</div>
 			<div class="jds-strut-30"></div>
 			<div class="mb-3">
 				<label for="images" class="form-label">Images</label>
-				<input class="form-control" type="file" id="images" accept=".jpg, .jpeg, .png" name="files" multiple>
+				<input class="form-control" type="file" id="images" accept=".jpg, .jpeg, .png" name="files" multiple required>
+				<div class="invalid-feedback">
+					Champ requis.
+				</div>
 			</div>
 		</div>
-		<button type="submit" class="my-3 jds-button jds-primary">
-			<span class="left"></span>
-			<span class="top"></span>
-			<span class="right"></span>
-			<span class="bottom"></span>
-			Ajouter
-		</button>
+		<button type="submit" class="btn btn-outline-success">Ajouter</button>
 	</form>
 </div>
+
+@section Scripts {
+	<script>
+		(function () {
+			'use strict'
+
+			var forms = document.querySelectorAll('.needs-validation')
+
+			Array.prototype.slice.call(forms)
+				.forEach(function (form) {
+					form.addEventListener('submit', function (event) {
+						if (!form.checkValidity()) {
+							event.preventDefault()
+							event.stopPropagation()
+						}
+
+						form.classList.add('was-validated')
+					}, false)
+				})
+		})()
+	</script>
+}
