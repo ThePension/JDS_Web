@@ -1,7 +1,6 @@
 ﻿using JDSCommon.Api;
 using JDSCommon.Database;
 using JDSCommon.Database.DataContract;
-using JDSCommon.Database.Models;
 using JDSCommon.Services;
 using JDSCommon.Services.Extensions;
 using JDSWeb.Models;
@@ -9,9 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Configuration;
 using System.Data;
-using DBUser = JDSCommon.Database.DataContract.User;
 using JDSContext = JDSCommon.Database.Models.JDSContext;
-using Role = JDSCommon.Database.DataContract.Role;
 using User = JDSCommon.Database.DataContract.User;
 
 namespace JDSWeb.Controllers
@@ -82,7 +79,6 @@ namespace JDSWeb.Controllers
 			return View(vm);
 		}
 
-		[Route("Users")]
 		public IActionResult List()
 		{
 			ERole role = (ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
@@ -109,9 +105,25 @@ namespace JDSWeb.Controllers
 				return RedirectToAction("Index", "Home");
 			}
 
-			string rndPw = SecurityService.GeneratePassword(12);
+			Request.Cookies.TryGetValue(UserViewModel.CookieKeyError, out string? error);
+			Response.Cookies.Delete(UserViewModel.CookieKeyError);
 
-			return View("Create", rndPw);
+			JDSContext ctx = new JDSContext();
+
+			Role[] roles = ctx.Roles
+				.Fetch()
+				.Skip(1)
+				.ToArray();
+
+			ctx.Dispose();
+
+			UserViewModel vm = new UserViewModel
+			{
+				Roles = roles,
+				Error = bool.Parse(error ?? "false"),
+			};
+
+			return View(vm);
 		}
 
 		public IActionResult Update(int id)
@@ -201,6 +213,7 @@ namespace JDSWeb.Controllers
 		public IActionResult Delete(int id)
 		{
 			ERole role = (ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
+			int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
 
 			if (role < ERole.Manager)
 			{
@@ -223,9 +236,16 @@ namespace JDSWeb.Controllers
 				return RedirectToAction("Index", "Home");
 			}
 
+			if (user.Id == userId)
+			{
+				ctx.Dispose();
+
+				return RedirectToAction(nameof(List));
+			}
+
 			ctx.Users.Remove(user);
 			ctx.SaveChanges();
-			ctx.Dispose();			
+			ctx.Dispose();
 
 			return RedirectToAction(nameof(List));
 		}
@@ -331,7 +351,7 @@ namespace JDSWeb.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult ParseLogin(string username, string password)
 		{
-			DBUser? user = FetchUserByUsername(username);
+			User? user = FetchUserByUsername(username);
 
 			string hPwd = password.ToSHA256();
 
@@ -357,49 +377,48 @@ namespace JDSWeb.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult ParseCreate(string username, string email, string password, int role, string newsletter)
+		public IActionResult ParseCreate(string username, string email, int role, string newsletter)
 		{
 			JDSContext ctx = new JDSContext();
 
-			ctx.Users.Add(new User
+			bool usernameTaken = ctx.Users.Any(u => u.Username == username);
+
+			if (usernameTaken)
 			{
+				ctx.Dispose();
+
+				Response.Cookies.Append(UserViewModel.CookieKeyError, "true");
+
+				return RedirectToAction(nameof(Create));
+			}
+
+			string password = SecurityService.GeneratePassword(8);
+
+			User user = new User
+			{
+				Role = new Role { ERole = (ERole)role },
 				Username = username,
 				Email = email,
 				Password = password.ToSHA256(),
-				Role = new Role { ERole = (ERole)role, },
-				Newsletter = newsletter == "on" ? true : false,
-			});
+				Newsletter = newsletter == "on",
+			};
 
-			ctx.SaveChanges();
-
-			ctx.Dispose();
-
-			return RedirectToAction(nameof(List));
-		}
-
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public IActionResult ParseUpdate(int id, string username, string email, string password, int role, string newsletter)
-		{
-			User? user = FetchUserById(id);
-
-			if (user is null)
-			{
-				return RedirectToAction(nameof(List));
-			}
-
-			user.Username = username;
-			user.Email = email;
-			user.Role = new Role { ERole = (ERole)role, };
-			user.Newsletter = newsletter == "on" ? true : false;
-
-			if (password is not null && password != "") user.Password = password.ToSHA256();
-
-			JDSContext ctx = new JDSContext();
-
-			ctx.Users.Update(user);
+			ctx.Users.Add(user);
 			ctx.SaveChanges();
 			ctx.Dispose();
+
+			new EMailMessage(email)
+				.AddSubject("Bienvenue")
+				.AddLine("Adieu !")
+				.AddEmptyLine()
+				.AddLine("Tout le comité de la Jeunesse de Savagnier te souhaite la bienvenue !")
+				.AddLine("Voici tes identifiants de connexion pour le site internet, pense à changer ton mot de passe à ta première connexion.")
+				.AddEmptyLine()
+				.AddLine($"- <b>Nom d'utilisateur :</b> {username}")
+				.AddLine($"- <b>Mot de passe :</b> {password}")
+				.AddEmptyLine()
+				.AddLine("À tout bientôt !")
+				.Send();
 
 			return RedirectToAction(nameof(List));
 		}
@@ -551,18 +570,18 @@ namespace JDSWeb.Controllers
 
 		#region Fetch
 
-		private static DBUser[] FetchUsers()
+		private static User[] FetchUsers()
 		{
 			JDSContext ctx = new JDSContext();
 
-			DBUser[] users = ctx.Users.Fetch();
+			User[] users = ctx.Users.Fetch();
 
 			ctx.Dispose();
 
 			return users;
 		}
 
-		private static DBUser? FetchUserById(int id)
+		private static User? FetchUserById(int id)
 		{
 			JDSContext ctx = new JDSContext();
 
@@ -573,11 +592,11 @@ namespace JDSWeb.Controllers
 			return user;
 		}
 
-		private static DBUser? FetchUserByUsername(string username)
+		private static User? FetchUserByUsername(string username)
 		{
 			JDSContext ctx = new JDSContext();
 
-			DBUser? user = ctx.Users.FetchByUsername(username);
+			User? user = ctx.Users.FetchByUsername(username);
 
 			ctx.Dispose();
 

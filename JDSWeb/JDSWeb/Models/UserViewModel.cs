@@ -39,6 +39,5 @@ namespace JDSWeb.Models
         public bool IsManager { get; set; } = false;
 
         public bool PasswordResetSuccess { get; set; } = false;
-
     }
 }

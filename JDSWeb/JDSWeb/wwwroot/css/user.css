@@ -107,7 +107,7 @@
 		}
 
 		.jds-user-content .jds-user-actions .jds-menu-toggle.jds-menu-toggle-active ~ .jds-menu {
-			width: 240px;
+			width: 170px;
 			height: 50px;
 			z-index: 1;
 			transform: translateY(-70px);
@@ -140,7 +140,7 @@
 			justify-content: center;
 			align-items: center;
 			height: 50px;
-			gap: 40px;
+			gap: 50px;
 		}
 
 			.jds-user-content .jds-user-actions .jds-menu ul li {
@@ -160,10 +160,6 @@
 					transition-delay: 0.2s;
 				}
 
-				.jds-user-content .jds-user-actions .jds-menu ul li:nth-child(3) {
-					transition-delay: 0.3s;
-				}
-
 		.jds-user-content .jds-user-actions .jds-menu-toggle.jds-menu-toggle-active ~ .jds-menu ul li {
 			opacity: 1;
 			visibility: visible;
@@ -176,10 +172,6 @@
 
 			.jds-user-content .jds-user-actions .jds-menu-toggle.jds-menu-toggle-active ~ .jds-menu ul li:nth-child(2) {
 				transition-delay: 0.95s;
-			}
-
-			.jds-user-content .jds-user-actions .jds-menu-toggle.jds-menu-toggle-active ~ .jds-menu ul li:nth-child(3) {
-				transition-delay: 1.05s;
 			}
 
 		.jds-user-content .jds-user-actions .jds-menu ul li a {

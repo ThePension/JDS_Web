@@ -11,7 +11,7 @@
 	<div class="card mt-3 mb-3">
 		<div class="row g-0">
 			<div class="col-md-4">
-				<img src="@Model.Event.Images.FirstOrDefault()?.URL" class="img-fluid rounded-start">
+				<img src="@Model.Event.Images.FirstOrDefault()?.URL" class="img-fluid rounded-start" alt="@Model.Event.Images.FirstOrDefault()?.Alt">
 			</div>
 			<div class="col-md-8">
 				<div class="card-body">
@@ -20,8 +20,8 @@
 
 					@if (role >= ERole.Manager)
 					{
-						<a class="btn btn-primary" href="@Url.Action("Update", "Event", new { id = Model.Event.Id })">Modifier</a>
-						<a class="btn btn-danger" href="@Url.Action("Delete", "Event", new { id = Model.Event.Id })">Supprimer</a>
+						<a asp-controller="Event" asp-action="Update" asp-route-id="@Model.Event.Id" class="btn btn-primary">Modifier</a>
+						<a asp-controller="Event" asp-action="Delete" asp-route-id="@Model.Event.Id" class="btn btn-danger">Supprimer</a>
 					}
 
 				</div>
@@ -34,7 +34,7 @@
 		@foreach (var image in Model.Event.Images)
 		{
 			<div id="inputImage" class="card mb-3">
-				<img src="@image.URL" class="card-img-top">
+				<img src="@image.URL" class="card-img-top" alt="@image.Alt">
 			</div>
 		}
 

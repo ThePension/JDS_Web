@@ -25,8 +25,8 @@
 			@for (int i = 0; i < @Model.Events?.Length; i++)
 			{
 				<div class="carousel-item @(i==0 ? "active" : "")">
-					<a href="@Url.Action("Show", "Event", new { id = Model.Events[i].Id })">
-						<img src="@Model.Events[i].Images.FirstOrDefault()?.URL" class="d-block w-100" alt="test">
+					<a asp-controller="Event" asp-action="Show" asp-route-id="@Model.Events[i].Id">
+						<img src="@Model.Events[i].Images.FirstOrDefault()?.URL" class="d-block w-100" alt="@Model.Events[i].Images.FirstOrDefault()?.Alt">
 						<div class="carousel-caption d-none d-md-block">
 							<h2>@Model.Events[i].Title - @Model.Events[i].StringDate</h2>
 							<h5>@Model.Events[i].Description</h5>

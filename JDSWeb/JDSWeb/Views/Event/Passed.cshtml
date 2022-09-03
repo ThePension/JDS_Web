@@ -1,30 +1,33 @@
 ﻿@using JDSCommon.Database.DataContract
 
 @{
-	ViewData["Title"] = "Événements passés";
+    ViewData["Title"] = "Événements passés";
 }
 
 @model EventViewModel
 
 <div class="text-center">
-	<h1 class="my-4">Événements passés</h1>
+    <h1 class="my-4">Événements passés</h1>
 </div>
 
-@foreach (Event e in @Model.Events)
-{
-	<div class="card mb-3">
-		<div class="row g-0">
-			<div class="col-md-4">
-				<a href="@Url.Action("Show", "Event", new {id = e.Id})">
-					<img src="@e.Images.FirstOrDefault()?.URL" class="img-fluid rounded-start">
-				</a>
-			</div>
-			<div class="col-md-8">
-				<div class="card-body">
-					<h5 class="card-title">@e.Title</h5>
-					<p class="card-text">@e.Description</p>
-				</div>
-			</div>
-		</div>
-	</div>
-}
+
+<div class="container">
+    @foreach (Event e in @Model.Events)
+    {
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <a asp-controller="Event" asp-action="Show" asp-route-id="@e.Id">
+                        <img src="@e.Images.FirstOrDefault()?.URL" class="img-fluid rounded-start" alt="@e.Images.FirstOrDefault()?.Alt">
+                    </a>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@e.Title</h5>
+                        <p class="card-text">@e.Description</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

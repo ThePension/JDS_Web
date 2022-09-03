@@ -44,7 +44,7 @@
 				<div id="inputImage" class="card mb-3">
 					<img src="@image.URL" class="card-img-top">
 					<div class="card-body">
-						<a href="@Url.Action("DeleteImage", "Event", new {imageId = image.Id, eventId = Model.Event.Id})" id="removeImage" class="btn btn-danger">Supprimer</a>
+						<a asp-controller="Event" asp-action="DeleteImage" asp-route-imageId="@image.Id" asp-route-eventId="@Model.Event.Id" id="removeImage" class="btn btn-danger">Supprimer</a>
 					</div>
 				</div>
 			}
