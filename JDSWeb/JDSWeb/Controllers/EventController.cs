@@ -208,7 +208,7 @@ namespace JDSWeb.Controllers
 
             int count = 0;
 
-            foreach (var image in files)
+            foreach (IFormFile image in files)
             {
                 images[count++] = new Image
                 {

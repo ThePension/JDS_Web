@@ -1,0 +1,16 @@
+﻿/* User Form Container */
+
+#jds-user-form-container {
+	max-width: 50%;
+	padding: 20px;
+	margin: 0 auto;
+	margin-top: 75px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+}
+
+@media screen and (max-width: 650px) {
+	#jds-user-form-container {
+		max-width: 95%;
+	}
+}

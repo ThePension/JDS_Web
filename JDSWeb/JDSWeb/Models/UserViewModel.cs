@@ -11,6 +11,7 @@ namespace JDSWeb.Models
         public static readonly string SessionKeyUserId = "_User.Id";
         public static readonly string SessionKeyUserName = "_User.Name";
         public static readonly string SessionKeyUserRole = "_User.Role";
+        public static readonly string SessionKeyUserResetPasswordId = "_User.ResetPasswordId";
         public static readonly string SessionKeyUserResetPasswordCode = "_User.ResetPasswordCode";
 
         public static readonly string CookieKeyUsername = "c_User.Name";

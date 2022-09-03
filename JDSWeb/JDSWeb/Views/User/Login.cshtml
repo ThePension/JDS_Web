@@ -18,9 +18,11 @@
 
 @if (Model.PasswordResetSuccess)
 {
-    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-        Votre mot-de-passe a bien été réinitialisé.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="container my-4">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Votre mot de passe a bien été réinitialisé.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </div>
 }
 
@@ -48,7 +50,7 @@
                         Champ requis
                     </div>
                 </div>
-                <a href="@Url.Action("ForgottenPasswordEmailInput","User")">Mot de passe oubli&eacute; ?</a>
+                <a asp-controller="User" asp-action="ForgotPassword">Mot de passe oubli&eacute; ?</a>
                 <button type="submit" class="jds-button jds-primary">
                     <span class="left"></span>
                     <span class="top"></span>

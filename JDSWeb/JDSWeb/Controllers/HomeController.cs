@@ -15,7 +15,7 @@ namespace JDSWeb.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+		public IActionResult Index()
         {
             Request.Cookies.TryGetValue(UserViewModel.CookieKeyLoggedIn, out string? loggedIn);
             Request.Cookies.TryGetValue(UserViewModel.CookieKeyLoggedOut, out string? loggedOut);

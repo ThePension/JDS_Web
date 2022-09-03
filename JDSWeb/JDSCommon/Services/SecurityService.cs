@@ -13,7 +13,6 @@ namespace JDSCommon.Services
             string _allowedChars = "0123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ";
             Random randNum = new Random();
             char[] chars = new char[PasswordLength];
-            int allowedCharCount = _allowedChars.Length;
 
             for (int i = 0; i < PasswordLength; i++)
             {

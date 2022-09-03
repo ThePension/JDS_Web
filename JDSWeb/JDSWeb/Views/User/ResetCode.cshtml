@@ -1,5 +1,5 @@
 ﻿@{
-	ViewData["Title"] = "Réinitialisation du mot de passe";
+    ViewData["Title"] = "Mot de passe oublié";
 }
 
 @model UserViewModel
@@ -11,34 +11,27 @@
     {
         <div class="container my-4">
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                Les mots de passe ne correspondent pas.
+                Code incorrect.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         </div>
     }
 
-    <form class="row g-3 needs-validation" method="post" asp-controller="User" asp-action="ParseNewPassword" novalidate>
+    <form class="row g-3 needs-validation" method="post" asp-controller="User" asp-action="ParseCode" novalidate>
         <div class="col-md-12">
-            <label class="form-label">Choisissez un nouveau mot de passe.</label>
+            <label class="form-label">Un code de réinitialisation vous a été envoyé par email.</label>
         </div>
-        <div class="col-md-6">
-            <label for="newPasswordOne" class="form-label">Mot de passe</label>
-            <input type="password" class="form-control" id="newPasswordOne" name="newPasswordOne" required>
-            <div class="invalid-feedback">
-                Champ requis.
-            </div>
-        </div>
-        <div class="col-md-6">
-            <label for="newPasswordTwo" class="form-label">Répéter</label>
-            <input type="password" class="form-control" id="newPasswordTwo" name="newPasswordTwo" required>
+        <div class="col-md-12">
+            <label for="code" class="form-label">Code de réinitialisation</label>
+            <input type="text" class="form-control" id="code" name="code" required>
             <div class="invalid-feedback">
                 Champ requis.
             </div>
         </div>
         <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-outline-success">
-                <i class="fa-solid fa-check me-1"></i>
-                Réinitialiser
+            <button type="submit" class="btn btn-outline-primary">
+                Vérifier
+                <i class="fa-solid fa-angles-right ms-1"></i>
             </button>
         </div>
     </form>

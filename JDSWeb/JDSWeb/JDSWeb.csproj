@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\user.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="jQuery" Version="3.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.8" />
