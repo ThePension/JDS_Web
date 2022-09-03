@@ -21,6 +21,7 @@ namespace JDSWeb.Models
         public static readonly string CookieKeyLoggedIn = "c_User.Login";
         public static readonly string CookieKeyLoggedOut = "c_User.Logout";
         public static readonly string CookieKeyPasswordResetSuccess = "c_User.PasswordResetSucess";
+        public static readonly string CookieKeyUserUpdate = "c_User.UserUpdate";
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
         |*                             PROPERTIES                            *|

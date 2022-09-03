@@ -142,20 +142,24 @@ namespace JDSWeb.Controllers
 		}
 
 		[Route("User/Update/Informations")]
-		public IActionResult UpdateInformations(int id)
+		public IActionResult UpdateInformations(int? id)
 		{
 			ERole role = (ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
-			int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
 
 			Request.Cookies.TryGetValue(UserViewModel.CookieKeyError, out string? error);
+			Request.Cookies.TryGetValue(UserViewModel.CookieKeyUserUpdate, out string? userIdStr);
+
 			Response.Cookies.Delete(UserViewModel.CookieKeyError);
+			Response.Cookies.Delete(UserViewModel.CookieKeyError);
+
+			int userId = int.Parse(userIdStr ?? "0");
 
 			JDSContext ctx = new JDSContext();
 
 			Role[] roles = ctx.Roles.Fetch();
 			User? user = ctx.Users
 				.Fetch()
-				.FirstOrDefault(u => u.Id == id);
+				.FirstOrDefault(u => u.Id == (id ?? userId));
 
 			ctx.Dispose();
 
@@ -178,19 +182,23 @@ namespace JDSWeb.Controllers
 		}
 
 		[Route("User/Update/Password")]
-		public IActionResult UpdatePassword(int id)
+		public IActionResult UpdatePassword(int? id)
 		{
 			ERole role = (ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
-			int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
 
 			Request.Cookies.TryGetValue(UserViewModel.CookieKeyError, out string? error);
+			Request.Cookies.TryGetValue(UserViewModel.CookieKeyUserUpdate, out string? userIdStr);
+
 			Response.Cookies.Delete(UserViewModel.CookieKeyError);
+			Response.Cookies.Delete(UserViewModel.CookieKeyError);
+
+			int userId = int.Parse(userIdStr ?? "0");
 
 			JDSContext ctx = new JDSContext();
 
 			User? user = ctx.Users
 				.Fetch()
-				.FirstOrDefault(u => u.Id == id);
+				.FirstOrDefault(u => u.Id == (id ?? userId));
 
 			ctx.Dispose();
 
@@ -447,6 +455,7 @@ namespace JDSWeb.Controllers
 				ctx.Dispose();
 
 				Response.Cookies.Append(UserViewModel.CookieKeyError, "true");
+				Response.Cookies.Append(UserViewModel.CookieKeyUserUpdate, $"{id}");
 
 				return RedirectToAction(nameof(UpdateInformations));
 			}
@@ -488,6 +497,7 @@ namespace JDSWeb.Controllers
 				ctx.Dispose();
 
 				Response.Cookies.Append(UserViewModel.CookieKeyError, "true");
+				Response.Cookies.Append(UserViewModel.CookieKeyUserUpdate, $"{id}");
 
 				return RedirectToAction(nameof(UpdatePassword));
 			}
