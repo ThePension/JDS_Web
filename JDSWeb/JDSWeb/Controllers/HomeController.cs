@@ -1,6 +1,5 @@
 ﻿using JDSCommon.Api;
 using JDSWeb.Models;
-using MailKit;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

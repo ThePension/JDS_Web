@@ -1,31 +1,62 @@
-﻿@{
-	ViewData["Title"] = "Liste des utilisateurs";
+﻿@using JDSCommon.Database.DataContract
+@{
+    ViewData["Title"] = "Liste des utilisateurs";
+    ViewData["Active"] = "admin";
+    ViewData["MobileActive"] = "crud_users";
 }
 
 @model UserViewModel;
 
+<div id="jds-user-list" class="container mt-4">
+    <h1 class="text-center">Liste des Utilisateurs</h1>
 
-<h1 class="text-center mt-4">Liste des utilisateurs</h1>
+    <div class="d-flex mt-4 mb-2">
+        <a asp-controller="User" asp-action="Create" class="mx-auto btn btn-outline-primary">Ajouter un utilisateur</a>
+    </div>
 
-<main id="jds-userlist-main">
-	<a class="btn btn-success mb-4" href="@Url.Action("Create", "User")">Créer un nouvel utilisateur</a>
-	<ul class="list-group">
-		@if (Model.Users is not null)
-		{
-			@for (int i = 0; i < Model.Users.Length; i++)
-			{
-				<li class="list-group-item d-flex justify-content-between align-items-center">
-					<p class="align-middle">@Model.Users[i].Username</p>
-					<p class="align-middle">@Model.Users[i].Role.Name</p>
-					<p class="align-middle">@Model.Users[i].Email</p>
-					<p class="align-middle">Newsletter : <input type="checkbox" @(Model.Users[i].Newsletter ? "checked" : "") disabled /></p>
+    <div class="jds-user-list-container">
+        <div class="list-group list-group-flush">
+            @foreach (User user in Model.Users)
+            {
+                <div class="list-group-item">
+                    <h4 class="my-3">@user.Username</h4>
+                    <div class="container jds-user-content">
+                        <div class="jds-user-details">
+                            <span><b>Role :</b> @user.Role.Name</span>
+                            <span><b>Email :</b> @user.Email</span>
+                            <span><b>Newsletter :</b> @(user.Newsletter ? "Oui" : "Non")</span>
+                        </div>
+                        <div class="jds-user-actions">
+                            <div class="jds-menu-toggle"></div>
+                            <div class="jds-menu">
+                                <ul>
+                                    <li>
+                                        <a asp-controller="User" asp-action="UpdatePassword" asp-route-id="@user.Id"><i class="fa-solid fa-lock"></i></a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="User" asp-action="UpdateInformations" asp-route-id="@user.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="User" asp-action="Delete" asp-route-id="@user.Id"><i class="fa-solid fa-trash"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
-					<div>
-						<a class="btn btn-primary" href="@Url.Action("Update", "User", new { id = Model.Users[i].Id })">Modifier</a>
-						<a class="btn btn-danger" href="@Url.Action("Delete", "User", new { id = Model.Users[i].Id })">Supprimer</a>
-					</div>
-				</li>
-			}
-		}
-	</ul>
-</main>
+@section Scripts {
+    <script>
+        $(document).ready(() => {
+            $(".jds-menu-toggle").each(() => {
+                $(this).unbind().click((event) => {
+                    $(event.target).toggleClass("jds-menu-toggle-active");
+                });
+            });
+        });
+    </script>
+}

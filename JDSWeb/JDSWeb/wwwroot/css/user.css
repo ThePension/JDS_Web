@@ -23,3 +23,172 @@
 	margin-top: 50px;
 	align-items: center;
 }
+
+/* User List */
+
+.jds-user-list-container {
+	max-width: 75%;
+	padding: 20px;
+	margin: 0 auto;
+	margin-top: 30px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+}
+
+@media screen and (max-width: 650px) {
+	.jds-user-list-container {
+		max-width: 95%;
+	}
+}
+
+.jds-user-content {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+	.jds-user-content .jds-user-details {
+		display: flex;
+		flex-direction: column;
+		height: 100px;
+		width: 50%;
+		min-width: 250px;
+		justify-content: space-around;
+	}
+
+	.jds-user-content .jds-user-actions {
+		position: relative;
+		display: flex;
+		padding-bottom: 10px;
+		justify-content: center;
+		align-items: end;
+		height: 100px;
+		width: 250px;
+	}
+
+		/* Menu Toggle */
+
+		.jds-user-content .jds-user-actions .jds-menu-toggle {
+			position: relative;
+			display: flex;
+			width: 50px;
+			height: 50px;
+			background: var(--snow-drift);
+			box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+			border-radius: 50%;
+			cursor: pointer;
+			align-items: center;
+			justify-content: center;
+		}
+
+			.jds-user-content .jds-user-actions .jds-menu-toggle::before {
+				content: '+';
+				position: absolute;
+				font-size: 2.5em;
+				font-weight: 200;
+				color: var(--san-juan);
+				transition: 1.5s;
+			}
+
+			.jds-user-content .jds-user-actions .jds-menu-toggle.jds-menu-toggle-active::before {
+				transform: rotate(225deg);
+			}
+
+		.jds-user-content .jds-user-actions .jds-menu {
+			position: absolute;
+			width: 30px;
+			height: 30px;
+			background: var(--snow-drift);
+			border-radius: 70px;
+			z-index: -1;
+			transition: transform 0.5s, width 0.5s, height 0.5s, z-index 0.5s;
+			transition-delay: 1s, 0.5s, 0.5s;
+			transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+		}
+
+		.jds-user-content .jds-user-actions .jds-menu-toggle.jds-menu-toggle-active ~ .jds-menu {
+			width: 240px;
+			height: 50px;
+			z-index: 1;
+			transform: translateY(-70px);
+			transition-delay: 0s, 0.5s, 0.5s;
+			box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+		}
+
+		.jds-user-content .jds-user-actions .jds-menu::before {
+			content: '';
+			position: absolute;
+			width: 12px;
+			height: 12px;
+			background: var(--snow-drift);
+			left: calc(50% - 6px);
+			bottom: 4px;
+			transform: rotate(45deg);
+			border-radius: 2px;
+			transition: 0.5s;
+		}
+
+		.jds-user-content .jds-user-actions .jds-menu-toggle.jds-menu-toggle-active ~ .jds-menu::before {
+			transition-delay: 0.5s;
+			bottom: -6px;
+		}
+
+		.jds-user-content .jds-user-actions .jds-menu ul {
+			position: relative;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 50px;
+			gap: 40px;
+		}
+
+			.jds-user-content .jds-user-actions .jds-menu ul li {
+				list-style: none;
+				cursor: pointer;
+				opacity: 0;
+				visibility: hidden;
+				transform: translateY(-30px);
+				transition: 0.25s;
+			}
+
+				.jds-user-content .jds-user-actions .jds-menu ul li:nth-child(1) {
+					transition-delay: 0.1s;
+				}
+
+				.jds-user-content .jds-user-actions .jds-menu ul li:nth-child(2) {
+					transition-delay: 0.2s;
+				}
+
+				.jds-user-content .jds-user-actions .jds-menu ul li:nth-child(3) {
+					transition-delay: 0.3s;
+				}
+
+		.jds-user-content .jds-user-actions .jds-menu-toggle.jds-menu-toggle-active ~ .jds-menu ul li {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0px);
+		}
+
+			.jds-user-content .jds-user-actions .jds-menu-toggle.jds-menu-toggle-active ~ .jds-menu ul li:nth-child(1) {
+				transition-delay: 0.85s;
+			}
+
+			.jds-user-content .jds-user-actions .jds-menu-toggle.jds-menu-toggle-active ~ .jds-menu ul li:nth-child(2) {
+				transition-delay: 0.95s;
+			}
+
+			.jds-user-content .jds-user-actions .jds-menu-toggle.jds-menu-toggle-active ~ .jds-menu ul li:nth-child(3) {
+				transition-delay: 1.05s;
+			}
+
+		.jds-user-content .jds-user-actions .jds-menu ul li a {
+			display: block;
+			font-size: 1.5em;
+			text-decoration: none;
+			color: var(--san-juan);
+		}
+
+		.jds-user-content .jds-user-actions .jds-menu ul li:hover a {
+			color: var(--saffron);
+		}

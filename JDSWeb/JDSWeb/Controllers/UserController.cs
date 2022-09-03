@@ -85,9 +85,11 @@ namespace JDSWeb.Controllers
 		[Route("Users")]
 		public IActionResult List()
 		{
-			if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
+			ERole role = (ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
+
+			if (role < ERole.Manager)
 			{
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction(nameof(Profil));
 			}
 
 			UserViewModel vm = new UserViewModel
@@ -141,7 +143,7 @@ namespace JDSWeb.Controllers
 			Role[] roles = ctx.Roles.Fetch();
 			User? user = ctx.Users
 				.Fetch()
-				.FirstOrDefault(u => u.Id == userId);
+				.FirstOrDefault(u => u.Id == id);
 
 			ctx.Dispose();
 
@@ -176,7 +178,7 @@ namespace JDSWeb.Controllers
 
 			User? user = ctx.Users
 				.Fetch()
-				.FirstOrDefault(u => u.Id == userId);
+				.FirstOrDefault(u => u.Id == id);
 
 			ctx.Dispose();
 
@@ -199,7 +201,11 @@ namespace JDSWeb.Controllers
 		public IActionResult Delete(int id)
 		{
 			ERole role = (ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
-			int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
+
+			if (role < ERole.Manager)
+			{
+				return RedirectToAction("Index", "Home");
+			}
 
 			Request.Cookies.TryGetValue(UserViewModel.CookieKeyError, out string? error);
 			Response.Cookies.Delete(UserViewModel.CookieKeyError);
@@ -208,24 +214,20 @@ namespace JDSWeb.Controllers
 
 			User? user = ctx.Users
 				.Fetch()
-				.FirstOrDefault(u => u.Id == userId);
+				.FirstOrDefault(u => u.Id == id);
 
-			ctx.Dispose();
-
-			if (user is null) return RedirectToAction("Index", "Home");
-
-			if (role < ERole.Manager && user.Id != id)
+			if (user is null)
 			{
+				ctx.Dispose();
+
 				return RedirectToAction("Index", "Home");
 			}
 
-			UserViewModel vm = new UserViewModel
-			{
-				User = user,
-				Error = bool.Parse(error ?? "false"),
-			};
+			ctx.Users.Remove(user);
+			ctx.SaveChanges();
+			ctx.Dispose();			
 
-			return user is null ? RedirectToAction(nameof(List)) : View(vm);
+			return RedirectToAction(nameof(List));
 		}
 
 		public IActionResult ForgotPassword()
