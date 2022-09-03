@@ -1,5 +1,7 @@
 ﻿using JDSCommon.Database.DataContract;
 
+#nullable disable
+
 namespace JDSWeb.Models
 {
     public class UserViewModel
@@ -24,9 +26,18 @@ namespace JDSWeb.Models
         |*                             PROPERTIES                            *|
         \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        public string? Username { get; set; }
-        public User[]? Users { get; set; }
+        public string Username { get; set; }
+
+        public User[] Users { get; set; }
+
+        public Role[] Roles { get; set; }
+
+        public User User { get; set; }
+
         public bool Error { get; set; } = false;
+
+        public bool IsManager { get; set; } = false;
+
         public bool PasswordResetSuccess { get; set; } = false;
 
     }

@@ -8,6 +8,7 @@ using JDSWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Configuration;
+using System.Data;
 using DBUser = JDSCommon.Database.DataContract.User;
 using JDSContext = JDSCommon.Database.Models.JDSContext;
 using Role = JDSCommon.Database.DataContract.Role;
@@ -59,6 +60,28 @@ namespace JDSWeb.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
+		public IActionResult Profil()
+		{
+			int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
+
+			JDSContext ctx = new JDSContext();
+
+			User? user = ctx.Users
+				.Fetch()
+				.FirstOrDefault(u => u.Id == userId);
+
+			ctx.Dispose();
+
+			if (user is null) return RedirectToAction("Index", "Home");
+
+			UserViewModel vm = new UserViewModel
+			{
+				User = user,
+			};
+
+			return View(vm);
+		}
+
 		[Route("Users")]
 		public IActionResult List()
 		{
@@ -104,27 +127,105 @@ namespace JDSWeb.Controllers
 			return (user is null) ? RedirectToAction(nameof(List)) : View(user);
 		}
 
-		public IActionResult Delete(int id)
+		[Route("User/Update/Informations")]
+		public IActionResult UpdateInformations(int id)
 		{
-			if ((ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1) < ERole.Manager)
+			ERole role = (ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
+			int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
+
+			Request.Cookies.TryGetValue(UserViewModel.CookieKeyError, out string? error);
+			Response.Cookies.Delete(UserViewModel.CookieKeyError);
+
+			JDSContext ctx = new JDSContext();
+
+			Role[] roles = ctx.Roles.Fetch();
+			User? user = ctx.Users
+				.Fetch()
+				.FirstOrDefault(u => u.Id == userId);
+
+			ctx.Dispose();
+
+			if (user is null) return RedirectToAction("Index", "Home");
+
+			if (role < ERole.Manager && user.Id != id)
 			{
 				return RedirectToAction("Index", "Home");
 			}
 
-			User? user = FetchUserById(id);
-
-			if (user is null)
+			UserViewModel vm = new UserViewModel
 			{
-				return RedirectToAction(nameof(List));
-			}
+				User = user,
+				Roles = roles,
+				IsManager = role >= ERole.Manager,
+				Error = bool.Parse(error ?? "false"),
+			};
+
+			return user is null ? RedirectToAction(nameof(List)) : View(vm);
+		}
+
+		[Route("User/Update/Password")]
+		public IActionResult UpdatePassword(int id)
+		{
+			ERole role = (ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
+			int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
+
+			Request.Cookies.TryGetValue(UserViewModel.CookieKeyError, out string? error);
+			Response.Cookies.Delete(UserViewModel.CookieKeyError);
 
 			JDSContext ctx = new JDSContext();
 
-			ctx.Users.Remove(user);
-			ctx.SaveChanges();
+			User? user = ctx.Users
+				.Fetch()
+				.FirstOrDefault(u => u.Id == userId);
+
 			ctx.Dispose();
 
-			return RedirectToAction(nameof(List));
+			if (user is null) return RedirectToAction("Index", "Home");
+
+			if (role < ERole.Manager && user.Id != id)
+			{
+				return RedirectToAction("Index", "Home");
+			}
+
+			UserViewModel vm = new UserViewModel
+			{
+				User = user,
+				Error = bool.Parse(error ?? "false"),
+			};
+
+			return user is null ? RedirectToAction(nameof(List)) : View(vm);
+		}
+
+		public IActionResult Delete(int id)
+		{
+			ERole role = (ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
+			int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
+
+			Request.Cookies.TryGetValue(UserViewModel.CookieKeyError, out string? error);
+			Response.Cookies.Delete(UserViewModel.CookieKeyError);
+
+			JDSContext ctx = new JDSContext();
+
+			User? user = ctx.Users
+				.Fetch()
+				.FirstOrDefault(u => u.Id == userId);
+
+			ctx.Dispose();
+
+			if (user is null) return RedirectToAction("Index", "Home");
+
+			if (role < ERole.Manager && user.Id != id)
+			{
+				return RedirectToAction("Index", "Home");
+			}
+
+			UserViewModel vm = new UserViewModel
+			{
+				User = user,
+				Error = bool.Parse(error ?? "false"),
+			};
+
+			return user is null ? RedirectToAction(nameof(List)) : View(vm);
 		}
 
 		public IActionResult ForgotPassword()
@@ -293,6 +394,84 @@ namespace JDSWeb.Controllers
 			if (password is not null && password != "") user.Password = password.ToSHA256();
 
 			JDSContext ctx = new JDSContext();
+
+			ctx.Users.Update(user);
+			ctx.SaveChanges();
+			ctx.Dispose();
+
+			return RedirectToAction(nameof(List));
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult ParseUpdateInformations(int id, string username, string email, int role, string newsletter)
+		{
+			JDSContext ctx = new JDSContext();
+
+			User[] allUsers = ctx.Users.Fetch();
+
+			User? user = allUsers.FirstOrDefault(c => c.Id == id);
+
+			if (user is null)
+			{
+				ctx.Dispose();
+
+				return RedirectToAction("Index", "Home");
+			}
+
+			bool usernameTaken = allUsers.Any(u => u.Username == username && u.Username != user.Username);
+
+			if (usernameTaken)
+			{
+				ctx.Dispose();
+
+				Response.Cookies.Append(UserViewModel.CookieKeyError, "true");
+
+				return RedirectToAction(nameof(UpdateInformations));
+			}
+
+			user.Username = username;
+			user.Email = email;
+			user.Role = new Role { ERole = (ERole)role };
+			user.Newsletter = newsletter == "on";
+
+			HttpContext.Session.SetInt32(UserViewModel.SessionKeyUserRole, user.Role.Id);
+			HttpContext.Session.SetString(UserViewModel.SessionKeyUserName, user.Username);
+
+			ctx.Users.Update(user);
+			ctx.SaveChanges();
+			ctx.Dispose();
+
+			return RedirectToAction(nameof(List));
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult ParseUpdatePassword(int id, string passwordOne, string passwordTwo)
+		{
+			JDSContext ctx = new JDSContext();
+
+			User? user = ctx.Users
+				.Fetch()
+				.FirstOrDefault(c => c.Id == id);
+
+			if (user is null)
+			{
+				ctx.Dispose();
+
+				return RedirectToAction("Index", "Home");
+			}
+
+			if (passwordOne != passwordTwo)
+			{
+				ctx.Dispose();
+
+				Response.Cookies.Append(UserViewModel.CookieKeyError, "true");
+
+				return RedirectToAction(nameof(UpdatePassword));
+			}
+
+			user.Password = passwordOne.ToSHA256();
 
 			ctx.Users.Update(user);
 			ctx.SaveChanges();

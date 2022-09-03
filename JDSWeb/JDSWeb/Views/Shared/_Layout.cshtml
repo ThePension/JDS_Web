@@ -96,7 +96,7 @@
                                 Mon Compte
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="user_dropdown">
-                                <li><a class="dropdown-item" asp-controller="User" asp-action="Update" asp-route-id="@userId">Modifier</a></li>
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="Profil">Profil</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" asp-controller="User" asp-action="Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Déconnexion</a></li>
                             </ul>
@@ -187,7 +187,7 @@
                 <li class="jds-mobile-menu-item jds-mobile-dropdown">
                     <a>Mon compte</a>
                     <ul>
-                        <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "update_profil" ? "jds-mobile-menu-active" : "")" asp-controller="User" asp-action="Update" asp-route-id="@userId">Modifier</a></li>
+                        <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "profil" ? "jds-mobile-menu-active" : "")" asp-controller="User" asp-action="Profil">Profil</a></li>
                         <li class="jds-mobile-submenu-item"><a class="@(ViewData["MobileActive"] as string == "logout" ? "jds-mobile-menu-active" : "")" asp-controller="User" asp-action="Logout">Déconnexion</a></li>
                     </ul>
                 </li>

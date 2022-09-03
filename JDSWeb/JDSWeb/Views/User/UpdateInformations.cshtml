@@ -1,0 +1,91 @@
+﻿@using JDSCommon.Database.DataContract
+@{
+    ViewData["Title"] = "Profil";
+    ViewData["Active"] = "user";
+    ViewData["MobileActive"] = "profil";
+}
+
+@model UserViewModel
+
+<div id="jds-user-form-container">
+    <h1 class="mb-4">Modification des informations</h1>
+
+    @if (Model.Error)
+    {
+        <div class="container my-4">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                Ce nom d'utilisateur est déjà pris.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    }
+
+    <form class="row g-3 needs-validation" method="post" asp-controller="User" asp-action="ParseUpdateInformations" novalidate>
+        <input type="hidden" name="id" value="@Model.User.Id" />
+        <div class="col-md-6">
+            <label for="username" class="form-label">Nom d'Utilisateur</label>
+            <input type="text" class="form-control" id="username" name="username" value="@Model.User.Username" required>
+            <div class="invalid-feedback">
+                Champ requis.
+            </div>
+        </div>
+
+        @if (Model.IsManager)
+        {
+            <div class="col-md-6">
+                <label for="role" class="form-label">Role</label>
+                <select id="role" name="role" class="form-select">
+                    @foreach (Role role in Model.Roles)
+                    {
+                        <option value="@role.Id" selected="@(role.ERole == Model.User.Role.ERole ? "selected" : "")">@role.Name</option>
+                    }
+                </select>
+            </div>
+        }
+        else
+        {
+            <input type="hidden" name="role" value="@Model.User.Role.Id" />
+        }
+        <div class="col-md-12">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" id="email" name="email" value="@Model.User.Email" required>
+            <div class="invalid-feedback">
+                Champ requis.
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter" @(Model.User.Newsletter ? "checked" : "")>
+                <label class="form-check-label" for="newsletter">Newsletter</label>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-outline-success">
+                <i class="fa-solid fa-check me-1"></i>
+                Modifier
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+}

@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Profil";
+    ViewData["Active"] = "user";
+    ViewData["MobileActive"] = "profil";
+}
+
+@model UserViewModel
+
+<div class="container mt-4">
+    <h1 class="text-center">Profil</h1>
+
+    <div id="jds-user-profil" class="container">
+        <div class="col-8">
+            <h3>Informations</h3>
+            <div><b>Nom d'utilisateur :</b> @Model.User.Username</div>
+            <div><b>Email :</b> @Model.User.Email</div>
+            <div><b>Abonné à la Newsletter :</b> @(Model.User.Newsletter ? "Oui" : "Non")</div>
+        </div>
+        <div class="col d-flex flex-column mt-3">
+            <a class="btn btn-outline-secondary my-2" asp-controller="User" asp-action="UpdateInformations" asp-route-id="@Model.User.Id">Modifier Informations</a>
+            <a class="btn btn-outline-secondary my-2" asp-controller="User" asp-action="UpdatePassword" asp-route-id="@Model.User.Id">Modifier Mot de Passe</a>
+        </div>
+    </div>
+</div>

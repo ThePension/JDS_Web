@@ -60,6 +60,13 @@ namespace JDSCommon.Database
                 .Copy();
         }
 
+        public static DataContract.Role[] Fetch(this DbSet<Models.Role> roles)
+        {
+            return roles
+                .Select(r => r.ToDataContract())
+                .Copy();
+        }
+
         public static DataContract.User[] Fetch(this DbSet<Models.User> users)
         {
             return users

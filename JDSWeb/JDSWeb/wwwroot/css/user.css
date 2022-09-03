@@ -14,3 +14,12 @@
 		max-width: 95%;
 	}
 }
+
+/* User Profil */
+
+#jds-user-profil {
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 50px;
+	align-items: center;
+}
