@@ -126,21 +126,6 @@ namespace JDSWeb.Controllers
 			return View(vm);
 		}
 
-		public IActionResult Update(int id)
-		{
-			ERole role = (ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
-			int userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId) ?? -1;
-
-			if (role < ERole.Manager && userId != id)
-			{
-				return RedirectToAction("Index", "Home");
-			}
-
-			User? user = FetchUserById(id);
-
-			return (user is null) ? RedirectToAction(nameof(List)) : View(user);
-		}
-
 		[Route("User/Update/Informations")]
 		public IActionResult UpdateInformations(int? id)
 		{
@@ -185,12 +170,15 @@ namespace JDSWeb.Controllers
 		public IActionResult UpdatePassword(int? id)
 		{
 			ERole role = (ERole)(HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1);
+			int? loggedId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
 
 			Request.Cookies.TryGetValue(UserViewModel.CookieKeyError, out string? error);
 			Request.Cookies.TryGetValue(UserViewModel.CookieKeyUserUpdate, out string? userIdStr);
 
 			Response.Cookies.Delete(UserViewModel.CookieKeyError);
 			Response.Cookies.Delete(UserViewModel.CookieKeyError);
+
+			if (loggedId != id) return RedirectToAction("Index", "Home");
 
 			int userId = int.Parse(userIdStr ?? "0");
 
