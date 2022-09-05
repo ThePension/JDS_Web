@@ -4,6 +4,8 @@
 
 @{
 	ViewData["Title"] = Model.Event.Title;
+	ViewData["Active"] = "event";
+
 	ERole role = (ERole)(Context.Session.GetInt32(UserViewModel.SessionKeyUserRole) ?? -1); //ERole role = ERole.Admin;
 }
 
