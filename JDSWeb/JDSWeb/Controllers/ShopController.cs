@@ -15,6 +15,8 @@ namespace JDSWeb.Controllers
 {
     public class ShopController : Controller
     {
+		private readonly object _locker = new object();
+
 		#region GET Actions
 
 		public IActionResult Index()
@@ -141,43 +143,46 @@ namespace JDSWeb.Controllers
 		[MethodImpl(MethodImplOptions.Synchronized)]
 		public IActionResult AddToCart(int cloth_type_id, int? cloth_size)
 		{
-			JDSContext ctx = new JDSContext();
-
-			Cloth? cloth = ctx.Cloths
-				.Fetch()
-				.FirstOrDefault(c => c.Type.Id == cloth_type_id && c.Size?.Id == cloth_size && c.Booked is null);
-
-			if (cloth is null)
+			lock (_locker)
 			{
+				JDSContext ctx = new JDSContext();
+
+				Cloth? cloth = ctx.Cloths
+					.Fetch()
+					.FirstOrDefault(c => c.Type.Id == cloth_type_id && c.Size?.Id == cloth_size && c.Booked is null);
+
+				if (cloth is null)
+				{
+					ctx.Dispose();
+
+					// Error : This product is not available anymore
+
+					Response.Cookies.Append(ShopViewModel.CookieKeyError, "true");
+
+					return RedirectToAction(nameof(Index));
+				}
+
+				// Book this cloth for the user
+				int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
+
+				if (userId is not null)
+				{
+					DBUser user = ctx.Users
+						.Fetch()
+						.First(u => u.Id == userId);
+
+					cloth.Booked = user;
+				}
+
+				ctx.Cloths.Update(cloth);
+				ctx.SaveChanges();
+
 				ctx.Dispose();
 
-				// Error : This product is not available anymore
-
-				Response.Cookies.Append(ShopViewModel.CookieKeyError, "true");
+				Response.Cookies.Append(ShopViewModel.CookieKeyArticleAdded, "true");
 
 				return RedirectToAction(nameof(Index));
 			}
-
-			// Book this cloth for the user
-			int? userId = HttpContext.Session.GetInt32(UserViewModel.SessionKeyUserId);
-
-			if (userId is not null)
-			{
-				DBUser user = ctx.Users
-					.Fetch()
-					.First(u => u.Id == userId);
-
-				cloth.Booked = user;
-			}
-
-			ctx.Cloths.Update(cloth);
-			ctx.SaveChanges();
-
-			ctx.Dispose();
-
-			Response.Cookies.Append(ShopViewModel.CookieKeyArticleAdded, "true");
-
-			return RedirectToAction(nameof(Index));
 		}
 
 		[HttpPost]
