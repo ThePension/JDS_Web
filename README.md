@@ -11,3 +11,7 @@ Aubert Nicolas, Jeannin Vincent, Vuilliomenet Théo
 Deux fichiers secrets contenant des clés privées et des mots de passes se trouvent dans le gitignore.<br>
 Ils sont cependant nécéssaires au bon fonctionnement de notre application via la solution Visual Studio.<br>
 Si vous souhaitez exécuter notre solution via l'IDE, envoyez-nous un mail afin que nous puissions vous fournir le dossier Settings contenant les deux fichiers secrets.
+
+### Identifiants de connexion
+
+Veuillez nous envoyer un mail ou un message Teams pour obtenir les identifiants de connexion.
